@@ -1,0 +1,6 @@
+# Ignore temp folder (includes some files i used as notes and logs)
+temp/
+
+# Ignore all log and text files
+*.log
+*.txt

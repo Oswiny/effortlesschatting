@@ -1,0 +1,314 @@
+#effortlesschatting {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    position: relative;
+}
+
+.effortlesschatting-root {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    position: relative;
+}
+
+.effortlesschatting-messagebox-area {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: stretch;
+    column-gap: .5rem;
+    width: 100%;
+    box-sizing: border-box;
+    outline: .1rem solid var(--seventv-border-transparent-1);
+    border-radius: .25rem;
+    background: var(--seventv-background-transparent-1);
+    -webkit-backdrop-filter: blur(1.5rem);
+    backdrop-filter: blur(1.5rem);
+}
+
+.effortlesschatting-no-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    min-height: 5rem;
+    margin: auto;
+    padding: 1rem;
+    box-sizing: border-box;
+    border-radius: 0.25rem;
+    outline: 0.1rem solid var(--seventv-border-transparent-1);
+    background: var(--seventv-background-transparent-1);
+    backdrop-filter: blur(1.5rem);
+    font-weight: 900;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    z-index: 10;
+    object-fit: contain;
+}
+
+.effortlesschatting-messagebox {
+    display: grid;
+    z-index: 10;
+    grid-template-columns: repeat(3, auto);
+    cursor: pointer;
+    overflow: clip;
+    min-height: 5rem;
+    padding: 1rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden
+}
+
+
+.effortlesschatting-message-img {
+    font-weight: 900;
+    grid-column: 1;
+    grid-row: 1;
+    margin: auto;
+    object-fit: contain;
+}
+
+.effortlesschatting-message-text {
+    font-weight: 900;
+    grid-column: 1;
+    grid-row: 1;
+    margin: auto;
+    object-fit: contain
+}
+
+/*
+.effortlesschatting-flush-button-outer {
+    margin-left: auto;
+    display: flex !important;
+    -moz-box-align: center !important;
+    align-items: center !important;
+    align-content: center !important;
+    flex-direction: row !important;
+}
+*/
+
+.effortlesschatting-flush-button-outer {
+    margin-left: auto;
+    display: flex !important;
+    align-items: center !important;
+    align-content: center !important;
+    flex-direction: row !important;
+}
+
+.effortlesschatting-flush-button-inner {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 3rem;
+    height: 3rem;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    transition: background-color 0.25s ease;
+}
+
+/* hover highlight */
+.effortlesschatting-flush-button-inner:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* tooltip container */
+.effortlesschatting-flush-tooltip {
+    position: absolute;
+    bottom: 138%; /* your Twitch-like offset */
+    left: 50%;
+    transform: translateX(-50%) translateY(5px);
+    background-color: #fff;
+    color: #000;
+    font-weight: 600;
+    font-size: 1.4rem;
+    padding: 6px;
+    border-radius: 4px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 9999;
+}
+
+/* arrow as rotated square */
+.effortlesschatting-flush-tooltip::before {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: 50%;
+    display: block;               /* must have this */
+    width: 6px;
+    height: 6px;
+    background-color: #fff;
+    transform: translateX(-50%) rotate(45deg); /* rotates into diamond */
+    box-shadow: rgba(0,0,0,0.1) -1px -1px 1px;
+    opacity: 0;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.effortlesschatting-flush-button-inner:hover .effortlesschatting-flush-tooltip,
+.effortlesschatting-flush-button-inner:hover .effortlesschatting-flush-tooltip::before {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* show tooltip + arrow on hover */
+.effortlesschatting-flush-button-inner:hover .effortlesschatting-flush-tooltip::before {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) rotate(45deg);
+}
+
+
+/*
+.effortlesschatting-flush-button-inner:hover {
+    border-radius: .4rem;
+    background-color: var(--color-background-button-text-hover);
+    color: var(--color-fill-button-icon-hover)
+}
+
+.effortlesschatting-flush-button-inner::after {
+    content: "Flush";
+    position: absolute;
+    bottom: 125%;
+    left: 75%;
+    transform: translateX(-50%) translateY(-10px);
+    background: #fff;
+    color: #333;
+    padding: 0.5rem 0.9rem;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+    font-size: 0.85rem;
+    font-weight: 500;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    z-index: 99999;
+    background-color: var(--color-text-base);
+    color: var(--color-text-tooltip);
+    text-align: center;
+    border-radius: .4rem;
+    display: flex;
+    font-weight: 600;
+    margin-top: -1.3rem;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    width: fit-content;
+    white-space: nowrap;
+    padding: .25em .35em;
+    margin-left: -3.5em;
+    z-index: 9999;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.effortlesschatting-flush-button-inner::before {
+    content: "";
+    font-weight: 600;
+    position: absolute;
+    top: 115%;
+    left: 50%;
+    transform: translateX(-50%) rotate(180deg);
+    border-width: 7px;
+    border-style: solid;
+    border-color: #fff transparent transparent transparent;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    z-index: 99999;
+}
+
+.effortlesschatting-flush-button-inner:hover::after,
+.effortlesschatting-flush-button-inner:hover::before {
+    opacity: 1;
+}
+
+
+
+.effortlesschatting-flush-button-inner {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    position: relative;
+}
+
+.effortlesschatting-flush-button {
+    border: 0;
+    background: transparent;
+    width: var(--button-size-default);
+    height: var(--button-size-default);
+    padding: .5rem;
+    justify-content: center;
+    align-items: center;
+    display: flex
+}
+*/
+
+/* v2 */
+/*
+.effortlesschatting-flush-button-inner {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 3rem;
+    height: 3rem;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    transition: background-color 0.25s ease;
+}
+
+.effortlesschatting-flush-button-inner:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.effortlesschatting-flush-button-inner::after {
+    content: "Flush";
+    position: absolute;
+    bottom: 138%;
+    left: 50%;
+    transform: translateX(-50%) translateY(5px);
+    background: #fff;
+    color: #000;
+    font-weight: 600;
+    font-size: 1.4rem;
+    padding: 6px 6px;
+    border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 9999;
+}
+
+.effortlesschatting-flush-button-inner::before {
+    content: "";
+    position: absolute;
+    bottom: 75%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 15px;
+    border-style: solid;
+    border-color: #fff transparent transparent transparent;
+    opacity: 0;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 9999;
+}
+
+.effortlesschatting-flush-button-inner:hover::after,
+.effortlesschatting-flush-button-inner:hover::before {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+*/
+
+
+.hidden {
+    display: none;
+}
