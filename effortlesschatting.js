@@ -4,13 +4,6 @@
 
     const querySelected = {};
 
-    function cachedQuerySelector(query) {
-        if (!querySelected[query]) {
-            querySelected[query] = document.querySelector(query)
-        }
-        return querySelected[query]
-    }
-
     function handleUpdatesInConfig(event) {
         if (event.data.effortless && event.data.type === "updateConfig") {
             Config = event.data.config
@@ -29,6 +22,7 @@
             this.src = src;
             this.srcset = srcset ?? "";
             this.createdAt = [new Date()];
+            this.timeoutIds = [];
         }
         printToChat() {
             let text = this.text
@@ -55,7 +49,8 @@
         add(message) {
             let foundMessage = messages.list.find(item => item.text === message.text)
             foundMessage === undefined ? this.list.push(message) : foundMessage.createdAt = foundMessage.createdAt.concat(message.createdAt)
-            setTimeout(() => {
+            message.timeoutIds.push(setTimeout(() => {
+                console.log("trying to delete message ", message)
                 let foundMessage = messages.list.find(item => item.text === message.text)
                 foundMessage.createdAt = foundMessage.createdAt.filter(item => item !== message.createdAt[0])
                 if (foundMessage.count === 0) {
@@ -64,7 +59,7 @@
                 if (Config.updateNodesAfterTimeout && !isMouseOver()) {
                     ContentNode.updateNodes()
                 }
-            }, Config.deleteAfterMs)
+            }, Config.deleteAfterMs))
         }
         getTop(number) {
             return this.sortedList.slice(0, number)
@@ -76,6 +71,12 @@
 
     class DomManager {
         constructor() {
+            this.selectors = {
+                root: ".effortlesschatting-root",
+                flush: ".effortlesschatting-flush-button-outer",
+                contentNodes: ".contentNode",
+            }
+            this.root = null
             this.contentNodes = []
         }
 
@@ -130,7 +131,7 @@
         }
 
         injectRoot() {
-            let seventvSafeChatContainer = cachedQuerySelector(".seventv-chat-input-container div.chat-input").childNodes[0]; //HERE
+            let seventvSafeChatContainer = document.querySelector(".seventv-chat-input-container div.chat-input").childNodes[0]; //HERE
 
             let root = document.createElement("div");
             root.classList.add("effortlesschatting-root")
@@ -148,6 +149,8 @@
                 root.querySelector(".effortlesschatting-no-message").classList.add("hidden");
             }
             seventvSafeChatContainer.appendChild(root);
+            this.root = root
+            return root;
         }
 
         #createContentNode() {
@@ -219,7 +222,7 @@
         }
 
         injectContentNodes() {
-            let outerElement = cachedQuerySelector(".effortlesschatting-messagebox-area");
+            let outerElement = document.querySelector(".effortlesschatting-messagebox-area");
             for (let i = 0; i < Config.contentNodeAmount; i++) {
                 let contentNode = this.#createContentNode()
                 outerElement.appendChild(contentNode.node)
@@ -228,7 +231,7 @@
         }
 
         injectFlushButton() {
-            let parent = cachedQuerySelector(".chat-input__buttons-container");
+            let parent = document.querySelector(".chat-input__buttons-container");
             let flushDiv = document.createElement("div");
             flushDiv.classList.add("effortlesschatting-flush-button-outer")
             flushDiv.innerHTML = `
@@ -245,16 +248,29 @@
                 </div>
             `
             function flushMessagesStorage() {
+                messages.list.forEach(message => {
+                    message.timeoutIds.forEach(timeoutId => {
+                        clearTimeout(timeoutId);
+                    })
+                })
                 messages.list.splice(0, messages.list.length);
                 ContentNode.updateNodes();
             }
             flushDiv.querySelector(".effortlesschatting-flush-button-inner").addEventListener("click", flushMessagesStorage)
-            parent.childNodes[parent.childNodes.length - 1].removeChild(parent.childNodes[parent.childNodes.length - 1].childNodes[0])
+            console.log("-----------")
+            console.log(parent)
+            console.log(parent.lastChild)
+            console.log(parent.lastChild.firstChild)
+            console.log("-----------")
+            parent.lastChild.removeChild(parent.lastChild.firstChild)
             parent.insertBefore(flushDiv, parent.childNodes[parent.childNodes.length - 1]);
+            return flushDiv
         }
 
         isMouseOver() {
-            let effortlessChatting = document.querySelector(".effortlesschatting-root")
+            let effortlessChatting = domManager.root
+            if (effortlessChatting == null)
+                return false
             return effortlessChatting.matches(":hover")
         }
 
@@ -339,6 +355,10 @@
         }
 
         static updateNodes() {
+            if(!domManager || domManager.contentNodes.length == 0)
+            {
+                return
+            }
             let topElements = messages.getTop(Config.contentNodeAmount);
             console.log("current top ", topElements)
             let isAnyMessageFound = false;
@@ -387,7 +407,7 @@
         }
     });
 
-
+    
     let domManager = new DomManager();
     await domManager.waitForSevenTV();
     let chatEntry = document.querySelector("#live-page-chat #seventv-message-container main.seventv-chat-list")
@@ -402,6 +422,38 @@
     domManager.injectContentNodes();
     //domManager.scrapeAlreadySent();
 
+    //if for some reason chat box gets removed we inject it
+    function checkInjection() {
+
+        const observer = new MutationObserver(async function () {
+            console.log(domManager)
+            if (domManager && document.querySelector(domManager.selectors.root) != null && document.querySelector(domManager.selectors.flush) != null && document.querySelectorAll(domManager.selectors.contentNodes).length != 0)
+                return
+            
+            observer.disconnect()
+
+            console.log("detected root disattachment")
+            domManager = new DomManager();
+            await domManager.waitForSevenTV();
+            chatEntry = document.querySelector("#live-page-chat #seventv-message-container main.seventv-chat-list")
+            messages = new MessageList();
+            textbox = document.querySelector("[role=textbox]")
+            hasText = function () { return textbox.textContent !== "\ufeff" }
+            textBoxControllers = domManager.getEditor();
+            console.log(textBoxControllers)
+            sendMessage = domManager.getSendMessage();
+            domManager.injectRoot();
+            domManager.injectFlushButton();
+            domManager.injectContentNodes();
+            //domManager.scrapeAlreadySent();
+
+            observer.observe(document, { childList: true, subtree: true })
+        })
+
+        observer.observe(document, { childList: true, subtree: true });
+    }
+
+    checkInjection();
 
     function findPathToTarget(startFiber, functionName) {
         const queue = [{ fiber: startFiber, path: [] }];
