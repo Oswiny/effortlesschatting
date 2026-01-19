@@ -50,7 +50,7 @@
         items.forEach(item => {
             const isMatch = item.dataset.value === value
             item.setAttribute("aria-selected", String(isMatch))
-            if(isMatch) matchedItem = item
+            if (isMatch) matchedItem = item
         })
 
         hidden.value = value;
@@ -77,6 +77,7 @@
         let currentConfig = await configManager.getConfig()
 
         setDropdownValue(dropdown, currentConfig[dropdown.id])
+        updateResetState(dropdown.closest(".row").querySelector(".reset-icon"), currentConfig[dropdown.id])
 
         btn.addEventListener("click", (e) => {
             e.stopPropagation();
@@ -105,10 +106,11 @@
             item.setAttribute('aria-checked', on);
         }
         let currentConfig = await configManager.getConfig();
+        let defaultConfig = await configManager.defaultConfig;
         if (typeof currentConfig[id] === "boolean") {
             set(currentConfig[id])
+            updateResetState(document.querySelector(`.reset-icon[data-target="${id}"]`), defaultConfig[id], currentConfig[id])
         }
-        let defaultConfig = await configManager.defaultConfig;
         item.addEventListener('click', () => {
             const isOn = item.classList.toggle('on');
             item.setAttribute('aria-checked', isOn);
@@ -131,6 +133,7 @@
         console.log("config ", id, " value ", currentConfig[id]);
         input.value = String(currentConfig[id]);
         span.textContent = input.id === "scrapeSubsWithMinimumMonths" ? input.value + " months" : input.id === "contentNodeAmount" ? input.value : input.value + " ms";
+        updateResetState(document.querySelector(`.reset-icon[data-target="${input.id}"]`), defaultConfig[input.id], currentConfig[input.id])
         input.addEventListener("input", () => {
             configManager.setConfig(input.id, input.value)
             span.textContent = input.id === "scrapeSubsWithMinimumMonths" ? input.value + " months" : input.id === "contentNodeAmount" ? input.value : input.value + " ms";
