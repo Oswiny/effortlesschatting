@@ -18,10 +18,14 @@ export let defaultConfig = {
     scrapeAlreadySentMessages: true,
     requiredHoldTime: 5000,
     messageClickAnimationTime: 125,
-    scannerMethod: 2,
+    scannerMethod: "injection-with-emotes",
 }
 
 export const labels = {
+    scannerMethod: {
+        main: "Scanner Method",
+        alt: "Choose what to use to scan and detect incoming messages"
+    },
     addButton: {
         main: "Add"
     },

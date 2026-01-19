@@ -18,17 +18,20 @@
     async function updateVisualStates() {
         let currentConfig = await configManager.getConfig();
         let defaultConfig = await configManager.defaultConfig;
+        dropdowns.forEach((item) => {
+            setDropdownValue(item, currentConfig[item.id])
+            updateResetState(item.closest(".row").querySelector(".reset-icon"), defaultConfig[item.id], currentConfig[item.id])
+        })
         toggles.forEach((item) => {
-            const reset = document.querySelector(`.reset-icon[data-target="${item.id}"]`);
             item.classList.toggle("on", currentConfig[item.id])
             item.setAttribute("aria-checked", currentConfig[item.id])
-            updateResetState(reset, defaultConfig[item.id], currentConfig[item.id])
+            updateResetState(item.closest(".row").querySelector(".reset-icon"), defaultConfig[item.id], currentConfig[item.id])
         })
         ranges.forEach((item) => {
             item.childNodes[1].value = String(currentConfig[item.childNodes[1].id])
             console.log("updated ", currentConfig[item.childNodes[1].id]);
             item.childNodes[3].textContent = item.childNodes[1].id === "scrapeSubsWithMinimumMonths" ? item.childNodes[1].value + " months" : item.childNodes[1].id === "contentNodeAmount" ? item.childNodes[1].value : item.childNodes[1].value + " ms";
-            updateResetState(document.querySelector(`.reset-icon[data-target="${item.childNodes[1].id}"]`), defaultConfig[item.childNodes[1].id], currentConfig[item.childNodes[1].id])
+            updateResetState(item.closest(".row").querySelector(".reset-icon"), defaultConfig[item.childNodes[1].id], currentConfig[item.childNodes[1].id])
 
         })
         arrayBasedSettings.forEach(async (item) => {
@@ -38,6 +41,61 @@
         })
     }
 
+    function setDropdownValue(dropdown, value) {
+        const hidden = dropdown.querySelector("input[type='hidden']");
+        const label = dropdown.querySelector(".dropdown-label");
+        const items = dropdown.querySelectorAll(".dropdown-item");
+
+        let matchedItem = null
+        items.forEach(item => {
+            const isMatch = item.dataset.value === value
+            item.setAttribute("aria-selected", String(isMatch))
+            if(isMatch) matchedItem = item
+        })
+
+        hidden.value = value;
+        label.textContent = matchedItem.textContent;
+        console.log(matchedItem.textContent)
+    }
+
+    function toggleDropdown(dropdown, btn, menu, forcedState) {
+        const isOpen = typeof forcedState === "boolean" ? forcedState : !dropdown.classList.contains("open");
+        dropdown.classList.toggle("open", isOpen);
+        btn.setAttribute("aria-expanded", String(isOpen));
+        isOpen ? menu.focus() : btn.focus();
+        return isOpen
+    }
+
+    const dropdowns = [...document.querySelectorAll(".dropdown")]
+    dropdowns.forEach(async (dropdown) => {
+        const btn = dropdown.querySelector(".dropdown-btn");
+        const menu = dropdown.querySelector(".dropdown-menu");
+        const label = dropdown.querySelector(".dropdown-label");
+        const hidden = dropdown.querySelector("input[type='hidden']");
+        const items = dropdown.querySelectorAll(".dropdown-item");
+        let defaultConfig = await configManager.defaultConfig;
+        let currentConfig = await configManager.getConfig()
+
+        setDropdownValue(dropdown, currentConfig[dropdown.id])
+
+        btn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            toggleDropdown(dropdown, btn, menu)
+        });
+
+        menu.addEventListener("click", (e) => {
+            const item = e.target.closest(".dropdown-item");
+            configManager.setConfig(dropdown.id, item.dataset.value)
+            setDropdownValue(dropdown, item.dataset.value)
+            updateResetState(dropdown.closest(".row").querySelector(".reset-icon"), defaultConfig[dropdown.id], hidden.value)
+            toggleDropdown(dropdown, btn, menu, false);
+        });
+
+
+        document.addEventListener("click", () => {
+            toggleDropdown(dropdown, btn, menu, false);
+        });
+    })
 
     const toggles = [...document.querySelectorAll('.toggle')];
     toggles.forEach(async (item) => {
@@ -162,7 +220,6 @@
                 return
             };
 
-            // Define defaults for each known control
             let defaultSetting = await configManager.resetConfig(id);
             reset.classList.toggle("modified", false);
 
@@ -177,6 +234,9 @@
             }
             else if (el.classList.contains("subsection")) {
                 await renderBanned(el.querySelector(".bannedList"), id)
+            }
+            else if (el.classList.contains("dropdown")) {
+                setDropdownValue(el, defaultSetting)
             }
         });
     });
@@ -195,12 +255,10 @@
         return '#' + (r.toString(16).padStart(2, '0') + g.toString(16).padStart(2, '0') + b.toString(16).padStart(2, '0'));
     }
 
-    // save button demo — replace with chrome.storage or browser.storage in your extension
     document.getElementById('closeButton').addEventListener('click', () => {
         window.close()
     });
 
-    // import demo (quick file read)
     document.getElementById("resetButton").addEventListener('click', async () => {
         if (!confirm('Reset settings to defaults?')) return;
         configManager.clearStorage();
