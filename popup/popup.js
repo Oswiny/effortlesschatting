@@ -77,7 +77,7 @@
         let currentConfig = await configManager.getConfig()
 
         setDropdownValue(dropdown, currentConfig[dropdown.id])
-        updateResetState(dropdown.closest(".row").querySelector(".reset-icon"), currentConfig[dropdown.id])
+        updateResetState(dropdown.closest(".row").querySelector(".reset-icon"), defaultConfig[dropdown.id], currentConfig[dropdown.id])
 
         btn.addEventListener("click", (e) => {
             e.stopPropagation();
