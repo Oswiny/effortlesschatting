@@ -4,9 +4,7 @@ html {
 
 :root {
     --bg: #141414;
-    /* requested background */
     --text: #efeff1;
-    /* requested text */
     --muted: #9a9aa0;
     --card: rgba(255, 255, 255, 0.03);
     --accent: #3dd9c8;

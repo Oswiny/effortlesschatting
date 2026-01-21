@@ -1,14 +1,17 @@
 "use strict";
+import * as configAccess from "../configAccess.js";
+import { defaultConfig, labels } from "../config.js";
+
 (async () => {
+    let currentConfig = await configAccess.currentConfig();
+    let labelElements = document.querySelectorAll("[data-label]")
+    async function updateLabels(language) {
+        labelElements.forEach((element) => {
+            element.textContent = labels[language][element.getAttribute("data-label")][element.getAttribute("data-label-type")]
+        })
+    }
+    updateLabels(currentConfig["language"])
 
-    let configManager = await import(browser.runtime.getURL("configManager.js"));
-    configManager.setApis(browser, chrome)
-
-
-    let labels = document.querySelectorAll("[data-label]")
-    labels.forEach((element) => {
-        element.textContent = configManager.labels[element.getAttribute("data-label")][element.getAttribute("data-label-type")]
-    })
 
     function updateResetState(element, defaultValue, on) {
         const changed = JSON.stringify(defaultValue) !== JSON.stringify(on)
@@ -16,8 +19,7 @@
     }
 
     async function updateVisualStates() {
-        let currentConfig = await configManager.getConfig();
-        let defaultConfig = await configManager.defaultConfig;
+        let currentConfig = await configAccess.currentConfig();
         dropdowns.forEach((item) => {
             setDropdownValue(item, currentConfig[item.id])
             updateResetState(item.closest(".row").querySelector(".reset-icon"), defaultConfig[item.id], currentConfig[item.id])
@@ -29,7 +31,6 @@
         })
         ranges.forEach((item) => {
             item.childNodes[1].value = String(currentConfig[item.childNodes[1].id])
-            console.log("updated ", currentConfig[item.childNodes[1].id]);
             item.childNodes[3].textContent = item.childNodes[1].id === "scrapeSubsWithMinimumMonths" ? item.childNodes[1].value + " months" : item.childNodes[1].id === "contentNodeAmount" ? item.childNodes[1].value : item.childNodes[1].value + " ms";
             updateResetState(item.closest(".row").querySelector(".reset-icon"), defaultConfig[item.childNodes[1].id], currentConfig[item.childNodes[1].id])
 
@@ -55,14 +56,13 @@
 
         hidden.value = value;
         label.textContent = matchedItem.textContent;
-        console.log(matchedItem.textContent)
     }
 
     function toggleDropdown(dropdown, btn, menu, forcedState) {
         const isOpen = typeof forcedState === "boolean" ? forcedState : !dropdown.classList.contains("open");
         dropdown.classList.toggle("open", isOpen);
         btn.setAttribute("aria-expanded", String(isOpen));
-        isOpen ? menu.focus() : btn.focus();
+        isOpen ? menu.focus({ preventScroll: true }) : btn.focus({ preventScroll: true });
         return isOpen
     }
 
@@ -73,8 +73,7 @@
         const label = dropdown.querySelector(".dropdown-label");
         const hidden = dropdown.querySelector("input[type='hidden']");
         const items = dropdown.querySelectorAll(".dropdown-item");
-        let defaultConfig = await configManager.defaultConfig;
-        let currentConfig = await configManager.getConfig()
+        let currentConfig = await configAccess.currentConfig()
 
         setDropdownValue(dropdown, currentConfig[dropdown.id])
         updateResetState(dropdown.closest(".row").querySelector(".reset-icon"), defaultConfig[dropdown.id], currentConfig[dropdown.id])
@@ -86,7 +85,10 @@
 
         menu.addEventListener("click", (e) => {
             const item = e.target.closest(".dropdown-item");
-            configManager.setConfig(dropdown.id, item.dataset.value)
+            configAccess.setConfig(dropdown.id, item.dataset.value)
+            if (dropdown.id === "language") {
+                updateLabels(item.dataset.value)
+            }
             setDropdownValue(dropdown, item.dataset.value)
             updateResetState(dropdown.closest(".row").querySelector(".reset-icon"), defaultConfig[dropdown.id], hidden.value)
             toggleDropdown(dropdown, btn, menu, false);
@@ -105,8 +107,7 @@
             item.classList.toggle('on', on);
             item.setAttribute('aria-checked', on);
         }
-        let currentConfig = await configManager.getConfig();
-        let defaultConfig = await configManager.defaultConfig;
+        let currentConfig = await configAccess.currentConfig();
         if (typeof currentConfig[id] === "boolean") {
             set(currentConfig[id])
             updateResetState(document.querySelector(`.reset-icon[data-target="${id}"]`), defaultConfig[id], currentConfig[id])
@@ -115,7 +116,7 @@
             const isOn = item.classList.toggle('on');
             item.setAttribute('aria-checked', isOn);
             const id = item.id;
-            configManager.setConfig(id, isOn)
+            configAccess.setConfig(id, isOn)
             const reset = document.querySelector(`.reset-icon[data-target="${id}"]`);
             updateResetState(reset, defaultConfig[id], isOn)
         });
@@ -128,14 +129,12 @@
         const input = item.childNodes[1];
         const id = input.id;
         const span = item.childNodes[3];
-        let currentConfig = await configManager.getConfig()
-        let defaultConfig = await configManager.defaultConfig;
-        console.log("config ", id, " value ", currentConfig[id]);
+        let currentConfig = await configAccess.currentConfig()
         input.value = String(currentConfig[id]);
         span.textContent = input.id === "scrapeSubsWithMinimumMonths" ? input.value + " months" : input.id === "contentNodeAmount" ? input.value : input.value + " ms";
         updateResetState(document.querySelector(`.reset-icon[data-target="${input.id}"]`), defaultConfig[input.id], currentConfig[input.id])
         input.addEventListener("input", () => {
-            configManager.setConfig(input.id, input.value)
+            configAccess.setConfig(input.id, input.value)
             span.textContent = input.id === "scrapeSubsWithMinimumMonths" ? input.value + " months" : input.id === "contentNodeAmount" ? input.value : input.value + " ms";
             updateResetState(document.querySelector(`.reset-icon[data-target="${input.id}"]`), defaultConfig[input.id], input.value)
         })
@@ -149,22 +148,22 @@
         const button = item.querySelector(".addBannedButton")
 
         button.addEventListener('click', async () => {
-            let currentConfig = await configManager.getConfig()
+            let currentConfig = await configAccess.currentConfig()
             const value = input.value.trim();
             if (!value) return;
             if (currentConfig[id].includes(value)) {
                 return alert('Already added!')
             };
-            configManager.setConfig(id, currentConfig[id].concat([value]))
+            await configAccess.setConfig(id, currentConfig[id].concat([value]))
             input.value = '';
             await renderBanned(list, id);
         });
 
         list.addEventListener('click', async (e) => {
-            let currentConfig = await configManager.getConfig()
+            let currentConfig = await configAccess.currentConfig()
             if (e.target.matches('button[data-index]')) {
                 const i = parseInt(e.target.dataset.index);
-                configManager.setConfig(id, currentConfig[id].filter((item, index) => index !== i))
+                await configAccess.setConfig(id, currentConfig[id].filter((item, index) => index !== i))
                 list.addEventListener('transitionend', () => item.remove(), { once: true });
                 await renderBanned(list, id);
             }
@@ -173,10 +172,9 @@
         await renderBanned(list, id);
     })
     async function renderBanned(list, id) {
-        let currentConfig = await configManager.getConfig()
-        let defaultConfig = await configManager.defaultConfig
+        let currentConfig = await configAccess.currentConfig()
         list.innerHTML = "";
-        if (currentConfig[id].length - configManager.defaultConfig[id].length === 0) {
+        if (currentConfig[id].length - defaultConfig[id].length === 0) {
             const empty = document.createElement("li");
             empty.className = "muted";
             empty.textContent = "No items added yet."
@@ -186,7 +184,7 @@
         }
 
         currentConfig[id].forEach((item, index) => {
-            if (configManager.defaultConfig[id].includes(item)) {
+            if (defaultConfig[id].includes(item)) {
                 return;
             }
             const li = document.createElement("li");
@@ -205,17 +203,14 @@
             list.appendChild(li);
         })
 
-        currentConfig = await configManager.getConfig()
+        currentConfig = await configAccess.currentConfig()
         updateResetState(document.querySelector(`.reset-icon[data-target="${id}"]`), defaultConfig[id], currentConfig[id])
-        console.log("reset state updated");
     }
 
     document.querySelectorAll('.reset-icon').forEach(async (reset) => {
         reset.addEventListener('click', async () => {
             const id = reset.dataset.target;
             const el = document.getElementById(id);
-            let defaultConfig = configManager.defaultConfig;
-
             if (!el) {
                 return
             };
@@ -223,7 +218,7 @@
                 return
             };
 
-            let defaultSetting = await configManager.resetConfig(id);
+            let defaultSetting = await configAccess.resetConfig(id);
             reset.classList.toggle("modified", false);
 
             if (el.classList.contains('toggle')) {
@@ -240,23 +235,13 @@
             }
             else if (el.classList.contains("dropdown")) {
                 setDropdownValue(el, defaultSetting)
+                if (el.id === "language") {
+                    updateLabels(defaultSetting)
+                }
             }
+
         });
     });
-
-
-    // small utility to shift hex color
-    function shade(hex, percent) {
-        // hex like #aabbcc
-        const num = parseInt(hex.replace('#', ''), 16);
-        let r = (num >> 16) + percent;
-        let g = ((num >> 8) & 0x00FF) + percent;
-        let b = (num & 0x0000FF) + percent;
-        r = Math.min(255, Math.max(0, r));
-        g = Math.min(255, Math.max(0, g));
-        b = Math.min(255, Math.max(0, b));
-        return '#' + (r.toString(16).padStart(2, '0') + g.toString(16).padStart(2, '0') + b.toString(16).padStart(2, '0'));
-    }
 
     document.getElementById('closeButton').addEventListener('click', () => {
         window.close()
@@ -264,8 +249,9 @@
 
     document.getElementById("resetButton").addEventListener('click', async () => {
         if (!confirm('Reset settings to defaults?')) return;
-        configManager.clearStorage();
-        await updateVisualStates()
+        configAccess.clearStorage();
+        await updateVisualStates();
+        updateLabels(defaultConfig["language"])
     });
 
 

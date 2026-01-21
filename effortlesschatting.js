@@ -1,18 +1,23 @@
 "use strict";
+import { labels } from "./config.js";
 (async () => {
-    let { requestConfig } = await import((new URL("./configManager.js", import.meta.url).href));
 
-    const querySelected = {};
+    let config = {};
+    window.postMessage({ source: "effortless", type: "CONFIG_SYNC" }, "*");
 
-    function handleUpdatesInConfig(event) {
-        if (event.data.effortless && event.data.type === "updateConfig") {
-            Config = event.data.config
+    window.addEventListener("message", (event) => {
+        if (event.data?.source === "effortless" && event.data.type === "CONFIG_SYNC" && event.data.payload?.config) {
+            config = event.data.payload.config;
+            updateLabels(config);
         }
-    }
-    window.addEventListener("message", handleUpdatesInConfig)
+    });
 
-    let Config = await requestConfig();
-    console.log(Config);
+    function updateLabels(config) {
+        document.querySelectorAll("[data-label]").forEach(element => {
+            element.textContent = labels[config.language][element.getAttribute("data-label")][element.getAttribute("data-label-type")];
+        })
+    }
+
     class Message {
         get count() {
             return this.createdAt.length;
@@ -27,10 +32,10 @@
         printToChat() {
             let text = this.text
             if (!textBoxControllers.selection) {
-                textBoxControllers.select(textBoxControllers.range(textBoxControllers.point([0], { edge: Config.defaultOffsetPosition })))
+                textBoxControllers.select(textBoxControllers.range(textBoxControllers.point([0], { edge: config.defaultOffsetPosition })))
             }
             const offset = textBoxControllers.selection.focus.offset;
-            if (Config.autoSpace && hasText()) {
+            if (config.autoSpace && hasText()) {
                 if (offset - 1 > 0 && textbox.textContent[offset - 1] !== " ") {
                     text = " " + text;
                 }
@@ -50,16 +55,15 @@
             let foundMessage = messages.list.find(item => item.text === message.text)
             foundMessage === undefined ? this.list.push(message) : foundMessage.createdAt = foundMessage.createdAt.concat(message.createdAt)
             message.timeoutIds.push(setTimeout(() => {
-                console.log("trying to delete message ", message)
                 let foundMessage = messages.list.find(item => item.text === message.text)
                 foundMessage.createdAt = foundMessage.createdAt.filter(item => item !== message.createdAt[0])
                 if (foundMessage.count === 0) {
                     messages.list = messages.list.filter(item => item !== foundMessage)
                 }
-                if (Config.updateNodesAfterTimeout && !isMouseOver()) {
+                if (config.updateNodesAfterTimeout && !isMouseOver()) {
                     ContentNode.updateNodes()
                 }
-            }, Config.deleteAfterMs))
+            }, config.deleteAfterMs))
         }
         getTop(number) {
             return this.sortedList.slice(0, number)
@@ -81,7 +85,7 @@
         }
 
         scrapeAlreadySent() {
-            if (Config.scrapeAlreadySentMessages) {
+            if (config.scrapeAlreadySentMessages) {
                 chatEntry.childNodes.forEach(item => { this.scrape(item) });
                 ContentNode.updateNodes()
             }
@@ -95,25 +99,25 @@
             const userName = message.querySelector("span.seventv-chat-user-username")?.innerText;
             let messageBody = message.querySelector("span.seventv-chat-message-body");
 
-            if ((!Config.scrapeMods && badges.includes("Moderator")) || (!Config.scrapeVIPs && badges.includes("VIP")) || (!Config.scrapeBots && badges.includes("Chat Bot"))) {
+            if ((!config.scrapeMods && badges.includes("Moderator")) || (!config.scrapeVIPs && badges.includes("VIP")) || (!config.scrapeBots && badges.includes("Chat Bot"))) {
                 return;
             }
 
             //only on english
-            if (Config.scrapeOnlySubs) {
+            if (config.scrapeOnlySubs) {
                 let subBadge = (badges.filter(item => item.includes("Subscriber")).length > 0)
                 if (!subBadge.length) {
                     return
                 }
-                if (subscriberMonthCalculator(subBadge) < Config.scrapeSubsWithMinimumMonths) {
+                if (subscriberMonthCalculator(subBadge) < config.scrapeSubsWithMinimumMonths) {
                     return
                 }
             }
 
-            if (!Config.bannedUsers.includes(userName)) {
-                if (Config.allowText) {
+            if (!config.bannedUsers.includes(userName)) {
+                if (config.allowText) {
                     if (messageBody) {
-                        let uniqueWordsInMessage = Array.from(new Set(messageBody.innerText.split(" ").filter(item => !Config.bannedWords.includes(item))));
+                        let uniqueWordsInMessage = Array.from(new Set(messageBody.innerText.split(" ").filter(item => !config.bannedWords.includes(item))));
                         uniqueWordsInMessage.forEach(word => {
                             messages.add(new Message(word));
                         })
@@ -122,7 +126,7 @@
 
                 let emotesInAMessage = messageBody?.querySelectorAll("img.seventv-chat-emote")
                 if (emotesInAMessage) {
-                    let uniqueEmotesInAMessage = [...new Map(Array.from(emotesInAMessage).map(item => [item["currentSrc"], item])).values()].filter(item => !Config.bannedEmotes.includes(item.alt));
+                    let uniqueEmotesInAMessage = [...new Map(Array.from(emotesInAMessage).map(item => [item["currentSrc"], item])).values()].filter(item => !config.bannedEmotes.includes(item.alt));
                     uniqueEmotesInAMessage.forEach(emote => {
                         messages.add(new Message(emote.alt, emote.currentSrc, emote.srcset))
                     })
@@ -139,13 +143,13 @@
                 e.preventDefault()
             })
             root.innerHTML = `
-                <div id="noMessages" style="transition: display 125ms;" class="effortlesschatting-no-message">
+                <div id="noMessages" style="transition: display 125ms;" class="effortlesschatting-no-message" data-label="noMessages" data-label-type="main">
                     No Messages Were Found
                 </div>
                 <div class="effortlesschatting-messagebox-area hidden">
                 </div>
             `
-            if (Config.autoHide) {
+            if (config.autoHide) {
                 root.querySelector(".effortlesschatting-no-message").classList.add("hidden");
             }
             seventvSafeChatContainer.appendChild(root);
@@ -155,7 +159,7 @@
 
         #createContentNode() {
             let contentNode = document.createElement("div");
-            contentNode.style = `transition: background ${Config.messageClickAnimationTime}ms ease;`;
+            contentNode.style = `transition: background ${config.messageClickAnimationTime}ms ease;`;
             contentNode.classList.add("contentNode");
             contentNode.classList.add("effortlesschatting-messagebox")
             contentNode.classList.add("hidden");
@@ -176,7 +180,7 @@
                 contentNode.style.background = "var(--seventv-highlight-neutral-1)"
                 setTimeout(() => {
                     contentNode.style.background = ""
-                }, Config.messageClickAnimationTime);
+                }, config.messageClickAnimationTime);
 
             })
 
@@ -184,7 +188,7 @@
             let hasHeld = false;
             function whileHeld(currentTime) {
                 whileHeldId = requestAnimationFrame(whileHeld);
-                if (currentTime - startTime >= Config.requiredHoldTime) {
+                if (currentTime - startTime >= config.requiredHoldTime) {
                     stopHold();
                     hasHeld = true;
                     let message = null;
@@ -195,7 +199,7 @@
                     return;
                 }
                 else {
-                    contentNode.style.setProperty("transition", `background ${Config.requiredHoldTime}ms ease`)
+                    contentNode.style.setProperty("transition", `background ${config.requiredHoldTime}ms ease`)
                     contentNode.style.background = "var(--seventv-highlight-neutral-1)"
                 }
             }
@@ -211,7 +215,7 @@
                     cancelAnimationFrame(whileHeldId)
                     startTime = 0;
                     whileHeldId = null
-                    contentNode.style.setProperty("transition", `background ${Config.messageClickAnimationTime}ms ease`)
+                    contentNode.style.setProperty("transition", `background ${config.messageClickAnimationTime}ms ease`)
                     contentNode.style.background = ""
                 }
             }
@@ -223,7 +227,7 @@
 
         injectContentNodes() {
             let outerElement = document.querySelector(".effortlesschatting-messagebox-area");
-            for (let i = 0; i < Config.contentNodeAmount; i++) {
+            for (let i = 0; i < config.contentNodeAmount; i++) {
                 let contentNode = this.#createContentNode()
                 outerElement.appendChild(contentNode.node)
                 this.contentNodes.push(contentNode)
@@ -276,8 +280,6 @@
 
         getEditor() {
             let reactFiber = textbox[Object.keys(textbox).find(item => item.includes("reactFiber"))];
-
-            console.log("reactFiber ", reactFiber)
             while (reactFiber) {
                 if (reactFiber.memoizedProps && reactFiber.memoizedProps.editor) {
                     reactFiber = reactFiber.memoizedProps.editor;
@@ -355,14 +357,12 @@
         }
 
         static updateNodes() {
-            if(!domManager || domManager.contentNodes.length == 0)
-            {
+            if (!domManager || domManager.contentNodes.length == 0) {
                 return
             }
-            let topElements = messages.getTop(Config.contentNodeAmount);
-            console.log("current top ", topElements)
+            let topElements = messages.getTop(config.contentNodeAmount);
             let isAnyMessageFound = false;
-            for (let i = 0; i < Config.contentNodeAmount; i++) {
+            for (let i = 0; i < config.contentNodeAmount; i++) {
                 domManager.contentNodes[i].stopDisplayOn()
                 if (topElements[i] && topElements[i].text) {
                     domManager.contentNodes[i].displayOn(topElements[i])
@@ -374,7 +374,7 @@
                 document.querySelector(".effortlesschatting-messagebox-area").classList.remove("hidden");
             }
             else {
-                if (Config.autoHide) {
+                if (config.autoHide) {
                     document.querySelector(".effortlesschatting-no-message").classList.add("hidden");
                 }
                 else {
@@ -407,7 +407,7 @@
         }
     });
 
-    
+
     let domManager = new DomManager();
     await domManager.waitForSevenTV();
     let chatEntry = document.querySelector("#live-page-chat #seventv-message-container main.seventv-chat-list")
@@ -415,7 +415,6 @@
     let textbox = document.querySelector("[role=textbox]")
     let hasText = function () { return textbox.textContent !== "\ufeff" }
     let textBoxControllers = domManager.getEditor();
-    console.log(textBoxControllers)
     let sendMessage = domManager.getSendMessage();
     domManager.injectRoot();
     domManager.injectFlushButton();
@@ -426,13 +425,11 @@
     function checkInjection() {
 
         const observer = new MutationObserver(async function () {
-            console.log(domManager)
             if (domManager && document.querySelector(domManager.selectors.root) != null && document.querySelector(domManager.selectors.flush) != null && document.querySelectorAll(domManager.selectors.contentNodes).length != 0)
                 return
             
             observer.disconnect()
 
-            console.log("detected root disattachment")
             domManager = new DomManager();
             await domManager.waitForSevenTV();
             chatEntry = document.querySelector("#live-page-chat #seventv-message-container main.seventv-chat-list")
@@ -440,7 +437,6 @@
             textbox = document.querySelector("[role=textbox]")
             hasText = function () { return textbox.textContent !== "\ufeff" }
             textBoxControllers = domManager.getEditor();
-            console.log(textBoxControllers)
             sendMessage = domManager.getSendMessage();
             domManager.injectRoot();
             domManager.injectFlushButton();
@@ -488,30 +484,29 @@
 
     let emotes = {}
     function scrapeOnEvent(messageData) {
-        if ((!Config.scrapeMods && messageData.message.user.badges.moderator) || (!Config.scrapeVIPs && messageData.message.isVip) || (!Config.scrapeBots && messageData.message.user.badges.chatbot)) {
+        if ((!config.scrapeMods && messageData.message.user.badges.moderator) || (!config.scrapeVIPs && messageData.message.isVip) || (!config.scrapeBots && messageData.message.user.badges.chatbot)) {
             return;
         }
 
-        if (Config.scrapeOnlySubs) { //make sure chatbot is a actual thing
-            if (messageData.message.isSubscriber && (Number(messageData.message.user.badges.Subscriber) < Config.scrapeSubsWithMinimumMonths)) {
+        if (config.scrapeOnlySubs) { //make sure chatbot is a actual thing
+            if (messageData.message.isSubscriber && (Number(messageData.message.user.badges.Subscriber) < config.scrapeSubsWithMinimumMonths)) {
                 return
             }
         }
 
-        if (Config.bannedUsers.includes(messageData.message.user.userName)) {
+        if (config.bannedUsers.includes(messageData.message.user.userName)) {
             return
         }
 
-        let uniqueWordsInMessage = Array.from(new Set(messageData.message.body.trim().split(" ").filter(item => !Config.bannedWords.includes(item))))
-        console.log(uniqueWordsInMessage);
+        let uniqueWordsInMessage = Array.from(new Set(messageData.message.body.trim().split(" ").filter(item => !config.bannedWords.includes(item))))
         uniqueWordsInMessage.forEach(word => messages.add(new Message(word, "", emotes[word])));
     }
 
     function scannerMethod() {
-        if (Config.scannerMethod === 0) {
+        if (config.scannerMethod === "legacy") {
             chatListener.observe(chatEntry, { childList: true, subtree: false });
         }
-        if (Config.scannerMethod === 1) {
+        if (config.scannerMethod === "injection-without-emotes") {
             let startElement = document.querySelector(".chat-room__content");
             let startFiber = startElement[Object.keys(startElement).find(item => item.includes("reactFiber"))]
             let functionName = "onChatMessageEvent"
@@ -527,7 +522,7 @@
                 return onChatMessageEvent.apply(this, args)
             }
         }
-        if (Config.scannerMethod === 2) {
+        if (config.scannerMethod === "injection-with-emotes") {
             let startElement = document.querySelector(".chat-room__content");
             let startFiber = startElement[Object.keys(startElement).find(item => item.includes("reactFiber"))]
             let functionName = "onChatMessageEvent"
@@ -559,10 +554,10 @@
                 return insertBefore.apply(this, args);
             }
         }
-        if (Config.scannerMethod === 3) {
+        if (config.scannerMethod === 3) {
             //combined method to work with other extensions
         }
-        if (Config.scannerMethod === 4) {
+        if (config.scannerMethod === 4) {
             //"insert before" listener but listener gets activated by onChatMessageEvent
         }
     }
