@@ -169,20 +169,6 @@ import { defaultConfig, labels } from "../config.js";
                 const item = e.target.dataset.value;
                 currentConfig[id].delete(item)
                 await configAccess.setConfig(id, currentConfig[id])
-                list.addEventListener("click", async (e) => {
-                    if (!e.target.matches('button[data-value]')) return;
-                    const li = e.target.closest("li");
-
-                    li.classList.add("removing");
-
-                    li.addEventListener("transitionend", async () => {
-                        let currentConfig = await configAccess.currentConfig()
-                        const item = e.target.dataset.index.value;
-                        currentConfig[id].delete(item)
-                        await configAccess.setConfig(id, currentConfig[id])
-                        await renderBanned(list, id)
-                    });
-                }, { once: true });
                 await renderBanned(list, id);
             }
         });
@@ -202,7 +188,6 @@ import { defaultConfig, labels } from "../config.js";
         }
 
         currentConfig[id].forEach((item) => {
-            console.log(defaultConfig[id], item);
             if (defaultConfig[id].has(item)) {
                 return;
             }
