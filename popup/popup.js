@@ -94,8 +94,10 @@ import { defaultConfig, labels } from "../config.js";
             toggleDropdown(dropdown, btn, menu, false);
         });
 
-
+        
         document.addEventListener("click", () => {
+            if(!dropdown.classList.contains("open"))
+                return;
             toggleDropdown(dropdown, btn, menu, false);
         });
     })
@@ -158,13 +160,26 @@ import { defaultConfig, labels } from "../config.js";
             input.value = '';
             await renderBanned(list, id);
         });
-
+        
         list.addEventListener('click', async (e) => {
             let currentConfig = await configAccess.currentConfig()
             if (e.target.matches('button[data-index]')) {
                 const i = parseInt(e.target.dataset.index);
                 await configAccess.setConfig(id, currentConfig[id].filter((item, index) => index !== i))
-                list.addEventListener('transitionend', () => item.remove(), { once: true });
+                list.addEventListener("click", async (e) => { 
+                    if(!e.target.matches('button[data-index]')) return;
+
+                    const li = e.target.closest("li");
+                    
+                    li.classList.add("removing");
+
+                    li.addEventListener("transitionend", async () => {
+                        let currentConfig = await configAccess.currentConfig()
+                        const i = parseInt(e.target.dataset.index);
+                        await configAccess.setConfig(id, currentConfig[id].filter((item, index) => index !== i))
+                        await renderBanned(list, id)
+                    });
+                }, { once: true });
                 await renderBanned(list, id);
             }
         });
@@ -253,6 +268,4 @@ import { defaultConfig, labels } from "../config.js";
         await updateVisualStates();
         updateLabels(defaultConfig["language"])
     });
-
-
 })()
