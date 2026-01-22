@@ -114,10 +114,10 @@ import { labels } from "./config.js";
                 }
             }
 
-            if (!config.bannedUsers.includes(userName)) {
+            if (!config.bannedUsers.has(userName)) {
                 if (config.allowText) {
                     if (messageBody) {
-                        let uniqueWordsInMessage = Array.from(new Set(messageBody.innerText.split(" ").filter(item => !config.bannedWords.includes(item))));
+                        let uniqueWordsInMessage = Array.from(new Set(messageBody.innerText.split(" ").filter(item => !config.bannedWords.has(item))));
                         uniqueWordsInMessage.forEach(word => {
                             messages.add(new Message(word));
                         })
@@ -126,7 +126,7 @@ import { labels } from "./config.js";
 
                 let emotesInAMessage = messageBody?.querySelectorAll("img.seventv-chat-emote")
                 if (emotesInAMessage) {
-                    let uniqueEmotesInAMessage = [...new Map(Array.from(emotesInAMessage).map(item => [item["currentSrc"], item])).values()].filter(item => !config.bannedEmotes.includes(item.alt));
+                    let uniqueEmotesInAMessage = [...new Map(Array.from(emotesInAMessage).map(item => [item["currentSrc"], item])).values()].filter(item => !config.bannedEmotes.has(item.alt));
                     uniqueEmotesInAMessage.forEach(emote => {
                         messages.add(new Message(emote.alt, emote.currentSrc, emote.srcset))
                     })
@@ -494,11 +494,11 @@ import { labels } from "./config.js";
             }
         }
 
-        if (config.bannedUsers.includes(messageData.message.user.userName)) {
+        if (config.bannedUsers.has(messageData.message.user.userName)) {
             return
         }
 
-        let uniqueWordsInMessage = Array.from(new Set(messageData.message.body.trim().split(" ").filter(item => !config.bannedWords.includes(item))))
+        let uniqueWordsInMessage = Array.from(new Set(messageData.message.body.trim().split(" ").filter(item => !config.bannedWords.has(item))))
         uniqueWordsInMessage.forEach(word => messages.add(new Message(word, "", emotes[word])));
     }
 

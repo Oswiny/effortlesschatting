@@ -94,9 +94,9 @@ import { defaultConfig, labels } from "../config.js";
             toggleDropdown(dropdown, btn, menu, false);
         });
 
-        
+
         document.addEventListener("click", () => {
-            if(!dropdown.classList.contains("open"))
+            if (!dropdown.classList.contains("open"))
                 return;
             toggleDropdown(dropdown, btn, menu, false);
         });
@@ -155,30 +155,31 @@ import { defaultConfig, labels } from "../config.js";
             let currentConfig = await configAccess.currentConfig()
             const value = input.value.trim();
             if (!value) return;
-            if (currentConfig[id].includes(value)) {
+            if (currentConfig[id].has(value)) {
                 return alert('Already added!')
             };
-            await configAccess.setConfig(id, currentConfig[id].concat([value]))
+            await configAccess.setConfig(id, currentConfig[id].add(value))
             input.value = '';
             await renderBanned(list, id);
         });
-        
+
         list.addEventListener('click', async (e) => {
             let currentConfig = await configAccess.currentConfig()
-            if (e.target.matches('button[data-index]')) {
-                const i = parseInt(e.target.dataset.index);
-                await configAccess.setConfig(id, currentConfig[id].filter((item, index) => index !== i))
-                list.addEventListener("click", async (e) => { 
-                    if(!e.target.matches('button[data-index]')) return;
-
+            if (e.target.matches('button[data-value]')) {
+                const item = e.target.dataset.value;
+                currentConfig[id].delete(item)
+                await configAccess.setConfig(id, currentConfig[id])
+                list.addEventListener("click", async (e) => {
+                    if (!e.target.matches('button[data-value]')) return;
                     const li = e.target.closest("li");
-                    
+
                     li.classList.add("removing");
 
                     li.addEventListener("transitionend", async () => {
                         let currentConfig = await configAccess.currentConfig()
-                        const i = parseInt(e.target.dataset.index);
-                        await configAccess.setConfig(id, currentConfig[id].filter((item, index) => index !== i))
+                        const item = e.target.dataset.index.value;
+                        currentConfig[id].delete(item)
+                        await configAccess.setConfig(id, currentConfig[id])
                         await renderBanned(list, id)
                     });
                 }, { once: true });
@@ -200,8 +201,9 @@ import { defaultConfig, labels } from "../config.js";
             return;
         }
 
-        currentConfig[id].forEach((item, index) => {
-            if (defaultConfig[id].includes(item)) {
+        currentConfig[id].forEach((item) => {
+            console.log(defaultConfig[id], item);
+            if (defaultConfig[id].has(item)) {
                 return;
             }
             const li = document.createElement("li");
@@ -215,7 +217,7 @@ import { defaultConfig, labels } from "../config.js";
                 `;
             li.innerHTML = `
                 <span>${item}</span>
-                <button class="btn ghost" style="padding:4px 8px;font-size:12px;" data-index="${index}">Remove</button>
+                <button class="btn ghost" style="padding:4px 8px;font-size:12px;" data-value="${item}">Remove</button>
                 `;
             list.appendChild(li);
         })
