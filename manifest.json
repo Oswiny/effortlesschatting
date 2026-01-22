@@ -4,7 +4,13 @@
     "version": "0.0.1",
     "description": "Allows you to chat in twitch using only your mouse.",
     "icons": {
-        "48": "icons/"
+        "8": "logo/8/logo.png",
+        "16": "logo/16/logo.png",
+        "32": "logo/32/logo.png",
+        "48": "logo/48/logo.png",
+        "64": "logo/64/logo.png",
+        "128": "logo/128/logo.png",
+        "256": "logo/256/logo.png"
     },
     "permissions": [
         "activeTab",
