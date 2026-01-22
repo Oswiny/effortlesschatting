@@ -40,6 +40,8 @@ export async function updateConfig() {
 
 export async function sendUpdateConfigMessage() {
     const [tab] = await browser.tabs.query({ active: true, currentWindow: true });
+    const twitchRegex = /^https:\/\/www\.twitch\.tv\//;
+    if (!tab || !tab.url || !twitchRegex.test(tab.url)) return;
     await browser.tabs.sendMessage(tab.id, { type: "CONFIG_SYNC" });
 }
 

@@ -142,6 +142,8 @@ import { defaultConfig, labels } from "../config.js";
         })
     })
 
+
+    // should probably switch to set or a object since lookups will be faster
     let arrayBasedSettings = [...document.querySelectorAll(".subsection")]
     arrayBasedSettings.forEach(async (item) => {
         const id = item.id
