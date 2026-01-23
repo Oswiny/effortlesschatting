@@ -165,8 +165,6 @@ import { labels } from "./config.js";
             contentNode.classList.add("hidden");
             contentNode.innerHTML = `
             <img loading="lazy" decoding="async" class="effortlesschatting-message-img contentImg hidden" srcset="null">
-            <div class="effortlesschatting-message-text contentText hidden">
-            </div>
             `
 
             contentNode.addEventListener("click", (e) => {
@@ -193,7 +191,7 @@ import { labels } from "./config.js";
                     hasHeld = true;
                     let message = null;
                     function getMessage() {
-                        return contentNode.textContent;
+                        return contentNode.children[0].alt;
                     }
                     sendMessage(getMessage())
                     return;
@@ -334,7 +332,7 @@ import { labels } from "./config.js";
             for (let child of this.node.children) {
                 child.classList.add("hidden");
                 child.srcset = null;
-                child.innerText = null;
+                child.alt = null;
                 if (this.printWrapper) {
                     this.node.removeEventListener("click", this.printWrapper);
                     this.printWrapper = null;
@@ -344,9 +342,8 @@ import { labels } from "./config.js";
         }
 
         displayOn(message) {
-            let messageToAssociatedClass = message.srcset === "" ? "contentText" : "contentImg"
-            let associatedChild = this.node.querySelector(`.${messageToAssociatedClass}`)
-            associatedChild.innerText = message.text;
+            let associatedChild = this.node.querySelector(`.contentImg`)
+            associatedChild.alt = message.text;
             associatedChild.srcset = message.srcset;
             associatedChild.classList.remove("hidden")
             this.node.classList.remove("hidden")

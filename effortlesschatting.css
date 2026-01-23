@@ -70,14 +70,6 @@
     object-fit: contain;
 }
 
-.effortlesschatting-message-text {
-    font-weight: 900;
-    grid-column: 1;
-    grid-row: 1;
-    margin: auto;
-    object-fit: contain
-}
-
 /*
 .effortlesschatting-flush-button-outer {
     margin-left: auto;

@@ -25,9 +25,9 @@
         allowText: true,
         deleteAfterMs: 10000,
         contentNodeAmount: 5,
-        bannedWords: ["\n", "", "͏", "​", "‌", "‍", "﻿", "͏", "⁠", "⁣", "⁢", "⁤", "", "", "", "", "", "", "", "", "", "", ""],
-        bannedEmotes: [],
-        bannedUsers: [],
+        bannedWords: new Set(["\n", "", "͏", "​", "‌", "‍", "﻿", "͏", "⁠", "⁣", "⁢", "⁤", "", "", "", "", "", "", "", "", "", "", ""]),
+        bannedEmotes: new Set([]),
+        bannedUsers: new Set([]),
         scrapeBots: false,
         scrapeMods: false,
         scrapeVIPs: true,
@@ -41,6 +41,7 @@
         scannerMethod: "injection-with-emotes",
         language: "en",
     }
+
 
 
     window.addEventListener("message", async (event) => {
