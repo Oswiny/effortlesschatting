@@ -1,3 +1,17 @@
+:root {
+    --color-hinted-grey-1: #0e0e10;
+    --color-hinted-grey-14: #efeff1;
+    --font-base: "Inter", "Noto Sans Arabic", "Roobert", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --font-weight-normal: 400;
+    --line-height-body: 1.4;
+    --color-background-body: var(--color-hinted-grey-1);
+    --color-text-base: var(--color-hinted-grey-14);
+    --font-size-4: 1.4rem;
+    --font-size-base: var(--font-size-4);
+    --color-background-scrollbar: #fff6;
+    --color-background-scrollbar-track: #0000;
+}
+
 #effortlesschatting {
     display: flex;
     justify-content: center;
@@ -19,9 +33,9 @@
     column-gap: .5rem;
     width: 100%;
     box-sizing: border-box;
-    outline: .1rem solid var(--seventv-border-transparent-1);
+    outline: 0.1rem solid rgba(255, 255, 255, 0.102);
     border-radius: .25rem;
-    background: var(--seventv-background-transparent-1);
+    background: #171717;
     -webkit-backdrop-filter: blur(1.5rem);
     backdrop-filter: blur(1.5rem);
 }
@@ -37,8 +51,8 @@
     padding: 1rem;
     box-sizing: border-box;
     border-radius: 0.25rem;
-    outline: 0.1rem solid var(--seventv-border-transparent-1);
-    background: var(--seventv-background-transparent-1);
+    outline: 0.1rem solid #ffffff1a;
+    background: #171717;
     backdrop-filter: blur(1.5rem);
     font-weight: 900;
     white-space: nowrap;
@@ -109,7 +123,8 @@
 /* tooltip container */
 .effortlesschatting-flush-tooltip {
     position: absolute;
-    bottom: 138%; /* your Twitch-like offset */
+    bottom: 138%;
+    /* your Twitch-like offset */
     left: 50%;
     transform: translateX(-50%) translateY(5px);
     background-color: #fff;
@@ -131,12 +146,14 @@
     position: absolute;
     bottom: -3px;
     left: 50%;
-    display: block;               /* must have this */
+    display: block;
+    /* must have this */
     width: 6px;
     height: 6px;
     background-color: #fff;
-    transform: translateX(-50%) rotate(45deg); /* rotates into diamond */
-    box-shadow: rgba(0,0,0,0.1) -1px -1px 1px;
+    transform: translateX(-50%) rotate(45deg);
+    /* rotates into diamond */
+    box-shadow: rgba(0, 0, 0, 0.1) -1px -1px 1px;
     opacity: 0;
     transition: opacity 0.2s ease, transform 0.2s ease;
 }

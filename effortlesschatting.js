@@ -135,7 +135,7 @@ import { labels } from "./config.js";
         }
 
         injectRoot() {
-            let seventvSafeChatContainer = document.querySelector(".seventv-chat-input-container div.chat-input").childNodes[0]; //HERE
+            let seventvSafeChatContainer = document.querySelector("div.chat-input").childNodes[0];
 
             let root = document.createElement("div");
             root.classList.add("effortlesschatting-root")
@@ -175,7 +175,7 @@ import { labels } from "./config.js";
                     return;
                 }
 
-                contentNode.style.background = "var(--seventv-highlight-neutral-1)"
+                contentNode.style.background = "rgba(128, 128, 128, 0.231)"
                 setTimeout(() => {
                     contentNode.style.background = ""
                 }, config.messageClickAnimationTime);
@@ -198,7 +198,7 @@ import { labels } from "./config.js";
                 }
                 else {
                     contentNode.style.setProperty("transition", `background ${config.requiredHoldTime}ms ease`)
-                    contentNode.style.background = "var(--seventv-highlight-neutral-1)"
+                    contentNode.style.background = "rgba(128, 128, 128, 0.231)"
                 }
             }
             let startTime = 0
@@ -298,6 +298,25 @@ import { labels } from "./config.js";
                 reactFiber = reactFiber.return
             }
             return reactFiber;
+        }
+
+        checkSevenTVInstallation() {
+            const sevenTVScript = document.querySelector("#seventv-extension");
+            const sevenTVStylesheet = document.querySelector("#seventv-stylesheet");
+            return new Promise((resolve, reject) => {
+                let timeoutId = null;
+                const observer = new MutationObserver((mutations) => {
+                    timeoutId && clearTimeout(timeoutId);
+                    if (document.head.querySelector("#seventv-extension") != null && document.head.querySelector("#seventv-stylesheet") != null) {
+                        resolve(true)
+                    }
+
+                    timeoutId = setTimeout(() => {
+                        resolve(false)
+                    }, 5000);
+                })
+                observer.observe(document.head, { subtree: true, childList: true })
+            })
         }
 
         waitForSevenTV() {
@@ -406,8 +425,11 @@ import { labels } from "./config.js";
 
 
     let domManager = new DomManager();
-    await domManager.waitForSevenTV();
-    let chatEntry = document.querySelector("#live-page-chat #seventv-message-container main.seventv-chat-list")
+    let isSevenTvInstalled = await domManager.checkSevenTVInstallation()
+    console.log("Is SevenTV Installed: ", isSevenTvInstalled);
+    if (isSevenTvInstalled) {
+        await domManager.waitForSevenTV();
+    }
     let messages = new MessageList();
     let textbox = document.querySelector("[role=textbox]")
     let hasText = function () { return textbox.textContent !== "\ufeff" }
@@ -424,12 +446,15 @@ import { labels } from "./config.js";
         const observer = new MutationObserver(async function () {
             if (domManager && document.querySelector(domManager.selectors.root) != null && document.querySelector(domManager.selectors.flush) != null && document.querySelectorAll(domManager.selectors.contentNodes).length != 0)
                 return
-            
+
             observer.disconnect()
 
             domManager = new DomManager();
-            await domManager.waitForSevenTV();
-            chatEntry = document.querySelector("#live-page-chat #seventv-message-container main.seventv-chat-list")
+            isSevenTvInstalled = await domManager.checkSevenTVInstallation()
+            console.log("Is SevenTV Installed: ", isSevenTvInstalled);
+            if (isSevenTvInstalled) {
+                await domManager.waitForSevenTV();
+            }
             messages = new MessageList();
             textbox = document.querySelector("[role=textbox]")
             hasText = function () { return textbox.textContent !== "\ufeff" }
@@ -501,6 +526,7 @@ import { labels } from "./config.js";
 
     function scannerMethod() {
         if (config.scannerMethod === "legacy") {
+            chatEntry = document.querySelector("#live-page-chat #seventv-message-container main.seventv-chat-list")
             chatListener.observe(chatEntry, { childList: true, subtree: false });
         }
         if (config.scannerMethod === "injection-without-emotes") {
@@ -552,13 +578,38 @@ import { labels } from "./config.js";
             }
         }
         if (config.scannerMethod === 3) {
-            //combined method to work with other extensions
-        }
-        if (config.scannerMethod === 4) {
-            //"insert before" listener but listener gets activated by onChatMessageEvent
+            //will be modified later
+            let startElement = document.querySelector(".chat-room__content");
+            let startFiber = startElement[Object.keys(startElement).find(item => item.includes("reactFiber"))]
+            let functionName = "onChatMessageEvent"
+            let fiber = findPathToTarget(startFiber, functionName).fiber
+            let onChatMessageEvent = fiber.stateNode.onChatMessageEvent
+            let scanEmotesFlag = { flag: false, param: null };
+            fiber.stateNode.onChatMessageEvent = function (...args) {
+                scanEmotesFlag = { flag: true, param: args[0] };
+                return onChatMessageEvent.apply(this, args)
+            }
+            let insertBefore = Node.prototype.insertBefore
+            Node.prototype.insertBefore = function (...args) {
+                if (scanEmotesFlag.flag) {
+                    if (args[0].className === "seventv-user-message") {
+                        let emoteImages = args[0].querySelectorAll("img.seventv-chat-emote")
+                        emoteImages.forEach(emote => {
+                            if (!emotes[emote.alt]) {
+                                emotes[emote.alt] = emote.srcset;
+                            }
+                        })
+                        scanEmotesFlag.flag = false;
+                        scrapeOnEvent(scanEmotesFlag.param)
+                        scanEmotesFlag.param = null;
+                        if (!domManager.isMouseOver()) {
+                            ContentNode.updateNodes()
+                        }
+                    }
+                }
+                return insertBefore.apply(this, args);
+            }
         }
     }
     scannerMethod()
-
-    //
 })()
