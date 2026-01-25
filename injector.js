@@ -40,6 +40,7 @@
         messageClickAnimationTime: 125,
         scannerMethod: "injection-with-emotes",
         language: "en",
+        allowSelf: true,
     }
 
 

@@ -35,7 +35,7 @@
                 <div class="row">
                     <div class="control">
                         <div class="icon" aria-hidden>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round">
                                 <path d="M3 7V5a2 2 0 0 1 2-2h2" />
@@ -68,29 +68,49 @@
                         <div class="dropdown-menu" role="listbox" tabindex="-1">
                             <button type="button" class="dropdown-item" role="option" data-value="legacy"
                                 aria-selected="true">Legacy</button>
-                            <button type="button" class="dropdown-item" role="option" data-value="injection-without-emotes"
-                                aria-selected="false">Injection Based (Without Emotes)</button>
+                            <button type="button" class="dropdown-item" role="option"
+                                data-value="injection-without-emotes" aria-selected="false">Injection Based (Without
+                                Emotes)</button>
                             <button type="button" class="dropdown-item" role="option" data-value="injection-with-emotes"
                                 aria-selected="false">Injection Based (With Emotes)</button>
                         </div>
                     </div>
                 </div>
 
+                <div class="row">
+                    <div class="control">
+                        <div class="icon" aria-hidden>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="lucide lucide-user-icon lucide-user">
+                                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                                <circle cx="12" cy="7" r="4" />
+                            </svg>
+                        </div>
+                        <div class="meta" style="user-select: none;">
+                            <div class="meta-top">
+                                <b data-label="allowSelf" data-label-type="main">Allow Self Scan</b>
+                                <span class="reset-icon" title="Reset to default" data-target="allowSelf">&times;</span>
+                            </div>
+                            <span class="muted" data-label="allowSelf" data-label-type="alt">Allow scanner to scan self
+                                messages</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div tabindex="0" class="toggle" id="allowSelf" role="switch" aria-checked="false">
+                            <div class="knob"></div>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="row">
                     <div class="control">
                         <div class="icon" aria-hidden>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M4 8v-2a2 2 0 0 1 2 -2h2" />
-                                <path d="M4 16v2a2 2 0 0 0 2 2h2" />
-                                <path d="M16 4h2a2 2 0 0 1 2 2v2" />
-                                <path d="M16 20h2a2 2 0 0 0 2 -2v-2" />
-                                <path d="M8 12h8" />
-                                <path d="M8 9h6" />
-                                <path d="M8 15h4" />
+                            <svg clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2"
+                                width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+                                <path
+                                    d="m15 17.75c0-.414-.336-.75-.75-.75h-11.5c-.414 0-.75.336-.75.75s.336.75.75.75h11.5c.414 0 .75-.336.75-.75zm7-4c0-.414-.336-.75-.75-.75h-18.5c-.414 0-.75.336-.75.75s.336.75.75.75h18.5c.414 0 .75-.336.75-.75zm0-4c0-.414-.336-.75-.75-.75h-18.5c-.414 0-.75.336-.75.75s.336.75.75.75h18.5c.414 0 .75-.336.75-.75zm0-4c0-.414-.336-.75-.75-.75h-18.5c-.414 0-.75.336-.75.75s.336.75.75.75h18.5c.414 0 .75-.336.75-.75z"
+                                    fill-rule="nonzero" />
                             </svg>
                         </div>
                         <div class="meta" style="user-select: none;">
@@ -113,7 +133,7 @@
                     <div class="control">
                         <div class="icon" aria-hidden>
                             <!-- cloud -->
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                                 viewBox="0 0 24 24">
                                 <path d="M8.5 10A1.5 2 0 1 0 8.5 14 1.5 2 0 1 0 8.5 10z"></path>
                                 <path d="M15.5 10A1.5 2 0 1 0 15.5 14 1.5 2 0 1 0 15.5 10z"></path>
@@ -144,7 +164,7 @@
                     <div class="control">
                         <div class="icon" aria-hidden>
                             <!-- cloud -->
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                 <path fill="currentColor"
                                     d="M12 1L3 5v6c0 5.5 3.8 10.7 9 12c5.2-1.3 9-6.5 9-12V5zm3 14h-2v3h-2v-3H9v-2h2l-1-5.9l2-1.6l2 1.6l-1 5.9h2z" />
                             </svg>
@@ -171,8 +191,8 @@
                     <div class="control">
                         <div class="icon" aria-hidden>
                             <!-- cloud -->
-                            <svg width="20" height="20" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"
-                                fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+                            <svg width="24" height="24" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round">
                                 <polygon points="4.75 2.75,11.25 2.75,14.25 6.25,8 13.25,1.75 6.25" />
                             </svg>
@@ -199,8 +219,8 @@
                     <div class="control">
                         <div class="icon" aria-hidden>
                             <!-- cloud -->
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round">
                                 <path
                                     d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" />
@@ -227,8 +247,8 @@
                     <div class="control">
                         <div class="icon" aria-hidden>
                             <!-- type -->
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round">
                                 <path d="M8 2v4" />
                                 <path d="M16 2v4" />
@@ -260,8 +280,8 @@
                     <div class="control">
                         <div class="icon" aria-hidden>
                             <!-- cloud -->
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round">
                                 <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
                                 <path d="M3 3v5h5" />
@@ -365,8 +385,8 @@
                     <div class="control">
                         <div class="icon" aria-hidden>
                             <!-- cloud -->
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                 <path d="M4 10v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1 -1v-3" />
@@ -392,8 +412,8 @@
                     <div class="control">
                         <div class="icon" aria-hidden>
                             <!-- bell -->
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round">
                                 <polyline id="primary" points="15 10 17 12 15 14" />
                                 <polyline id="primary-2" data-name="primary" points="9 14 7 12 9 10" />
@@ -422,8 +442,8 @@
                     <div class="control">
                         <div class="icon" aria-hidden>
                             <!-- type -->
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round">
                                 <path
                                     d="M3.714 3.048a.498.498 0 0 0-.683.627l2.843 7.627a2 2 0 0 1 0 1.396l-2.842 7.627a.498.498 0 0 0 .682.627l18-8.5a.5.5 0 0 0 0-.904z" />
@@ -458,7 +478,7 @@
                     <div class="control">
                         <div class="icon" aria-hidden>
                             <!-- type -->
-                            <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 -960 960 960"
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 -960 960 960"
                                 fill="currentColor">
                                 <path
                                     d="M444-336v-216H336v-72h288v72H516v216h-72ZM48-48v-240h84v-384H48v-240h240v84h384v-84h240v240h-84v384h84v240H672v-84H288v84H48Zm240-156h384v-84h84v-384h-84v-84H288v84h-84v384h84v84ZM120-744h96v-96h-96v96Zm624 0h96v-96h-96v96Zm0 624h96v-96h-96v96Zm-624 0h96v-96h-96v96Zm96-624Zm528 0Zm0 528Zm-528 0Z" />
@@ -487,7 +507,7 @@
                     <div class="control">
                         <div class="icon" aria-hidden>
                             <!-- cloud -->
-                            <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 -960 960 960"
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 -960 960 960"
                                 fill="currentColor">
                                 <path
                                     d="M227-346q-16-30-25.5-63.5T192-480q0-121 85-206t209-82l-57-57 51-51 144 144-144 144-51-51 57-57q-94-2-158 62t-64 154q0 22 4 42t12 39l-53 53ZM480-84 336-228l144-144 51 51-57 57q94 2 158-62t64-154q0-22-4-42t-12-39l53-53q16 30 25.5 63.5T768-480q0 120-85 205.5T474-192l57 57-51 51Z" />
@@ -520,7 +540,7 @@
                     <div class="control">
                         <div class="icon" aria-hidden>
                             <!-- type -->
-                            <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 -960 960 960"
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 -960 960 960"
                                 fill="currentColor">
                                 <path
                                     d="m780-281-54-55q9-23 13.5-47t4.5-49q0-110-77-187t-187-77q-25 0-49 4.5T384-677l-54-55q35-19 73-27.5t77-8.5q58 0 112 19.5t99 55.5l52-52 50 51-51 52q36 45 55 99t19 111q0 39-9 77.5T780-281ZM516-545v-79h-72v7l72 72ZM768-89l-79-80q-45 36-98.5 54.5T480-96q-70 0-131-26.5t-106.5-72Q197-240 170.5-301T144-432q0-57 18.5-110.5T217-641L90-768l51-51 678 679-51 51Zm-288-79q43 0 83-13.5t74-39.5L269-589q-26 34-39.5 74T216-432q0 110 77 187t187 77ZM360-816v-72h240v72H360Zm93 411Zm102-102Z" />
@@ -549,8 +569,8 @@
                     <div class="control">
                         <div class="icon" aria-hidden>
                             <!-- cloud -->
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round">
                                 <path
                                     d="M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49" />
@@ -654,7 +674,7 @@
                 <div class="row">
                     <div class="control">
                         <div class="icon" aria-hidden>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round">
                                 <path d="m5 8 6 6" />
@@ -706,7 +726,7 @@
 
             <div class="social-row">
                 <a href="https://twitter.com/oswiny_" class="icon-btn" target="_blank" aria-label="Twitter">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 1200 1227" fill="none">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 1200 1227" fill="none">
                         <path
                             d="M714.163 519.284L1160.89 0H1055.03L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.866L515.491 750.218L842.672 1226.37H1200L714.137 519.284H714.163ZM569.165 687.828L521.697 619.934L144.011 79.6944H306.615L611.412 515.685L658.88 583.579L1055.08 1150.3H892.476L569.165 687.854V687.828Z"
                             fill="currentColor" />
@@ -714,7 +734,7 @@
                 </a>
 
                 <a href="https://github.com/oswiny" class="icon-btn" target="_blank" aria-label="GitHub">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 98 96">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 98 96">
                         <path fill-rule="evenodd" clip-rule="evenodd"
                             d="M48.854 0C21.839 0 0 22 0 49.217c0 21.756 13.993 40.172 33.405 46.69 2.427.49 3.316-1.059 3.316-2.362 0-1.141-.08-5.052-.08-9.127-13.59 2.934-16.42-5.867-16.42-5.867-2.184-5.704-5.42-7.17-5.42-7.17-4.448-3.015.324-3.015.324-3.015 4.934.326 7.523 5.052 7.523 5.052 4.367 7.496 11.404 5.378 14.235 4.074.404-3.178 1.699-5.378 3.074-6.6-10.839-1.141-22.243-5.378-22.243-24.283 0-5.378 1.94-9.778 5.014-13.2-.485-1.222-2.184-6.275.486-13.038 0 0 4.125-1.304 13.426 5.052a46.97 46.97 0 0 1 12.214-1.63c4.125 0 8.33.571 12.213 1.63 9.302-6.356 13.427-5.052 13.427-5.052 2.67 6.763.97 11.816.485 13.038 3.155 3.422 5.015 7.822 5.015 13.2 0 18.905-11.404 23.06-22.324 24.283 1.78 1.548 3.316 4.481 3.316 9.126 0 6.6-.08 11.897-.08 13.526 0 1.304.89 2.853 3.316 2.364 19.412-6.52 33.405-24.935 33.405-46.691C97.707 22 75.788 0 48.854 0z"
                             fill="currentColor" />
@@ -722,7 +742,7 @@
                 </a>
 
                 <a href="https://instagram.com/contactoswiny" class="icon-btn" target="_blank" aria-label="instagram">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 1000 1000">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 1000 1000">
                         <path fill="currentColor"
                             d="M295.42,6c-53.2,2.51-89.53,11-121.29,23.48-32.87,12.81-60.73,30-88.45,57.82S40.89,143,28.17,175.92c-12.31,31.83-20.65,68.19-23,121.42S2.3,367.68,2.56,503.46,3.42,656.26,6,709.6c2.54,53.19,11,89.51,23.48,121.28,12.83,32.87,30,60.72,57.83,88.45S143,964.09,176,976.83c31.8,12.29,68.17,20.67,121.39,23s70.35,2.87,206.09,2.61,152.83-.86,206.16-3.39S799.1,988,830.88,975.58c32.87-12.86,60.74-30,88.45-57.84S964.1,862,976.81,829.06c12.32-31.8,20.69-68.17,23-121.35,2.33-53.37,2.88-70.41,2.62-206.17s-.87-152.78-3.4-206.1-11-89.53-23.47-121.32c-12.85-32.87-30-60.7-57.82-88.45S862,40.87,829.07,28.19c-31.82-12.31-68.17-20.7-121.39-23S637.33,2.3,501.54,2.56,348.75,3.4,295.42,6m5.84,903.88c-48.75-2.12-75.22-10.22-92.86-17-23.36-9-40-19.88-57.58-37.29s-28.38-34.11-37.5-57.42c-6.85-17.64-15.1-44.08-17.38-92.83-2.48-52.69-3-68.51-3.29-202s.22-149.29,2.53-202c2.08-48.71,10.23-75.21,17-92.84,9-23.39,19.84-40,37.29-57.57s34.1-28.39,57.43-37.51c17.62-6.88,44.06-15.06,92.79-17.38,52.73-2.5,68.53-3,202-3.29s149.31.21,202.06,2.53c48.71,2.12,75.22,10.19,92.83,17,23.37,9,40,19.81,57.57,37.29s28.4,34.07,37.52,57.45c6.89,17.57,15.07,44,17.37,92.76,2.51,52.73,3.08,68.54,3.32,202s-.23,149.31-2.54,202c-2.13,48.75-10.21,75.23-17,92.89-9,23.35-19.85,40-37.31,57.56s-34.09,28.38-57.43,37.5c-17.6,6.87-44.07,15.07-92.76,17.39-52.73,2.48-68.53,3-202.05,3.29s-149.27-.25-202-2.53m407.6-674.61a60,60,0,1,0,59.88-60.1,60,60,0,0,0-59.88,60.1M245.77,503c.28,141.8,115.44,256.49,257.21,256.22S759.52,643.8,759.25,502,643.79,245.48,502,245.76,245.5,361.22,245.77,503m90.06-.18a166.67,166.67,0,1,1,167,166.34,166.65,166.65,0,0,1-167-166.34"
                             transform="translate(-2.5 -2.5)" />
@@ -731,8 +751,8 @@
 
                 <a href="mailto:contactoswiny@gmail.com" title="contactoswiny@gmail.com" class="icon-btn"
                     target="_blank" aria-label="mail">
-                    <svg width="18px" height="18px" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                        stroke-width="2.5" xmlns="http://www.w3.org/2000/svg">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        xmlns="http://www.w3.org/2000/svg">
                         <path d="M4 7.00005L10.2 11.65C11.2667 12.45 12.7333 12.45 13.8 11.65L20 7"
                             stroke-linecap="round" stroke-linejoin="round" />
                         <rect x="3" y="5" width="18" height="14" rx="2" stroke-linecap="round" />
@@ -741,7 +761,7 @@
 
                 <a href="https://discordapp.com/users/293055366688931850" title="oswiny" class="icon-btn"
                     target="_blank" aria-label="Discord">
-                    <svg width="18" height="18" viewBox="0 0 126.644 96" fill="currentColor"
+                    <svg width="24" height="24" viewBox="0 0 126.644 96" fill="currentColor"
                         xmlns="http://www.w3.org/2000/svg">
                         <path xmlns="http://www.w3.org/2000/svg" id="Discord-Symbol-White" class="cls-1"
                             d="M81.15,0c-1.2376,2.1973-2.3489,4.4704-3.3591,6.794-9.5975-1.4396-19.3718-1.4396-28.9945,0-.985-2.3236-2.1216-4.5967-3.3591-6.794-9.0166,1.5407-17.8059,4.2431-26.1405,8.0568C2.779,32.5304-1.6914,56.3725.5312,79.8863c9.6732,7.1476,20.5083,12.603,32.0505,16.0884,2.6014-3.4854,4.8998-7.1981,6.8698-11.0623-3.738-1.3891-7.3497-3.1318-10.8098-5.1523.9092-.6567,1.7932-1.3386,2.6519-1.9953,20.281,9.547,43.7696,9.547,64.0758,0,.8587.7072,1.7427,1.3891,2.6519,1.9953-3.4601,2.0457-7.0718,3.7632-10.835,5.1776,1.97,3.8642,4.2683,7.5769,6.8698,11.0623,11.5419-3.4854,22.3769-8.9156,32.0509-16.0631,2.626-27.2771-4.496-50.9172-18.817-71.8548C98.9811,4.2684,90.1918,1.5659,81.1752.0505l-.0252-.0505ZM42.2802,65.4144c-6.2383,0-11.4159-5.6575-11.4159-12.6535s4.9755-12.6788,11.3907-12.6788,11.5169,5.708,11.4159,12.6788c-.101,6.9708-5.026,12.6535-11.3907,12.6535ZM84.3576,65.4144c-6.2637,0-11.3907-5.6575-11.3907-12.6535s4.9755-12.6788,11.3907-12.6788,11.4917,5.708,11.3906,12.6788c-.101,6.9708-5.026,12.6535-11.3906,12.6535Z" />

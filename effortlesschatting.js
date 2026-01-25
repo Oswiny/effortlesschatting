@@ -536,7 +536,7 @@ import { labels } from "./config.js";
             let fiber = findPathToTarget(startFiber, functionName).fiber
             let onChatMessageEvent = fiber.stateNode.onChatMessageEvent
             fiber.stateNode.onChatMessageEvent = function (...args) {
-                if (args[0]) {
+                if (args[0] && (config.allowSelf || (!config.allowSelf && !args[0].sentByCurrentUser))) {
                     scrapeOnEvent(args[0])
                     if (!domManager.isMouseOver()) {
                         ContentNode.updateNodes()
@@ -553,40 +553,9 @@ import { labels } from "./config.js";
             let onChatMessageEvent = fiber.stateNode.onChatMessageEvent
             let scanEmotesFlag = { flag: false, param: null };
             fiber.stateNode.onChatMessageEvent = function (...args) {
-                scanEmotesFlag = { flag: true, param: args[0] };
-                return onChatMessageEvent.apply(this, args)
-            }
-            let insertBefore = Node.prototype.insertBefore
-            Node.prototype.insertBefore = function (...args) {
-                if (scanEmotesFlag.flag) {
-                    if (args[0].className === "seventv-user-message") {
-                        let emoteImages = args[0].querySelectorAll("img.seventv-chat-emote")
-                        emoteImages.forEach(emote => {
-                            if (!emotes[emote.alt]) {
-                                emotes[emote.alt] = emote.srcset;
-                            }
-                        })
-                        scanEmotesFlag.flag = false;
-                        scrapeOnEvent(scanEmotesFlag.param)
-                        scanEmotesFlag.param = null;
-                        if (!domManager.isMouseOver()) {
-                            ContentNode.updateNodes()
-                        }
-                    }
-                }
-                return insertBefore.apply(this, args);
-            }
-        }
-        if (config.scannerMethod === 3) {
-            //will be modified later
-            let startElement = document.querySelector(".chat-room__content");
-            let startFiber = startElement[Object.keys(startElement).find(item => item.includes("reactFiber"))]
-            let functionName = "onChatMessageEvent"
-            let fiber = findPathToTarget(startFiber, functionName).fiber
-            let onChatMessageEvent = fiber.stateNode.onChatMessageEvent
-            let scanEmotesFlag = { flag: false, param: null };
-            fiber.stateNode.onChatMessageEvent = function (...args) {
-                scanEmotesFlag = { flag: true, param: args[0] };
+                if (args[0] && (config.allowSelf || (!config.allowSelf && !args[0].sentByCurrentUser))) {
+                    scanEmotesFlag = { flag: true, param: args[0] };
+                };
                 return onChatMessageEvent.apply(this, args)
             }
             let insertBefore = Node.prototype.insertBefore

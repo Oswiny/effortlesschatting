@@ -20,6 +20,7 @@ export let defaultConfig = {
     messageClickAnimationTime: 125,
     scannerMethod: "injection-with-emotes",
     language: "en",
+    allowSelf: true,
 }
 
 export const labels = {
@@ -27,6 +28,10 @@ export const labels = {
         scannerMethod: {
             main: "Scanner Method",
             alt: "Choose what to use to scan and detect incoming messages"
+        },
+        allowSelf: {
+            main: "Allow Self Scan",
+            alt: "Allow scanner to scan self messages"
         },
         addButton: {
             main: "Add"
@@ -140,6 +145,10 @@ export const labels = {
             main: "Método de Escaneo",
             alt: "Elige qué usar para escanear y detectar mensajes entrantes"
         },
+        allowSelf: {
+            main: "Permitir autoescaneo",
+            alt: "Permite que el escáner escanee sus propios mensajes"
+        },
         addButton: {
             main: "Agregar"
         },
@@ -251,6 +260,10 @@ export const labels = {
         scannerMethod: {
             main: "スキャナー方式",
             alt: "メッセージを検出・スキャンする方法を選択します"
+        },
+        allowSelf: {
+            main: "セルフスキャンを許可",
+            alt: "スキャナーが自身のメッセージをスキャンすることを許可します"
         },
         addButton: {
             main: "追加"
@@ -364,6 +377,10 @@ export const labels = {
             main: "Scan-Methode",
             alt: "Wähle aus, wie eingehende Nachrichten gescannt und erkannt werden"
         },
+        allowSelf: {
+            main: "Selbst-Scan erlauben",
+            alt: "Erlaubt dem Scanner, eigene Nachrichten zu scannen"
+        },
         addButton: {
             main: "Hinzufügen"
         },
@@ -476,6 +493,10 @@ export const labels = {
             main: "Méthode de Scan",
             alt: "Choisissez comment scanner et détecter les messages entrants"
         },
+        allowSelf: {
+            main: "Autoriser l'auto-scan",
+            alt: "Autoriser le scanner à scanner ses propres messages"
+        },
         addButton: {
             main: "Ajouter"
         },
@@ -587,6 +608,10 @@ export const labels = {
         scannerMethod: {
             main: "스캐너 방식",
             alt: "들어오는 메시지를 감지하고 스캔할 방식을 선택합니다"
+        },
+        allowSelf: {
+            main: "셀프 스캔 허용",
+            alt: "스캐너가 자신의 메시지를 스캔하도록 허용합니다"
         },
         addButton: {
             main: "추가"
