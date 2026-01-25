@@ -4,9 +4,10 @@ import { defaultConfig, labels } from "../config.js";
 
 (async () => {
     let currentConfig = await configAccess.currentConfig();
-    let labelElements = document.querySelectorAll("[data-label]")
     async function updateLabels(language) {
+        const labelElements = document.querySelectorAll("[data-label]")
         labelElements.forEach((element) => {
+            element.hasAttribute("placeholder") && (element.placeholder = labels[language][element.getAttribute("data-label")][element.getAttribute("data-label-type")]);
             element.textContent = labels[language][element.getAttribute("data-label")][element.getAttribute("data-label-type")]
         })
     }
@@ -31,7 +32,7 @@ import { defaultConfig, labels } from "../config.js";
         })
         ranges.forEach((item) => {
             item.childNodes[1].value = String(currentConfig[item.childNodes[1].id])
-            item.childNodes[3].textContent = item.childNodes[1].id === "scrapeSubsWithMinimumMonths" ? item.childNodes[1].value + " months" : item.childNodes[1].id === "contentNodeAmount" ? item.childNodes[1].value : item.childNodes[1].value + " ms";
+            item.childNodes[3].textContent = item.childNodes[1].value;
             updateResetState(item.closest(".row").querySelector(".reset-icon"), defaultConfig[item.childNodes[1].id], currentConfig[item.childNodes[1].id])
 
         })
@@ -54,8 +55,10 @@ import { defaultConfig, labels } from "../config.js";
             if (isMatch) matchedItem = item
         })
 
+
         hidden.value = value;
         label.textContent = matchedItem.textContent;
+        label.setAttribute("data-label", value)
     }
 
     function toggleDropdown(dropdown, btn, menu, forcedState) {
@@ -133,11 +136,11 @@ import { defaultConfig, labels } from "../config.js";
         const span = item.childNodes[3];
         let currentConfig = await configAccess.currentConfig()
         input.value = String(currentConfig[id]);
-        span.textContent = input.id === "scrapeSubsWithMinimumMonths" ? input.value + " months" : input.id === "contentNodeAmount" ? input.value : input.value + " ms";
+        span.textContent = input.value;
         updateResetState(document.querySelector(`.reset-icon[data-target="${input.id}"]`), defaultConfig[input.id], currentConfig[input.id])
         input.addEventListener("input", () => {
             configAccess.setConfig(input.id, input.value)
-            span.textContent = input.id === "scrapeSubsWithMinimumMonths" ? input.value + " months" : input.id === "contentNodeAmount" ? input.value : input.value + " ms";
+            span.textContent = input.value;
             updateResetState(document.querySelector(`.reset-icon[data-target="${input.id}"]`), defaultConfig[input.id], input.value)
         })
     })
@@ -202,7 +205,7 @@ import { defaultConfig, labels } from "../config.js";
                 `;
             li.innerHTML = `
                 <span>${item}</span>
-                <button class="btn ghost" style="padding:4px 8px;font-size:12px;" data-value="${item}">Remove</button>
+                <button class="btn ghost" style="padding:4px 8px;font-size:12px;" data-value="${item}" data-label="remove" data-label-type="main"> ${labels[currentConfig["language"]]["remove"]["main"]}</button>
                 `;
             list.appendChild(li);
         })
@@ -232,7 +235,7 @@ import { defaultConfig, labels } from "../config.js";
             }
             else if (el.type === "range") {
                 el.value = String(defaultSetting);
-                el.parentElement.querySelector("span").textContent = el.id === "scrapeSubsWithMinimumMonths" ? el.value + " months" : el.id === "contentNodeAmount" ? el.value : el.value + " ms";
+                el.parentElement.querySelector("span").textContent = el.value;
             }
             else if (el.classList.contains("subsection")) {
                 await renderBanned(el.querySelector(".bannedList"), id)

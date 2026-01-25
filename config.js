@@ -137,6 +137,27 @@ export const labels = {
         },
         noMessages: {
             main: "No Messages Were Found"
+        },
+        month: {
+            main: "Month"
+        },
+        remove: {
+            main: "Remove"
+        },
+        enterItem: {
+            main: "Enter item..."
+        },
+        milliseconds: {
+            main: "Milliseconds"
+        },
+        legacy: {
+            main: "Legacy",
+        },
+        "injection-without-emotes": {
+            main: "Injection Based (Without Emotes)",
+        },
+        "injection-with-emotes": {
+            main: "Injection Based (With Emotes)",
         }
     },
 
@@ -253,6 +274,27 @@ export const labels = {
         },
         noMessages: {
             main: "No se encontraron mensajes"
+        },
+        month: {
+            main: "Mes"
+        },
+        remove: {
+            main: "Eliminar"
+        },
+        enterItem: {
+            main: "Ingresar artículo..."
+        },
+        milliseconds: {
+            main: "Milisegundos"
+        },
+        legacy: {
+            main: "Legado (Legacy)",
+        },
+        "injection-without-emotes": {
+            main: "Basado en inyección (sin emoticonos)",
+        },
+        "injection-with-emotes": {
+            main: "Basado en inyección (con emoticonos)",
         }
     },
 
@@ -369,6 +411,27 @@ export const labels = {
         },
         noMessages: {
             main: "メッセージが見つかりませんでした"
+        },
+        month: {
+            main: "ヶ月"
+        },
+        remove: {
+            main: "削除"
+        },
+        enterItem: {
+            main: "アイテムを入力..."
+        },
+        milliseconds: {
+            main: "ミリ秒"
+        },
+        legacy: {
+            main: "レガシー (Legacy)",
+        },
+        "injection-without-emotes": {
+            main: "インジェクション方式 (絵文字なし)",
+        },
+        "injection-with-emotes": {
+            main: "インジェクション方式 (絵文字あり)",
         }
     },
 
@@ -485,6 +548,27 @@ export const labels = {
         },
         noMessages: {
             main: "Keine Nachrichten gefunden"
+        },
+        month: {
+            main: "Monat"
+        },
+        remove: {
+            main: "Entfernen"
+        },
+        enterItem: {
+            main: "Element eingeben..."
+        },
+        milliseconds: {
+            main: "Millisekunden"
+        },
+        legacy: {
+            main: "Legacy (Veraltet)",
+        },
+        "injection-without-emotes": {
+            main: "Injektionsbasiert (Ohne Emotes)",
+        },
+        "injection-with-emotes": {
+            main: "Injektionsbasiert (Mit Emotes)",
         }
     },
 
@@ -601,6 +685,27 @@ export const labels = {
         },
         noMessages: {
             main: "Aucun message trouvé"
+        },
+        month: {
+            main: "Mois"
+        },
+        remove: {
+            main: "Supprimer"
+        },
+        enterItem: {
+            main: "Saisir l'article..."
+        },
+        milliseconds: {
+            main: "Millisecondes"
+        },
+        legacy: {
+            main: "Hérité (Legacy)",
+        },
+        "injection-without-emotes": {
+            main: "Basé sur l'injection (sans émoticônes)",
+        },
+        "injection-with-emotes": {
+            main: "Basé sur l'injection (avec émoticônes)",
         }
     },
 
@@ -717,6 +822,27 @@ export const labels = {
         },
         noMessages: {
             main: "메시지를 찾을 수 없습니다"
+        },
+        month: {
+            main: "개월"
+        },
+        remove: {
+            main: "삭제"
+        },
+        enterItem: {
+            main: "항목 입력..."
+        },
+        milliseconds: {
+            main: "밀리초"
+        },
+        legacy: {
+            main: "레거시 (Legacy)",
+        },
+        "injection-without-emotes": {
+            main: "인젝션 방식 (이모티콘 제외)",
+        },
+        "injection-with-emotes": {
+            main: "인젝션 방식 (이모티콘 포함)",
         }
     },
 }
