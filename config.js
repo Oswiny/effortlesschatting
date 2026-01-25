@@ -21,6 +21,7 @@ export let defaultConfig = {
     scannerMethod: "injection-with-emotes",
     language: "en",
     allowSelf: true,
+    seventvInstallationWaitTime: 2000,
 }
 
 export const labels = {
@@ -158,6 +159,10 @@ export const labels = {
         },
         "injection-with-emotes": {
             main: "Injection Based (With Emotes)",
+        },
+        seventvInstallationWaitTime: {
+            main: "7TV Installation Detection Time",
+            alt: "How long the app waits after the last detected change to the head element before deciding that loading is finished. Increase this if you see “7TV installation not detected”."
         }
     },
 
@@ -295,6 +300,10 @@ export const labels = {
         },
         "injection-with-emotes": {
             main: "Basado en inyección (con emoticonos)",
+        },
+        seventvInstallationWaitTime: {
+            main: "Tiempo de detección de instalación de 7TV",
+            alt: "Cuánto tiempo espera la aplicación tras el último cambio detectado en el elemento 'head' antes de decidir que la carga ha finalizado. Aumenta esto si ves el mensaje '7TV installation not detected'."
         }
     },
 
@@ -432,6 +441,10 @@ export const labels = {
         },
         "injection-with-emotes": {
             main: "インジェクション方式 (絵文字あり)",
+        },
+        seventvInstallationWaitTime: {
+            main: "7TV インストール検出時間",
+            alt: "ヘッド要素（head）の最終変更から、読み込み完了と判断するまでの待機時間です。「7TV installation not detected」と表示される場合は、この値を増やしてください。"
         }
     },
 
@@ -569,6 +582,10 @@ export const labels = {
         },
         "injection-with-emotes": {
             main: "Injektionsbasiert (Mit Emotes)",
+        },
+        seventvInstallationWaitTime: {
+            main: "7TV-Installationserkennungszeit",
+            alt: "Wie lange die App nach der letzten Änderung am Head-Element wartet, bevor sie entscheidet, dass das Laden abgeschlossen ist. Erhöhen Sie diesen Wert, wenn die Meldung „7TV installation not detected“ angezeigt wird."
         }
     },
 
@@ -706,6 +723,10 @@ export const labels = {
         },
         "injection-with-emotes": {
             main: "Basé sur l'injection (avec émoticônes)",
+        },
+        seventvInstallationWaitTime: {
+            main: "Temps de détection de l'installation 7TV",
+            alt: "Temps d'attente après le dernier changement détecté dans l'élément 'head' avant de décider que le chargement est terminé. Augmentez cette valeur si vous voyez '7TV installation not detected'."
         }
     },
 
@@ -843,6 +864,10 @@ export const labels = {
         },
         "injection-with-emotes": {
             main: "인젝션 방식 (이모티콘 포함)",
+        },
+        seventvInstallationWaitTime: {
+            main: "7TV 설치 감지 시간",
+            alt: "헤드(head) 요소의 마지막 변경 감지 후 로딩이 완료되었다고 판단할 때까지 대기하는 시간입니다. '7TV installation not detected'라는 메시지가 표시되면 이 값을 늘리세요."
         }
     },
 }

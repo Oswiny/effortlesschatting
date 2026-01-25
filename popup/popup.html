@@ -57,7 +57,7 @@
                     </div>
 
                     <div class="dropdown" data-dropdown id="scannerMethod" style="min-width:200px">
-                        <input type="hidden" id="scannerMethodValue" value="legacy"/>
+                        <input type="hidden" id="scannerMethodValue" value="legacy" />
 
                         <button type="button" class="dropdown-btn" aria-haspopup="listbox" aria-expanded="false">
                             <span class="dropdown-label" data-label="legacy" data-label-type="main">Legacy</span>
@@ -595,8 +595,7 @@
                         <div class="icon" aria-hidden>
                             <svg xmlns="http://www.w3.org/2000/svg" height="20px" width="20px" viewBox="0 -960 960 960"
                                 fill="currentColor">
-                                <path
-                                    d=" M216-144q-33 0-52.5-19.5T144-216v-528q0-33
+                                <path d=" M216-144q-33 0-52.5-19.5T144-216v-528q0-33
                                 19.5-52.5T216-816h192v672H216Zm276.21 0q-15.21 0-25.71-10.29t-10.5-25.5q0-15.21
                                 10.29-25.71t25.5-10.5q15.21 0 25.71 10.29t10.5 25.5q0 15.21-10.29 25.71t-25.5
                                 10.5Zm0-150q-15.21 0-25.71-10.29t-10.5-25.5q0-15.21 10.29-25.71t25.5-10.5q15.21 0 25.71
@@ -664,6 +663,45 @@
 
                 <h2 data-label="other" data-label-type="main">Other</h2>
                 <p class="desc" data-label="other" data-label-type="alt">Other settings</p>
+
+                <div class="row">
+                    <div class="control">
+                        <div class="icon" aria-hidden>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="lucide lucide-clock-fading-icon lucide-clock-fading">
+                                <path d="M12 2a10 10 0 0 1 7.38 16.75" />
+                                <path d="M12 6v6l4 2" />
+                                <path d="M2.5 8.875a10 10 0 0 0-.5 3" />
+                                <path d="M2.83 16a10 10 0 0 0 2.43 3.4" />
+                                <path d="M4.636 5.235a10 10 0 0 1 .891-.857" />
+                                <path d="M8.644 21.42a10 10 0 0 0 7.631-.38" />
+                            </svg>
+                        </div>
+                        <div class="meta">
+                            <div class="meta-top">
+                                <b data-label="seventvInstallationWaitTime" data-label-type="main">7TV Installation
+                                    Detection Time</b>
+                                <span class="reset-icon" title="Reset to default"
+                                    data-target="seventvInstallationWaitTime">&times;</span>
+                            </div>
+                            <span class="muted" data-label="seventvInstallationWaitTime" data-label-type="alt">
+                                How long the app waits after the last detected change to the head element before
+                                deciding that loading is finished. Increase this if you see “7TV installation not
+                                detected”.
+                            </span>
+                        </div>
+                    </div>
+                    <div style="min-width:200px">
+                        <div class="range-wrap">
+                            <input id="seventvInstallationWaitTime" type="range" min="500" max="8000" value="2000"
+                                step="250" style="width:100%">
+                            <span class="muted" style="margin-left:8px;"></span>
+                            <span class="muted" data-label="milliseconds" data-label-type="main">Milliseconds</span>
+                        </div>
+                    </div>
+                </div>
+
 
                 <div class="row">
                     <div class="control">

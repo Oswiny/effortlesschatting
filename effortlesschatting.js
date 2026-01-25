@@ -301,8 +301,6 @@ import { labels } from "./config.js";
         }
 
         checkSevenTVInstallation() {
-            const sevenTVScript = document.querySelector("#seventv-extension");
-            const sevenTVStylesheet = document.querySelector("#seventv-stylesheet");
             return new Promise((resolve, reject) => {
                 let timeoutId = null;
                 const observer = new MutationObserver((mutations) => {
@@ -313,7 +311,7 @@ import { labels } from "./config.js";
 
                     timeoutId = setTimeout(() => {
                         resolve(false)
-                    }, 5000);
+                    }, config.seventvInstallationWaitTime);
                 })
                 observer.observe(document.head, { subtree: true, childList: true })
             })
