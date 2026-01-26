@@ -56,6 +56,7 @@ import { labels } from "./config.js";
             foundMessage === undefined ? this.list.push(message) : foundMessage.createdAt = foundMessage.createdAt.concat(message.createdAt)
             message.timeoutIds.push(setTimeout(() => {
                 let foundMessage = messages.list.find(item => item.text === message.text)
+                if (!foundMessage) return
                 foundMessage.createdAt = foundMessage.createdAt.filter(item => item !== message.createdAt[0])
                 if (foundMessage.count === 0) {
                     messages.list = messages.list.filter(item => item !== foundMessage)
@@ -504,7 +505,9 @@ import { labels } from "./config.js";
 
     let emotes = {}
     function scrapeOnEvent(messageData) {
-        if ((!config.scrapeMods && messageData.message.user.badges.moderator) || (!config.scrapeVIPs && messageData.message.isVip) || (!config.scrapeBots && messageData.message.user.badges.chatbot)) {
+        if (messageData.message.user.badges && ((!config.scrapeMods && messageData.message.user.badges.moderator) ||
+            (!config.scrapeVIPs && messageData.message.isVip) ||
+            (!config.scrapeBots && messageData.message.user.badges.chatbot))) {
             return;
         }
 
@@ -558,7 +561,7 @@ import { labels } from "./config.js";
             }
             let insertBefore = Node.prototype.insertBefore
             Node.prototype.insertBefore = function (...args) {
-                if (scanEmotesFlag.flag) {
+                if (scanEmotesFlag.flag && scanEmotesFlag.param) {
                     if (args[0].className === "seventv-user-message") {
                         let emoteImages = args[0].querySelectorAll("img.seventv-chat-emote")
                         emoteImages.forEach(emote => {
@@ -573,6 +576,10 @@ import { labels } from "./config.js";
                             ContentNode.updateNodes()
                         }
                     }
+                }
+                else {
+                    scanEmotesFlag.flag = false;
+                    scanEmotesFlag.param = null
                 }
                 return insertBefore.apply(this, args);
             }
