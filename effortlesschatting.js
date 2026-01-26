@@ -7,18 +7,20 @@ import { labels } from "./config.js";
 
     window.addEventListener("message", (event) => {
         if (event.data?.source === "effortless" && event.data.type === "CONFIG_SYNC" && event.data.payload?.config) {
-            const previousConfig = config;
+            const oldConfig = config;
             config = event.data.payload.config;
             updateLabels(config);
-            updateScannerMethod(previousConfig.scannerMethod, config.scannerMethod)
+            updateScannerMethod(config.scannerMethod, oldConfig.scannerMethod)
         }
     });
 
-    function updateScannerMethod(previousScannerMethod, newScannerMethod) {
-        if (previousScannerMethod === newScannerMethod) {
+    function updateScannerMethod(newScannerMethod, oldScannerMethod = null) {
+        if (!isInjected || (oldScannerMethod !== null && oldScannerMethod === newScannerMethod)) {
             return
         }
-        //still working on
+        scannerMethod();
+        //still working on this
+        //needs resetting after changing config, will do it tomorrow
     }
 
     function updateLabels(config) {
@@ -85,11 +87,6 @@ import { labels } from "./config.js";
 
     class DomManager {
         constructor() {
-            this.selectors = {
-                root: ".effortlesschatting-root",
-                flush: ".effortlesschatting-flush-button-outer",
-                contentNodes: ".contentNode",
-            }
             this.root = null
             this.contentNodes = []
         }
@@ -333,13 +330,32 @@ import { labels } from "./config.js";
         }
 
         waitForSevenTV() {
-            let emotePicker = document.querySelector("[data-a-target='emote-picker-button']");
             function isLoaded() {
-                if (document.body.querySelector("#seventv-message-container") && document.body.querySelector("#seventv-settings-button") && document.body.querySelector("aside#live-page-chat[aria-hidden='false']") && document.body.querySelector("#WYSIWGChatInputEditor_SkipChat") && document.body.querySelector(".seventv-emote-menu-button") && document.querySelector(".seventv-chat-input-container div.chat-input").childNodes[0].classList.length > 0) {
+                if (document.body.querySelector("#seventv-message-container") && document.body.querySelector("#seventv-settings-button") && document.body.querySelector("aside#live-page-chat[aria-hidden='false']") && document.body.querySelector(".seventv-emote-menu-button") && document.querySelector(".seventv-chat-input-container div.chat-input").childNodes[0].classList.length > 0) {
                     return true
                 }
                 return false
             }
+
+            return new Promise((resolve, reject) => {
+                let observer = new MutationObserver((mutations) => {
+                    let loadResult = isLoaded();
+                    if (loadResult) {
+                        observer.disconnect();
+                        resolve(loadResult);
+                    }
+                });
+                observer.observe(document.body, { attributes: true, subtree: true, childList: true })
+            })
+        }
+
+        waitForTwitch() {
+            function isLoaded() {
+                if (document.body.querySelector("[role=textbox]") && document.body.querySelector("#WYSIWGChatInputEditor_SkipChat")){
+                    return true
+                }
+                return false
+            } 
 
             return new Promise((resolve, reject) => {
                 let observer = new MutationObserver((mutations) => {
@@ -437,12 +453,12 @@ import { labels } from "./config.js";
     });
 
 
-    let domManager;
-    let isSevenTvInstalled;
-    let messages;
-    let textbox;
-    let textBoxControllers;
-    let sendMessage;
+    let domManager = null;
+    let isSevenTvInstalled = null;
+    let messages = null;
+    let textbox = null;
+    let textBoxControllers = null;
+    let sendMessage = null;
     let isInjected = false;
 
     //if for some reason chat box gets removed we inject it
@@ -451,20 +467,19 @@ import { labels } from "./config.js";
             const isChannel = /^https?:\/\/www\.twitch\.tv\/[a-zA-Z0-9_]+$/.test(window.location.href);
 
             if (!isChannel) return;
-            if (!domManager) return;
 
-            const root = document.querySelector(domManager.selectors.root);
-            const flush = document.querySelector(domManager.selectors.flush);
-            const contentNodes = document.querySelectorAll(domManager.selectors.contentNodes);
+            const root = document.querySelector(".effortlesschatting-root");
+            const flush = document.querySelector(".effortlesschatting-flush-button-outer");
+            const contentNodes = document.querySelectorAll(".contentNode");
 
-            if (root && flush && contentNodes.length !== 0) {
-                console.log("not injecting");
+            if (domManager && root && flush && contentNodes.length !== 0) {
+                return
             }
 
             //we have to remove all elements to prevent duplicates
             if (root) root.remove()
             if (flush) flush.remove()
-            if (contentNodesCount.length !== 0) contentNodes.forEach(contentNode => contentNode.remove())
+            if (contentNodes.length !== 0) contentNodes.forEach(contentNode => contentNode.remove())
 
             observer.disconnect()
             console.log("starting inject process")
@@ -474,6 +489,7 @@ import { labels } from "./config.js";
             if (isSevenTvInstalled) {
                 await domManager.waitForSevenTV();
             }
+            await domManager.waitForTwitch();
             messages = new MessageList();
             textbox = document.querySelector("[role=textbox]")
             textBoxControllers = domManager.getEditor();
@@ -483,6 +499,7 @@ import { labels } from "./config.js";
             domManager.injectContentNodes();
             //domManager.scrapeAlreadySent();
             isInjected = true;
+            updateScannerMethod();
             observer.observe(document, { childList: true, subtree: true })
         })
 
@@ -604,9 +621,4 @@ import { labels } from "./config.js";
             }
         }
     }
-    if (isInjected)
-    {
-        scannerMethod();
-    }
-
 })()
