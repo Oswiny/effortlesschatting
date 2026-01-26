@@ -7,10 +7,19 @@ import { labels } from "./config.js";
 
     window.addEventListener("message", (event) => {
         if (event.data?.source === "effortless" && event.data.type === "CONFIG_SYNC" && event.data.payload?.config) {
+            const previousConfig = config;
             config = event.data.payload.config;
             updateLabels(config);
+            updateScannerMethod(previousConfig.scannerMethod, config.scannerMethod)
         }
     });
+
+    function updateScannerMethod(previousScannerMethod, newScannerMethod) {
+        if (previousScannerMethod === newScannerMethod) {
+            return
+        }
+        //still working on
+    }
 
     function updateLabels(config) {
         document.querySelectorAll("[data-label]").forEach(element => {
@@ -35,7 +44,7 @@ import { labels } from "./config.js";
                 textBoxControllers.select(textBoxControllers.range(textBoxControllers.point([0], { edge: config.defaultOffsetPosition })))
             }
             const offset = textBoxControllers.selection.focus.offset;
-            if (config.autoSpace && hasText()) {
+            if (config.autoSpace && domManager.hasText()) {
                 if (offset - 1 > 0 && textbox.textContent[offset - 1] !== " ") {
                     text = " " + text;
                 }
@@ -84,6 +93,11 @@ import { labels } from "./config.js";
             this.root = null
             this.contentNodes = []
         }
+
+        hasText() {
+            return textbox.textContent !== "\ufeff"
+        }
+
 
         scrapeAlreadySent() {
             if (config.scrapeAlreadySentMessages) {
@@ -423,31 +437,37 @@ import { labels } from "./config.js";
     });
 
 
-    let domManager = new DomManager();
-    let isSevenTvInstalled = await domManager.checkSevenTVInstallation()
-    console.log("Is SevenTV Installed: ", isSevenTvInstalled);
-    if (isSevenTvInstalled) {
-        await domManager.waitForSevenTV();
-    }
-    let messages = new MessageList();
-    let textbox = document.querySelector("[role=textbox]")
-    let hasText = function () { return textbox.textContent !== "\ufeff" }
-    let textBoxControllers = domManager.getEditor();
-    let sendMessage = domManager.getSendMessage();
-    domManager.injectRoot();
-    domManager.injectFlushButton();
-    domManager.injectContentNodes();
-    //domManager.scrapeAlreadySent();
+    let domManager;
+    let isSevenTvInstalled;
+    let messages;
+    let textbox;
+    let textBoxControllers;
+    let sendMessage;
+    let isInjected = false;
 
     //if for some reason chat box gets removed we inject it
     function checkInjection() {
-
         const observer = new MutationObserver(async function () {
-            if (domManager && document.querySelector(domManager.selectors.root) != null && document.querySelector(domManager.selectors.flush) != null && document.querySelectorAll(domManager.selectors.contentNodes).length != 0)
-                return
+            const isChannel = /^https?:\/\/www\.twitch\.tv\/[a-zA-Z0-9_]+$/.test(window.location.href);
+
+            if (!isChannel) return;
+            if (!domManager) return;
+
+            const root = document.querySelector(domManager.selectors.root);
+            const flush = document.querySelector(domManager.selectors.flush);
+            const contentNodes = document.querySelectorAll(domManager.selectors.contentNodes);
+
+            if (root && flush && contentNodes.length !== 0) {
+                console.log("not injecting");
+            }
+
+            //we have to remove all elements to prevent duplicates
+            if (root) root.remove()
+            if (flush) flush.remove()
+            if (contentNodesCount.length !== 0) contentNodes.forEach(contentNode => contentNode.remove())
 
             observer.disconnect()
-
+            console.log("starting inject process")
             domManager = new DomManager();
             isSevenTvInstalled = await domManager.checkSevenTVInstallation()
             console.log("Is SevenTV Installed: ", isSevenTvInstalled);
@@ -456,20 +476,18 @@ import { labels } from "./config.js";
             }
             messages = new MessageList();
             textbox = document.querySelector("[role=textbox]")
-            hasText = function () { return textbox.textContent !== "\ufeff" }
             textBoxControllers = domManager.getEditor();
             sendMessage = domManager.getSendMessage();
             domManager.injectRoot();
             domManager.injectFlushButton();
             domManager.injectContentNodes();
             //domManager.scrapeAlreadySent();
-
+            isInjected = true;
             observer.observe(document, { childList: true, subtree: true })
         })
 
         observer.observe(document, { childList: true, subtree: true });
     }
-
     checkInjection();
 
     function findPathToTarget(startFiber, functionName) {
@@ -510,6 +528,7 @@ import { labels } from "./config.js";
             (!config.scrapeBots && messageData.message.user.badges.chatbot))) {
             return;
         }
+        if (!messages) return
 
         if (config.scrapeOnlySubs) { //make sure chatbot is a actual thing
             if (messageData.message.isSubscriber && (Number(messageData.message.user.badges.Subscriber) < config.scrapeSubsWithMinimumMonths)) {
@@ -585,5 +604,9 @@ import { labels } from "./config.js";
             }
         }
     }
-    scannerMethod()
+    if (isInjected)
+    {
+        scannerMethod();
+    }
+
 })()
