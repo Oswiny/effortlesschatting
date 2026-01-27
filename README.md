@@ -1,0 +1,1 @@
+Core functionality is mostly complete, but the code is messy and undocumented.

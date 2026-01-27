@@ -1,593 +1,504 @@
 <!doctype html>
 <html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>Extension — Settings</title>
+        <link rel="stylesheet" href="popup.css" />
+    </head>
 
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Extension — Settings</title>
-    <link rel="stylesheet" href="popup.css" />
-</head>
-
-<body>
-    <div class="wrapper">
-        <header>
-            <div class="title">
-                <div class="logo">
-                    <img src="../logo/48/logo.png" alt="Effortless Chatting Logo" width="48" height="48">
-                </div>
-                <div>
-                    <h1 data-label="mainTag" data-label-type="main">Effortless Chatting</h1>
-                    <p class="lead" data-label="mainTag" data-label-type="alt">Settings</p>
-                </div>
-            </div>
-            <div style="display:flex;gap:10px;align-items:center">
-                <button class="btn ghost" id="resetButton" data-label="resetButton" , data-label-type="main">Reset
-                    All</button>
-                <button class="btn primary" id="closeButton">&times;</button>
-            </div>
-        </header>
-
-        <main>
-            <section class="card section">
-                <h2 data-label="setScanner" data-label-type="main">Scanner settings</h2>
-                <p class="desc" data-label="setScanner" data-label-type="alt">Adjust scanner behavior</p>
-
-                <div class="row">
-                    <div class="control">
-                        <div class="icon" aria-hidden>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <path d="M3 7V5a2 2 0 0 1 2-2h2" />
-                                <path d="M17 3h2a2 2 0 0 1 2 2v2" />
-                                <path d="M21 17v2a2 2 0 0 1-2 2h-2" />
-                                <path d="M7 21H5a2 2 0 0 1-2-2v-2" />
-                            </svg>
-                        </div>
-
-                        <div class="meta">
-                            <div class="meta-top">
-                                <b data-label="scannerMethod" data-label-type="main">Scanner Method</b>
-                                <span class="reset-icon" title="Reset to default"
-                                    data-target="scannerMethod">&times;</span>
-                            </div>
-                            <span class="muted" data-label="scannerMethod" data-label-type="alt">Choose the method for
-                                detecting incoming messages</span>
-                        </div>
-                    </div>
-
-                    <div class="dropdown" data-dropdown id="scannerMethod" style="min-width:200px">
-                        <input type="hidden" id="scannerMethodValue" value="legacy" />
-
-                        <button type="button" class="dropdown-btn" aria-haspopup="listbox" aria-expanded="false">
-                            <span class="dropdown-label" data-label="legacy" data-label-type="main">Legacy</span>
-                            <span class="dropdown-caret" style="margin-left: 8px;" aria-hidden>▾</span>
-                        </button>
-
-                        <div class="dropdown-menu" role="listbox" tabindex="-1">
-                            <button type="button" class="dropdown-item" role="option" data-value="legacy"
-                                aria-selected="true" data-label="legacy" data-label-type="main">Legacy</button>
-                            <button type="button" class="dropdown-item" role="option"
-                                data-value="injection-without-emotes" aria-selected="false"
-                                data-label="injection-without-emotes" data-label-type="main">Injection Based (Without
-                                Emotes)</button>
-                            <button type="button" class="dropdown-item" role="option" data-value="injection-with-emotes"
-                                aria-selected="false" data-label="injection-with-emotes"
-                                data-label-type="main">Injection Based (With Emotes)</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="control">
-                        <div class="icon" aria-hidden>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="lucide lucide-user-icon lucide-user">
-                                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
-                                <circle cx="12" cy="7" r="4" />
-                            </svg>
-                        </div>
-                        <div class="meta" style="user-select: none;">
-                            <div class="meta-top">
-                                <b data-label="allowSelf" data-label-type="main">Allow Self Scan</b>
-                                <span class="reset-icon" title="Reset to default" data-target="allowSelf">&times;</span>
-                            </div>
-                            <span class="muted" data-label="allowSelf" data-label-type="alt">Allow the scanner to detect
-                                your own messages</span>
-                        </div>
+    <body>
+        <div class="wrapper">
+            <header>
+                <div class="title">
+                    <div class="logo">
+                        <img src="../logo/48/logo.png" alt="Effortless Chatting Logo" width="48" height="48" />
                     </div>
                     <div>
-                        <div tabindex="0" class="toggle" id="allowSelf" role="switch" aria-checked="false">
-                            <div class="knob"></div>
-                        </div>
+                        <h1 data-label="mainTag" data-label-type="main">Effortless Chatting</h1>
+                        <p class="lead" data-label="mainTag" data-label-type="alt">Settings</p>
                     </div>
                 </div>
-
-                <div class="row">
-                    <div class="control">
-                        <div class="icon" aria-hidden>
-                            <svg clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2"
-                                width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
-                                fill="currentColor">
-                                <path
-                                    d="m15 17.75c0-.414-.336-.75-.75-.75h-11.5c-.414 0-.75.336-.75.75s.336.75.75.75h11.5c.414 0 .75-.336.75-.75zm7-4c0-.414-.336-.75-.75-.75h-18.5c-.414 0-.75.336-.75.75s.336.75.75.75h18.5c.414 0 .75-.336.75-.75zm0-4c0-.414-.336-.75-.75-.75h-18.5c-.414 0-.75.336-.75.75s.336.75.75.75h18.5c.414 0 .75-.336.75-.75zm0-4c0-.414-.336-.75-.75-.75h-18.5c-.414 0-.75.336-.75.75s.336.75.75.75h18.5c.414 0 .75-.336.75-.75z"
-                                    fill-rule="nonzero" />
-                            </svg>
-                        </div>
-                        <div class="meta" style="user-select: none;">
-                            <div class="meta-top">
-                                <b data-label="allowText" data-label-type="main">Allow Text</b>
-                                <span class="reset-icon" title="Reset to default" data-target="allowText">&times;</span>
-                            </div>
-                            <span class="muted" data-label="allowText" data-label-type="alt">Allow scanning of text
-                                messages</span>
-                        </div>
+                <div style="display: flex; gap: 10px; align-items: center">
+                    <div id="twitch" class="status-pill">
+                        <span class="status-dot red"></span>
+                        Twitch
                     </div>
-                    <div>
-                        <div tabindex="0" class="toggle" id="allowText" role="switch" aria-checked="false">
-                            <div class="knob"></div>
-                        </div>
+                    <!--
+                    <div id="seventv" class="status-pill">
+                        <span class="status-dot red"></span>
+                        7tv
                     </div>
+                    -->
+                    <button class="btn ghost" id="resetButton" data-label="resetButton" , data-label-type="main">Reset All</button>
+                    <button class="btn primary" id="closeButton">&times;</button>
                 </div>
+            </header>
 
-                <div class="row">
-                    <div class="control">
-                        <div class="icon" aria-hidden>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                                viewBox="0 0 24 24">
-                                <path d="M8.5 10A1.5 2 0 1 0 8.5 14 1.5 2 0 1 0 8.5 10z"></path>
-                                <path d="M15.5 10A1.5 2 0 1 0 15.5 14 1.5 2 0 1 0 15.5 10z"></path>
-                                <path d="M8 16H16V18H8z"></path>
-                                <path
-                                    d="m21,11v-3c0-1.1-.9-2-2-2h-6v-1.39c.3-.27.5-.67.5-1.11,0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5,1.5c0,.44.2.84.5,1.11v1.39h-6c-1.1,0-2,.9-2,2v3c-.55,0-1,.45-1,1v4c0,.55.45,1,1,1v3c0,1.1.9,2,2,2h14c1.1,0,2-.9,2-2v-3c.55,0,1-.45,1-1v-4c0-.55-.45-1-1-1ZM5,20v-12h14v4s0,0,0,0v4s0,0,0,0v4s-14,0-14,0Z">
-                                </path>
-                            </svg>
-                        </div>
-                        <div class="meta">
-                            <div class="meta-top">
-                                <b data-label="scrapeBots" data-label-type="main">Allow Bots</b>
-                                <span class="reset-icon" title="Reset to default"
-                                    data-target="scrapeBots">&times;</span>
+            <main>
+                <section class="card section">
+                    <h2 data-label="setScanner" data-label-type="main">Scanner settings</h2>
+                    <p class="desc" data-label="setScanner" data-label-type="alt">Adjust scanner behavior</p>
+
+                    <div class="row">
+                        <div class="control">
+                            <div class="icon" aria-hidden>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M3 7V5a2 2 0 0 1 2-2h2" />
+                                    <path d="M17 3h2a2 2 0 0 1 2 2v2" />
+                                    <path d="M21 17v2a2 2 0 0 1-2 2h-2" />
+                                    <path d="M7 21H5a2 2 0 0 1-2-2v-2" />
+                                </svg>
                             </div>
-                            <span class="muted" data-label="scrapeBots" data-label-type="alt">Allow scanning messages
-                                from bots</span>
-                        </div>
-                    </div>
-                    <div>
-                        <div tabindex="0" class="toggle" id="scrapeBots" role="switch" aria-checked="false">
-                            <div class="knob"></div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="row">
-                    <div class="control">
-                        <div class="icon" aria-hidden>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                <path fill="currentColor"
-                                    d="M12 1L3 5v6c0 5.5 3.8 10.7 9 12c5.2-1.3 9-6.5 9-12V5zm3 14h-2v3h-2v-3H9v-2h2l-1-5.9l2-1.6l2 1.6l-1 5.9h2z" />
-                            </svg>
-                        </div>
-                        <div class="meta">
-                            <div class="meta-top">
-                                <b data-label="scrapeMods" data-label-type="main">Allow Mods</b>
-                                <span class="reset-icon" title="Reset to default"
-                                    data-target="scrapeMods">&times;</span>
-
+                            <div class="meta">
+                                <div class="meta-top">
+                                    <b data-label="scannerMethod" data-label-type="main">Scanner Method</b>
+                                    <span class="reset-icon" title="Reset to default" data-target="scannerMethod">&times;</span>
+                                </div>
+                                <span class="muted" data-label="scannerMethod" data-label-type="alt">Choose the method for detecting incoming messages</span>
                             </div>
-                            <span class="muted" data-label="scrapeMods" data-label-type="alt">Allow scanning messages
-                                from moderators</span>
                         </div>
-                    </div>
-                    <div>
-                        <div tabindex="0" class="toggle" id="scrapeMods" role="switch" aria-checked="false">
-                            <div class="knob"></div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="row">
-                    <div class="control">
-                        <div class="icon" aria-hidden>
-                            <svg width="24" height="24" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <polygon points="4.75 2.75,11.25 2.75,14.25 6.25,8 13.25,1.75 6.25" />
-                            </svg>
-                        </div>
-                        <div class="meta">
-                            <div class="meta-top">
-                                <b data-label="scrapeVIPs" data-label-type="main">Allow VIPs</b>
-                                <span class="reset-icon" title="Reset to default"
-                                    data-target="scrapeVIPs">&times;</span>
+                        <div class="dropdown" data-dropdown id="scannerMethod" style="min-width: 200px">
+                            <input type="hidden" id="scannerMethodValue" value="legacy" />
 
+                            <button type="button" class="dropdown-btn" aria-haspopup="listbox" aria-expanded="false">
+                                <span class="dropdown-label" data-label="legacy" data-label-type="main">Legacy</span>
+                                <span class="dropdown-caret" style="margin-left: 8px" aria-hidden>▾</span>
+                            </button>
+
+                            <div class="dropdown-menu" role="listbox" tabindex="-1">
+                                <button type="button" class="dropdown-item" role="option" data-value="legacy" aria-selected="true" data-label="legacy" data-label-type="main">Legacy</button>
+                                <button type="button" class="dropdown-item" role="option" data-value="injection-without-emotes" aria-selected="false" data-label="injection-without-emotes" data-label-type="main">Injection Based (Without Emotes)</button>
+                                <button type="button" class="dropdown-item" role="option" data-value="injection-with-emotes" aria-selected="false" data-label="injection-with-emotes" data-label-type="main">Injection Based (With Emotes)</button>
                             </div>
-                            <span class="muted" data-label="scrapeVIPs" data-label-type="alt">Allow scanning messages
-                                from VIPs</span>
                         </div>
                     </div>
-                    <div>
-                        <div tabindex="0" class="toggle" id="scrapeVIPs" role="switch" aria-checked="false">
-                            <div class="knob"></div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="row">
-                    <div class="control">
-                        <div class="icon" aria-hidden>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <path
-                                    d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" />
-                            </svg>
-                        </div>
-                        <div class="meta">
-                            <div class="meta-top">
-                                <b data-label="scrapeOnlySubs" data-label-type="main">Allow Only Subscribers</b>
-                                <span class="reset-icon" title="Reset to default"
-                                    data-target="scrapeOnlySubs">&times;</span>
+                    <div class="row">
+                        <div class="control">
+                            <div class="icon" aria-hidden>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-icon lucide-user">
+                                    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                                    <circle cx="12" cy="7" r="4" />
+                                </svg>
                             </div>
-                            <span class="muted" data-label="scrapeOnlySubs" data-label-type="alt">Only scan messages
-                                from subscribed users</span>
-                        </div>
-                    </div>
-                    <div>
-                        <div tabindex="0" class="toggle" id="scrapeOnlySubs" role="switch" aria-checked="false">
-                            <div class="knob"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="control">
-                        <div class="icon" aria-hidden>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <path d="M8 2v4" />
-                                <path d="M16 2v4" />
-                                <rect width="18" height="18" x="3" y="4" rx="2" />
-                                <path d="M3 10h18" />
-                            </svg>
-                        </div>
-                        <div class="meta">
-                            <div class="meta-top">
-                                <b data-label="scrapeSubsWithMinimumMonths" data-label-type="main">Minimum Subscription Duration</b>
-                                <span class="reset-icon" title="Reset to default"
-                                    data-target="scrapeSubsWithMinimumMonths">&times;</span>
+                            <div class="meta" style="user-select: none">
+                                <div class="meta-top">
+                                    <b data-label="allowSelf" data-label-type="main">Allow Self Scan</b>
+                                    <span class="reset-icon" title="Reset to default" data-target="allowSelf">&times;</span>
+                                </div>
+                                <span class="muted" data-label="allowSelf" data-label-type="alt">Allow the scanner to detect your own messages</span>
                             </div>
-                            <span class="muted" data-label="scrapeSubsWithMinimumMonths" data-label-type="alt">Only scan users subscribed for at least the selected number of months</span>
                         </div>
-                    </div>
-                    <div style="min-width:200px">
-                        <div class="range-wrap">
-                            <input id="scrapeSubsWithMinimumMonths" type="range" min="0" max="120" value="24" step="6"
-                                style="width:100%">
-                            <span class="muted" style="margin-left:8px;"></span>
-                            <span class="muted" data-label="month" data-label-type="main">month</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="control">
-                        <div class="icon" aria-hidden>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
-                                <path d="M3 3v5h5" />
-                                <path d="M12 7v5l4 2" />
-                            </svg>
-                        </div>
-                        <div class="meta">
-                            <div class="meta-top">
-                                <b data-label="scrapeAlreadySentMessages" data-label-type="main">Scan Chat History</b>
-                                <span class="reset-icon" title="Reset to default"
-                                    data-target="scrapeAlreadySentMessages">&times;</span>
+                        <div>
+                            <div tabindex="0" class="toggle" id="allowSelf" role="switch" aria-checked="false">
+                                <div class="knob"></div>
                             </div>
-                            <span class="muted" data-label="scrapeAlreadySentMessages" data-label-type="alt">Scan messages already visible in chat</span>
                         </div>
                     </div>
-                    <div>
-                        <div tabindex="0" class="toggle" id="scrapeAlreadySentMessages" role="switch"
-                            aria-checked="false">
-                            <div class="knob"></div>
-                        </div>
-                    </div>
-                </div>
 
-                <section class="subsection" id="bannedWords">
-                    <div class="control">
-                        <div class="meta">
-                            <div class="meta-top">
-                                <b data-label="bannedWords" data-label-type="main">Blocked Words</b>
-                                <span class="reset-icon" title="Reset to default"
-                                    data-target="bannedWords">&times;</span>
+                    <div class="row">
+                        <div class="control">
+                            <div class="icon" aria-hidden>
+                                <svg clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+                                    <path d="m15 17.75c0-.414-.336-.75-.75-.75h-11.5c-.414 0-.75.336-.75.75s.336.75.75.75h11.5c.414 0 .75-.336.75-.75zm7-4c0-.414-.336-.75-.75-.75h-18.5c-.414 0-.75.336-.75.75s.336.75.75.75h18.5c.414 0 .75-.336.75-.75zm0-4c0-.414-.336-.75-.75-.75h-18.5c-.414 0-.75.336-.75.75s.336.75.75.75h18.5c.414 0 .75-.336.75-.75zm0-4c0-.414-.336-.75-.75-.75h-18.5c-.414 0-.75.336-.75.75s.336.75.75.75h18.5c.414 0 .75-.336.75-.75z" fill-rule="nonzero" />
+                                </svg>
                             </div>
-                            <p class="desc" data-label="bannedWords" data-label-type="alt">These words will be ignored
-                                by the scanner</p>
+                            <div class="meta" style="user-select: none">
+                                <div class="meta-top">
+                                    <b data-label="allowText" data-label-type="main">Allow Text</b>
+                                    <span class="reset-icon" title="Reset to default" data-target="allowText">&times;</span>
+                                </div>
+                                <span class="muted" data-label="allowText" data-label-type="alt">Allow scanning of text messages</span>
+                            </div>
+                        </div>
+                        <div>
+                            <div tabindex="0" class="toggle" id="allowText" role="switch" aria-checked="false">
+                                <div class="knob"></div>
+                            </div>
                         </div>
                     </div>
-                    <div class="add-row" style="display:flex;gap:8px;align-items:center;">
-                        <input class="bannedInput" type="text" data-label="enterItem" data-label-type="main"
-                            placeholder="Enter item..." style="flex:1;">
-                        <button class="btn primary addBannedButton" data-label="addButton"
-                            data-label-type="main">Add</button>
+
+                    <div class="row">
+                        <div class="control">
+                            <div class="icon" aria-hidden>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M8.5 10A1.5 2 0 1 0 8.5 14 1.5 2 0 1 0 8.5 10z"></path>
+                                    <path d="M15.5 10A1.5 2 0 1 0 15.5 14 1.5 2 0 1 0 15.5 10z"></path>
+                                    <path d="M8 16H16V18H8z"></path>
+                                    <path d="m21,11v-3c0-1.1-.9-2-2-2h-6v-1.39c.3-.27.5-.67.5-1.11,0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5,1.5c0,.44.2.84.5,1.11v1.39h-6c-1.1,0-2,.9-2,2v3c-.55,0-1,.45-1,1v4c0,.55.45,1,1,1v3c0,1.1.9,2,2,2h14c1.1,0,2-.9,2-2v-3c.55,0,1-.45,1-1v-4c0-.55-.45-1-1-1ZM5,20v-12h14v4s0,0,0,0v4s0,0,0,0v4s-14,0-14,0Z"></path>
+                                </svg>
+                            </div>
+                            <div class="meta">
+                                <div class="meta-top">
+                                    <b data-label="scrapeBots" data-label-type="main">Allow Bots</b>
+                                    <span class="reset-icon" title="Reset to default" data-target="scrapeBots">&times;</span>
+                                </div>
+                                <span class="muted" data-label="scrapeBots" data-label-type="alt">Allow scanning messages from bots</span>
+                            </div>
+                        </div>
+                        <div>
+                            <div tabindex="0" class="toggle" id="scrapeBots" role="switch" aria-checked="false">
+                                <div class="knob"></div>
+                            </div>
+                        </div>
                     </div>
 
-                    <ul class="bannedList"
-                        style="list-style:none;margin:12px 0 0;padding:0;display:flex;flex-direction:column;gap:8px;">
-                    </ul>
+                    <div class="row">
+                        <div class="control">
+                            <div class="icon" aria-hidden>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                    <path fill="currentColor" d="M12 1L3 5v6c0 5.5 3.8 10.7 9 12c5.2-1.3 9-6.5 9-12V5zm3 14h-2v3h-2v-3H9v-2h2l-1-5.9l2-1.6l2 1.6l-1 5.9h2z" />
+                                </svg>
+                            </div>
+                            <div class="meta">
+                                <div class="meta-top">
+                                    <b data-label="scrapeMods" data-label-type="main">Allow Mods</b>
+                                    <span class="reset-icon" title="Reset to default" data-target="scrapeMods">&times;</span>
+                                </div>
+                                <span class="muted" data-label="scrapeMods" data-label-type="alt">Allow scanning messages from moderators</span>
+                            </div>
+                        </div>
+                        <div>
+                            <div tabindex="0" class="toggle" id="scrapeMods" role="switch" aria-checked="false">
+                                <div class="knob"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="control">
+                            <div class="icon" aria-hidden>
+                                <svg width="24" height="24" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polygon points="4.75 2.75,11.25 2.75,14.25 6.25,8 13.25,1.75 6.25" />
+                                </svg>
+                            </div>
+                            <div class="meta">
+                                <div class="meta-top">
+                                    <b data-label="scrapeVIPs" data-label-type="main">Allow VIPs</b>
+                                    <span class="reset-icon" title="Reset to default" data-target="scrapeVIPs">&times;</span>
+                                </div>
+                                <span class="muted" data-label="scrapeVIPs" data-label-type="alt">Allow scanning messages from VIPs</span>
+                            </div>
+                        </div>
+                        <div>
+                            <div tabindex="0" class="toggle" id="scrapeVIPs" role="switch" aria-checked="false">
+                                <div class="knob"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="control">
+                            <div class="icon" aria-hidden>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" />
+                                </svg>
+                            </div>
+                            <div class="meta">
+                                <div class="meta-top">
+                                    <b data-label="scrapeOnlySubs" data-label-type="main">Allow Only Subscribers</b>
+                                    <span class="reset-icon" title="Reset to default" data-target="scrapeOnlySubs">&times;</span>
+                                </div>
+                                <span class="muted" data-label="scrapeOnlySubs" data-label-type="alt">Only scan messages from subscribed users</span>
+                            </div>
+                        </div>
+                        <div>
+                            <div tabindex="0" class="toggle" id="scrapeOnlySubs" role="switch" aria-checked="false">
+                                <div class="knob"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="control">
+                            <div class="icon" aria-hidden>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M8 2v4" />
+                                    <path d="M16 2v4" />
+                                    <rect width="18" height="18" x="3" y="4" rx="2" />
+                                    <path d="M3 10h18" />
+                                </svg>
+                            </div>
+                            <div class="meta">
+                                <div class="meta-top">
+                                    <b data-label="scrapeSubsWithMinimumMonths" data-label-type="main">Minimum Subscription Duration</b>
+                                    <span class="reset-icon" title="Reset to default" data-target="scrapeSubsWithMinimumMonths">&times;</span>
+                                </div>
+                                <span class="muted" data-label="scrapeSubsWithMinimumMonths" data-label-type="alt">Only scan users subscribed for at least the selected number of months</span>
+                            </div>
+                        </div>
+                        <div style="min-width: 200px">
+                            <div class="range-wrap">
+                                <input id="scrapeSubsWithMinimumMonths" type="range" min="0" max="120" value="24" step="6" style="width: 100%" />
+                                <span class="muted" style="margin-left: 8px"></span>
+                                <span class="muted" data-label="month" data-label-type="main">month</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="control">
+                            <div class="icon" aria-hidden>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+                                    <path d="M3 3v5h5" />
+                                    <path d="M12 7v5l4 2" />
+                                </svg>
+                            </div>
+                            <div class="meta">
+                                <div class="meta-top">
+                                    <b data-label="scrapeAlreadySentMessages" data-label-type="main">Scan Chat History</b>
+                                    <span class="reset-icon" title="Reset to default" data-target="scrapeAlreadySentMessages">&times;</span>
+                                </div>
+                                <span class="muted" data-label="scrapeAlreadySentMessages" data-label-type="alt">Scan messages already visible in chat</span>
+                            </div>
+                        </div>
+                        <div>
+                            <div tabindex="0" class="toggle" id="scrapeAlreadySentMessages" role="switch" aria-checked="false">
+                                <div class="knob"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <section class="subsection" id="bannedWords">
+                        <div class="control">
+                            <div class="meta">
+                                <div class="meta-top">
+                                    <b data-label="bannedWords" data-label-type="main">Blocked Words</b>
+                                    <span class="reset-icon" title="Reset to default" data-target="bannedWords">&times;</span>
+                                </div>
+                                <p class="desc" data-label="bannedWords" data-label-type="alt">These words will be ignored by the scanner</p>
+                            </div>
+                        </div>
+                        <div class="add-row" style="display: flex; gap: 8px; align-items: center">
+                            <input class="bannedInput" type="text" data-label="enterItem" data-label-type="main" placeholder="Enter item..." style="flex: 1" />
+                            <button class="btn primary addBannedButton" data-label="addButton" data-label-type="main">Add</button>
+                        </div>
+
+                        <ul class="bannedList" style="list-style: none; margin: 12px 0 0; padding: 0; display: flex; flex-direction: column; gap: 8px"></ul>
+                    </section>
+
+                    <section class="subsection" id="bannedEmotes">
+                        <div class="control">
+                            <div class="meta">
+                                <div class="meta-top">
+                                    <b data-label="bannedEmotes" data-label-type="main">Blocked Emotes</b>
+                                    <span class="reset-icon" title="Reset to default" data-target="bannedEmotes">&times;</span>
+                                </div>
+                                <p class="desc" data-label="bannedEmotes" data-label-type="alt">These emotes will be ignored by the scanner</p>
+                            </div>
+                        </div>
+                        <div class="add-row" style="display: flex; gap: 8px; align-items: center">
+                            <input class="bannedInput" type="text" data-label="enterItem" data-label-type="main" placeholder="Enter item..." style="flex: 1" />
+                            <button class="btn primary addBannedButton" data-label="addButton" data-label-type="main">Add</button>
+                        </div>
+
+                        <ul class="bannedList" style="list-style: none; margin: 12px 0 0; padding: 0; display: flex; flex-direction: column; gap: 8px"></ul>
+                    </section>
+
+                    <section class="subsection" id="bannedUsers">
+                        <div class="control">
+                            <div class="meta">
+                                <div class="meta-top">
+                                    <b data-label="bannedUsers" data-label-type="main">Blocked Users</b>
+                                    <span class="reset-icon" title="Reset to default" data-target="bannedUsers">&times;</span>
+                                </div>
+                                <p class="desc" data-label="bannedUsers" data-label-type="alt">These users' messages will be ignored by the scanner</p>
+                            </div>
+                        </div>
+                        <div class="add-row" style="display: flex; gap: 8px; align-items: center">
+                            <input class="bannedInput" type="text" data-label="enterItem" data-label-type="main" placeholder="Enter item..." style="flex: 1" />
+                            <button class="btn primary addBannedButton" data-label="addButton" data-label-type="main">Add</button>
+                        </div>
+
+                        <ul class="bannedList" style="list-style: none; margin: 12px 0 0; padding: 0; display: flex; flex-direction: column; gap: 8px"></ul>
+                    </section>
                 </section>
 
-                <section class="subsection" id="bannedEmotes">
-                    <div class="control">
-                        <div class="meta">
-                            <div class="meta-top">
-                                <b data-label="bannedEmotes" data-label-type="main">Blocked Emotes</b>
-                                <span class="reset-icon" title="Reset to default"
-                                    data-target="bannedEmotes">&times;</span>
+                <section class="card section">
+                    <h2 data-label="setInsert" data-label-type="main">Insert Settings</h2>
+                    <p class="desc" data-label="setInsert" data-label-type="alt">Adjust insertion behavior</p>
+
+                    <div class="row">
+                        <div class="control">
+                            <div class="icon" aria-hidden>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M4 10v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1 -1v-3" />
+                                </svg>
                             </div>
-                            <p class="desc" data-label="bannedEmotes" data-label-type="alt">These emotes will be ignored
-                                by the scanner</p>
+                            <div class="meta">
+                                <div class="meta-top">
+                                    <b data-label="autoSpace" data-label-type="main">Automatic Spacing</b>
+                                    <span class="reset-icon" title="Reset to default" data-target="autoSpace">&times;</span>
+                                </div>
+                                <span class="muted" data-label="autoSpace" data-label-type="alt">Automatically add spaces when inserting a message</span>
+                            </div>
+                        </div>
+                        <div>
+                            <div tabindex="0" class="toggle" id="autoSpace" role="switch" aria-checked="false">
+                                <div class="knob"></div>
+                            </div>
                         </div>
                     </div>
-                    <div class="add-row" style="display:flex;gap:8px;align-items:center;">
-                        <input class="bannedInput" type="text" data-label="enterItem" data-label-type="main"
-                            placeholder="Enter item..." style="flex:1;">
-                        <button class="btn primary addBannedButton" data-label="addButton"
-                            data-label-type="main">Add</button>
+
+                    <div class="row">
+                        <div class="control">
+                            <div class="icon" aria-hidden>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline id="primary" points="15 10 17 12 15 14" />
+                                    <polyline id="primary-2" data-name="primary" points="9 14 7 12 9 10" />
+                                    <path id="primary-3" data-name="primary" d="M21,6V18M3,6V18m14-6H7" />
+                                </svg>
+                            </div>
+                            <div class="meta">
+                                <div class="meta-top">
+                                    <b data-label="useStartAsDefaultOffset" data-label-type="main">Default Insert Position</b>
+                                    <span class="reset-icon" title="Reset to default" data-target="useStartAsDefaultOffset">&times;</span>
+                                </div>
+                                <span class="muted" data-label="useStartAsDefaultOffset" data-label-type="alt">Insert at the start or end if no cursor is active</span>
+                            </div>
+                        </div>
+                        <div>
+                            <div tabindex="0" class="toggle" id="useStartAsDefaultOffset" role="switch" aria-checked="true">
+                                <div class="knob"></div>
+                            </div>
+                        </div>
                     </div>
 
-                    <ul class="bannedList"
-                        style="list-style:none;margin:12px 0 0;padding:0;display:flex;flex-direction:column;gap:8px;">
-                    </ul>
+                    <div class="row">
+                        <div class="control">
+                            <div class="icon" aria-hidden>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M3.714 3.048a.498.498 0 0 0-.683.627l2.843 7.627a2 2 0 0 1 0 1.396l-2.842 7.627a.498.498 0 0 0 .682.627l18-8.5a.5.5 0 0 0 0-.904z" />
+                                    <path d="M6 12h16" />
+                                </svg>
+                            </div>
+                            <div class="meta">
+                                <div class="meta-top">
+                                    <b data-label="requiredHoldTime" data-label-type="main">Long-Press to Send</b>
+                                    <span class="reset-icon" title="Reset to default" data-target="requiredHoldTime">&times;</span>
+                                </div>
+                                <span class="muted" data-label="requiredHoldTime" data-label-type="alt">Duration to hold the message box to auto-send</span>
+                            </div>
+                        </div>
+                        <div style="min-width: 200px">
+                            <div class="range-wrap">
+                                <input id="requiredHoldTime" type="range" min="1000" max="10000" value="5000" step="250" style="width: 100%" />
+                                <span class="muted" style="margin-left: 8px"></span>
+                                <span class="muted" data-label="milliseconds" data-label-type="main">Milliseconds</span>
+                            </div>
+                        </div>
+                    </div>
                 </section>
 
-                <section class="subsection" id="bannedUsers">
-                    <div class="control">
-                        <div class="meta">
-                            <div class="meta-top">
-                                <b data-label="bannedUsers" data-label-type="main">Blocked Users</b>
-                                <span class="reset-icon" title="Reset to default"
-                                    data-target="bannedUsers">&times;</span>
+                <section class="card section">
+                    <h2 data-label="setMessageBox" data-label-type="main">Message Box Settings</h2>
+                    <p class="desc" data-label="setMessageBox" data-label-type="alt">Customize message box behavior</p>
+
+                    <div class="row">
+                        <div class="control">
+                            <div class="icon" aria-hidden>
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 -960 960 960" fill="currentColor">
+                                    <path d="M444-336v-216H336v-72h288v72H516v216h-72ZM48-48v-240h84v-384H48v-240h240v84h384v-84h240v240h-84v384h84v240H672v-84H288v84H48Zm240-156h384v-84h84v-384h-84v-84H288v84h-84v384h84v84ZM120-744h96v-96h-96v96Zm624 0h96v-96h-96v96Zm0 624h96v-96h-96v96Zm-624 0h96v-96h-96v96Zm96-624Zm528 0Zm0 528Zm-528 0Z" />
+                                </svg>
                             </div>
-                            <p class="desc" data-label="bannedUsers" data-label-type="alt">These users' messages will
-                                be ignored by the scanner</p>
-                        </div>
-                    </div>
-                    <div class="add-row" style="display:flex;gap:8px;align-items:center;">
-                        <input class="bannedInput" type="text" data-label="enterItem" data-label-type="main"
-                            placeholder="Enter item..." style="flex:1;">
-                        <button class="btn primary addBannedButton" data-label="addButton"
-                            data-label-type="main">Add</button>
-                    </div>
-
-                    <ul class="bannedList"
-                        style="list-style:none;margin:12px 0 0;padding:0;display:flex;flex-direction:column;gap:8px;">
-                    </ul>
-                </section>
-            </section>
-
-            <section class="card section">
-                <h2 data-label="setInsert" data-label-type="main">Insert Settings</h2>
-                <p class="desc" data-label="setInsert" data-label-type="alt">Adjust insertion behavior</p>
-
-                <div class="row">
-                    <div class="control">
-                        <div class="icon" aria-hidden>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                <path d="M4 10v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1 -1v-3" />
-                            </svg>
-                        </div>
-                        <div class="meta">
-                            <div class="meta-top">
-                                <b data-label="autoSpace" data-label-type="main">Automatic Spacing</b>
-                                <span class="reset-icon" title="Reset to default" data-target="autoSpace">&times;</span>
+                            <div class="meta">
+                                <div class="meta-top">
+                                    <b data-label="contentNodeAmount" data-label-type="main">Number of Message Boxes</b>
+                                    <span class="reset-icon" title="Reset to default" data-target="contentNodeAmount">&times;</span>
+                                </div>
+                                <span class="muted" data-label="contentNodeAmount" data-label-type="alt">Count of message boxes displayed</span>
                             </div>
-                            <span class="muted" data-label="autoSpace" data-label-type="alt">Automatically add spaces
-                                when inserting a message</span>
                         </div>
-                    </div>
-                    <div>
-                        <div tabindex="0" class="toggle" id="autoSpace" role="switch" aria-checked="false">
-                            <div class="knob"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="control">
-                        <div class="icon" aria-hidden>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <polyline id="primary" points="15 10 17 12 15 14" />
-                                <polyline id="primary-2" data-name="primary" points="9 14 7 12 9 10" />
-                                <path id="primary-3" data-name="primary" d="M21,6V18M3,6V18m14-6H7" />
-                            </svg>
-                        </div>
-                        <div class="meta">
-                            <div class="meta-top">
-                                <b data-label="useStartAsDefaultOffset" data-label-type="main">Default Insert
-                                    Position</b>
-                                <span class="reset-icon" title="Reset to default"
-                                    data-target="useStartAsDefaultOffset">&times;</span>
+                        <div style="min-width: 200px">
+                            <div class="range-wrap">
+                                <input id="contentNodeAmount" type="range" min="1" max="5" value="5" style="width: 100%" />
+                                <span class="muted" style="margin-left: 8px"></span>
                             </div>
-                            <span class="muted" data-label="useStartAsDefaultOffset" data-label-type="alt">Insert at the
-                                start or end if no cursor is active</span>
                         </div>
                     </div>
-                    <div>
-                        <div tabindex="0" class="toggle" id="useStartAsDefaultOffset" role="switch" aria-checked="true">
-                            <div class="knob"></div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="row">
-                    <div class="control">
-                        <div class="icon" aria-hidden>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <path
-                                    d="M3.714 3.048a.498.498 0 0 0-.683.627l2.843 7.627a2 2 0 0 1 0 1.396l-2.842 7.627a.498.498 0 0 0 .682.627l18-8.5a.5.5 0 0 0 0-.904z" />
-                                <path d="M6 12h16" />
-                            </svg>
-                        </div>
-                        <div class="meta">
-                            <div class="meta-top">
-                                <b data-label="requiredHoldTime" data-label-type="main">Long-Press to Send</b>
-                                <span class="reset-icon" title="Reset to default"
-                                    data-target="requiredHoldTime">&times;</span>
+                    <div class="row">
+                        <div class="control">
+                            <div class="icon" aria-hidden>
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 -960 960 960" fill="currentColor">
+                                    <path d="M227-346q-16-30-25.5-63.5T192-480q0-121 85-206t209-82l-57-57 51-51 144 144-144 144-51-51 57-57q-94-2-158 62t-64 154q0 22 4 42t12 39l-53 53ZM480-84 336-228l144-144 51 51-57 57q94 2 158-62t64-154q0-22-4-42t-12-39l53-53q16 30 25.5 63.5T768-480q0 120-85 205.5T474-192l57 57-51 51Z" />
+                                </svg>
                             </div>
-                            <span class="muted" data-label="requiredHoldTime" data-label-type="alt">Duration to hold the message box to auto-send</span>
-                        </div>
-                    </div>
-                    <div style="min-width:200px">
-                        <div class="range-wrap">
-                            <input id="requiredHoldTime" type="range" min="1000" max="10000" value="5000" step="250"
-                                style="width:100%">
-                            <span class="muted" style="margin-left:8px;"></span>
-                            <span class="muted" data-label="milliseconds" data-label-type="main">Milliseconds</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section class="card section">
-                <h2 data-label="setMessageBox" data-label-type="main">Message Box Settings</h2>
-                <p class="desc" data-label="setMessageBox" data-label-type="alt">Customize message box behavior</p>
-
-                <div class="row">
-                    <div class="control">
-                        <div class="icon" aria-hidden>
-                            <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 -960 960 960"
-                                fill="currentColor">
-                                <path
-                                    d="M444-336v-216H336v-72h288v72H516v216h-72ZM48-48v-240h84v-384H48v-240h240v84h384v-84h240v240h-84v384h84v240H672v-84H288v84H48Zm240-156h384v-84h84v-384h-84v-84H288v84h-84v384h84v84ZM120-744h96v-96h-96v96Zm624 0h96v-96h-96v96Zm0 624h96v-96h-96v96Zm-624 0h96v-96h-96v96Zm96-624Zm528 0Zm0 528Zm-528 0Z" />
-                            </svg>
-                        </div>
-                        <div class="meta">
-                            <div class="meta-top">
-                                <b data-label="contentNodeAmount" data-label-type="main">Number of Message Boxes</b>
-                                <span class="reset-icon" title="Reset to default"
-                                    data-target="contentNodeAmount">&times;</span>
+                            <div class="meta">
+                                <div class="meta-top">
+                                    <b data-label="updateNodesAfterTimeout" data-label-type="main">Refresh After Expiration</b>
+                                    <span class="reset-icon" title="Reset to default" data-target="updateNodesAfterTimeout">&times;</span>
+                                </div>
+                                <span class="muted" data-label="updateNodesAfterTimeout" data-label-type="alt">Refresh message boxes after the message lifespan ends</span>
                             </div>
-                            <span class="muted" data-label="contentNodeAmount" data-label-type="alt">Count of message
-                                boxes displayed</span>
                         </div>
-                    </div>
-                    <div style="min-width:200px">
-                        <div class="range-wrap">
-                            <input id="contentNodeAmount" type="range" min="1" max="5" value="5" style="width:100%">
-                            <span class="muted" style="margin-left:8px;"></span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="control">
-                        <div class="icon" aria-hidden>
-                            <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 -960 960 960"
-                                fill="currentColor">
-                                <path
-                                    d="M227-346q-16-30-25.5-63.5T192-480q0-121 85-206t209-82l-57-57 51-51 144 144-144 144-51-51 57-57q-94-2-158 62t-64 154q0 22 4 42t12 39l-53 53ZM480-84 336-228l144-144 51 51-57 57q94 2 158-62t64-154q0-22-4-42t-12-39l53-53q16 30 25.5 63.5T768-480q0 120-85 205.5T474-192l57 57-51 51Z" />
-                            </svg>
-                        </div>
-                        <div class="meta">
-                            <div class="meta-top">
-                                <b data-label="updateNodesAfterTimeout" data-label-type="main">Refresh After Expiration</b>
-                                <span class="reset-icon" title="Reset to default"
-                                    data-target="updateNodesAfterTimeout">&times;</span>
+                        <div>
+                            <div tabindex="0" class="toggle" id="updateNodesAfterTimeout" role="switch" aria-checked="false">
+                                <div class="knob"></div>
                             </div>
-                            <span class="muted" data-label="updateNodesAfterTimeout" data-label-type="alt">Refresh message boxes after the message lifespan ends</span>
                         </div>
                     </div>
-                    <div>
-                        <div tabindex="0" class="toggle" id="updateNodesAfterTimeout" role="switch"
-                            aria-checked="false">
-                            <div class="knob"></div>
-                        </div>
-                    </div>
-                </div>
 
-
-
-
-
-                <div class="row">
-                    <div class="control">
-                        <div class="icon" aria-hidden>
-                            <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 -960 960 960"
-                                fill="currentColor">
-                                <path
-                                    d="m780-281-54-55q9-23 13.5-47t4.5-49q0-110-77-187t-187-77q-25 0-49 4.5T384-677l-54-55q35-19 73-27.5t77-8.5q58 0 112 19.5t99 55.5l52-52 50 51-51 52q36 45 55 99t19 111q0 39-9 77.5T780-281ZM516-545v-79h-72v7l72 72ZM768-89l-79-80q-45 36-98.5 54.5T480-96q-70 0-131-26.5t-106.5-72Q197-240 170.5-301T144-432q0-57 18.5-110.5T217-641L90-768l51-51 678 679-51 51Zm-288-79q43 0 83-13.5t74-39.5L269-589q-26 34-39.5 74T216-432q0 110 77 187t187 77ZM360-816v-72h240v72H360Zm93 411Zm102-102Z" />
-                            </svg>
-                        </div>
-                        <div class="meta">
-                            <div class="meta-top">
-                                <b data-label="deleteAfterMs" data-label-type="main">Message Lifespan</b>
-                                <span class="reset-icon" title="Reset to default"
-                                    data-target="deleteAfterMs">&times;</span>
+                    <div class="row">
+                        <div class="control">
+                            <div class="icon" aria-hidden>
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 -960 960 960" fill="currentColor">
+                                    <path d="m780-281-54-55q9-23 13.5-47t4.5-49q0-110-77-187t-187-77q-25 0-49 4.5T384-677l-54-55q35-19 73-27.5t77-8.5q58 0 112 19.5t99 55.5l52-52 50 51-51 52q36 45 55 99t19 111q0 39-9 77.5T780-281ZM516-545v-79h-72v7l72 72ZM768-89l-79-80q-45 36-98.5 54.5T480-96q-70 0-131-26.5t-106.5-72Q197-240 170.5-301T144-432q0-57 18.5-110.5T217-641L90-768l51-51 678 679-51 51Zm-288-79q43 0 83-13.5t74-39.5L269-589q-26 34-39.5 74T216-432q0 110 77 187t187 77ZM360-816v-72h240v72H360Zm93 411Zm102-102Z" />
+                                </svg>
                             </div>
-                            <span class="muted" data-label="deleteAfterMs" data-label-type="alt">Duration a scanned
-                                message remains visible</span>
-                        </div>
-                    </div>
-                    <div style="min-width:200px">
-                        <div class="range-wrap">
-                            <input id="deleteAfterMs" type="range" min="1000" max="60000" value="10000" step="250"
-                                style="width:100%">
-                            <span class="muted" style="margin-left:8px;"></span>
-                            <span class="muted" data-label="milliseconds" data-label-type="main">Milliseconds</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="control">
-                        <div class="icon" aria-hidden>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <path
-                                    d="M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49" />
-                                <path d="M14.084 14.158a3 3 0 0 1-4.242-4.242" />
-                                <path
-                                    d="M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143" />
-                                <path d="m2 2 20 20" />
-                            </svg>
-                        </div>
-                        <div class="meta">
-                            <div class="meta-top">
-                                <b data-label="autoHide" data-label-type="main">Auto-Hide</b>
-                                <span class="reset-icon" title="Reset to default" data-target="autoHide">&times;</span>
+                            <div class="meta">
+                                <div class="meta-top">
+                                    <b data-label="deleteAfterMs" data-label-type="main">Message Lifespan</b>
+                                    <span class="reset-icon" title="Reset to default" data-target="deleteAfterMs">&times;</span>
+                                </div>
+                                <span class="muted" data-label="deleteAfterMs" data-label-type="alt">Duration a scanned message remains visible</span>
                             </div>
-                            <span class="muted" data-label="autoHide" data-label-type="alt">Automatically hide the panel when no messages are available</span>
+                        </div>
+                        <div style="min-width: 200px">
+                            <div class="range-wrap">
+                                <input id="deleteAfterMs" type="range" min="1000" max="60000" value="10000" step="250" style="width: 100%" />
+                                <span class="muted" style="margin-left: 8px"></span>
+                                <span class="muted" data-label="milliseconds" data-label-type="main">Milliseconds</span>
+                            </div>
                         </div>
                     </div>
-                    <div>
-                        <div tabindex="0" class="toggle" id="autoHide" role="switch" aria-checked="false">
-                            <div class="knob"></div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="row">
-                    <div class="control">
-                        <div class="icon" aria-hidden>
-                            <svg xmlns="http://www.w3.org/2000/svg" height="20px" width="20px" viewBox="0 -960 960 960"
-                                fill="currentColor">
-                                <path d=" M216-144q-33 0-52.5-19.5T144-216v-528q0-33
+                    <div class="row">
+                        <div class="control">
+                            <div class="icon" aria-hidden>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49" />
+                                    <path d="M14.084 14.158a3 3 0 0 1-4.242-4.242" />
+                                    <path d="M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143" />
+                                    <path d="m2 2 20 20" />
+                                </svg>
+                            </div>
+                            <div class="meta">
+                                <div class="meta-top">
+                                    <b data-label="autoHide" data-label-type="main">Auto-Hide</b>
+                                    <span class="reset-icon" title="Reset to default" data-target="autoHide">&times;</span>
+                                </div>
+                                <span class="muted" data-label="autoHide" data-label-type="alt">Automatically hide the panel when no messages are available</span>
+                            </div>
+                        </div>
+                        <div>
+                            <div tabindex="0" class="toggle" id="autoHide" role="switch" aria-checked="false">
+                                <div class="knob"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="control">
+                            <div class="icon" aria-hidden>
+                                <svg xmlns="http://www.w3.org/2000/svg" height="20px" width="20px" viewBox="0 -960 960 960" fill="currentColor">
+                                    <path
+                                        d=" M216-144q-33 0-52.5-19.5T144-216v-528q0-33
                                 19.5-52.5T216-816h192v672H216Zm276.21 0q-15.21 0-25.71-10.29t-10.5-25.5q0-15.21
                                 10.29-25.71t25.5-10.5q15.21 0 25.71 10.29t10.5 25.5q0 15.21-10.29 25.71t-25.5
                                 10.5Zm0-150q-15.21 0-25.71-10.29t-10.5-25.5q0-15.21 10.29-25.71t25.5-10.5q15.21 0 25.71
@@ -626,172 +537,141 @@
                                 15.21-10.29 25.71t-25.5 10.5Zm0-150q-15.21 0-25.71-10.29t-10.5-25.5q0-15.21
                                 10.29-25.71t25.5-10.5q15.21 0 25.71 10.29t10.5 25.5q0 15.21-10.29 25.71t-25.5
                                 10.5Zm0-150q-15.21 0-25.71-10.29t-10.5-25.5q0-15.21 10.29-25.71t25.5-10.5q15.21 0 25.71
-                                10.29t10.5 25.5q0 15.21-10.29 25.71t-25.5 10.5Z" />
-                            </svg>
-                        </div>
-                        <div class="meta">
-                            <div class="meta-top">
-                                <b data-label="messageClickAnimationTime" data-label-type="main">Click Animation Duration</b>
-                                <span class="reset-icon" title="Reset to default"
-                                    data-target="messageClickAnimationTime">&times;</span>
+                                10.29t10.5 25.5q0 15.21-10.29 25.71t-25.5 10.5Z"
+                                    />
+                                </svg>
                             </div>
-                            <span class="muted" data-label="messageClickAnimationTime" data-label-type="alt">Length of the animation when a message box is clicked</span>
-                        </div>
-                    </div>
-                    <div style="min-width:200px">
-                        <div class="range-wrap">
-                            <input id="messageClickAnimationTime" type="range" min="25" max="250" value="125" step="5"
-                                style="width:100%">
-                            <span class="muted" style="margin-left:8px;"></span>
-                            <span class="muted" data-label="milliseconds" data-label-type="main">Milliseconds</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section class="card section">
-
-                <h2 data-label="other" data-label-type="main">Other</h2>
-                <p class="desc" data-label="other" data-label-type="alt">Other settings</p>
-
-                <div class="row">
-                    <div class="control">
-                        <div class="icon" aria-hidden>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="lucide lucide-clock-fading-icon lucide-clock-fading">
-                                <path d="M12 2a10 10 0 0 1 7.38 16.75" />
-                                <path d="M12 6v6l4 2" />
-                                <path d="M2.5 8.875a10 10 0 0 0-.5 3" />
-                                <path d="M2.83 16a10 10 0 0 0 2.43 3.4" />
-                                <path d="M4.636 5.235a10 10 0 0 1 .891-.857" />
-                                <path d="M8.644 21.42a10 10 0 0 0 7.631-.38" />
-                            </svg>
-                        </div>
-                        <div class="meta">
-                            <div class="meta-top">
-                                <b data-label="seventvInstallationWaitTime" data-label-type="main">7TV Detection Timeout</b>
-                                <span class="reset-icon" title="Reset to default"
-                                    data-target="seventvInstallationWaitTime">&times;</span>
+                            <div class="meta">
+                                <div class="meta-top">
+                                    <b data-label="messageClickAnimationTime" data-label-type="main">Click Animation Duration</b>
+                                    <span class="reset-icon" title="Reset to default" data-target="messageClickAnimationTime">&times;</span>
+                                </div>
+                                <span class="muted" data-label="messageClickAnimationTime" data-label-type="alt">Length of the animation when a message box is clicked</span>
                             </div>
-                            <span class="muted" data-label="seventvInstallationWaitTime" data-label-type="alt">"Time to wait for 7TV to load. Increase this if you see '7TV installation not detected'."
-                            </span>
                         </div>
-                    </div>
-                    <div style="min-width:200px">
-                        <div class="range-wrap">
-                            <input id="seventvInstallationWaitTime" type="range" min="500" max="8000" value="2000"
-                                step="250" style="width:100%">
-                            <span class="muted" style="margin-left:8px;"></span>
-                            <span class="muted" data-label="milliseconds" data-label-type="main">Milliseconds</span>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="row">
-                    <div class="control">
-                        <div class="icon" aria-hidden>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <path d="m5 8 6 6" />
-                                <path d="m4 14 6-6 2-3" />
-                                <path d="M2 5h12" />
-                                <path d="M7 2h1" />
-                                <path d="m22 22-5-10-5 10" />
-                                <path d="M14 18h6" />
-                            </svg>
-                        </div>
-
-                        <div class="meta">
-                            <div class="meta-top">
-                                <b data-label="language" data-label-type="main">Language</b>
-                                <span class="reset-icon" title="Reset to default" data-target="language">&times;</span>
+                        <div style="min-width: 200px">
+                            <div class="range-wrap">
+                                <input id="messageClickAnimationTime" type="range" min="25" max="250" value="125" step="5" style="width: 100%" />
+                                <span class="muted" style="margin-left: 8px"></span>
+                                <span class="muted" data-label="milliseconds" data-label-type="main">Milliseconds</span>
                             </div>
-                            <span class="muted" data-label="language" data-label-type="alt">Select interface language</span>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="card section">
+                    <h2 data-label="other" data-label-type="main">Other</h2>
+                    <p class="desc" data-label="other" data-label-type="alt">Other settings</p>
+
+                    <div class="row">
+                        <div class="control">
+                            <div class="icon" aria-hidden>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock-fading-icon lucide-clock-fading">
+                                    <path d="M12 2a10 10 0 0 1 7.38 16.75" />
+                                    <path d="M12 6v6l4 2" />
+                                    <path d="M2.5 8.875a10 10 0 0 0-.5 3" />
+                                    <path d="M2.83 16a10 10 0 0 0 2.43 3.4" />
+                                    <path d="M4.636 5.235a10 10 0 0 1 .891-.857" />
+                                    <path d="M8.644 21.42a10 10 0 0 0 7.631-.38" />
+                                </svg>
+                            </div>
+                            <div class="meta">
+                                <div class="meta-top">
+                                    <b data-label="seventvInstallationWaitTime" data-label-type="main">7TV Detection Timeout</b>
+                                    <span class="reset-icon" title="Reset to default" data-target="seventvInstallationWaitTime">&times;</span>
+                                </div>
+                                <span class="muted" data-label="seventvInstallationWaitTime" data-label-type="alt">"Time to wait for 7TV to load. Increase this if you see '7TV installation not detected'."</span>
+                            </div>
+                        </div>
+                        <div style="min-width: 200px">
+                            <div class="range-wrap">
+                                <input id="seventvInstallationWaitTime" type="range" min="500" max="8000" value="2000" step="250" style="width: 100%" />
+                                <span class="muted" style="margin-left: 8px"></span>
+                                <span class="muted" data-label="milliseconds" data-label-type="main">Milliseconds</span>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="dropdown" data-dropdown id="language" style="min-width:200px">
-                        <input type="hidden" id="languageValue" value="en" />
+                    <div class="row">
+                        <div class="control">
+                            <div class="icon" aria-hidden>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="m5 8 6 6" />
+                                    <path d="m4 14 6-6 2-3" />
+                                    <path d="M2 5h12" />
+                                    <path d="M7 2h1" />
+                                    <path d="m22 22-5-10-5 10" />
+                                    <path d="M14 18h6" />
+                                </svg>
+                            </div>
 
-                        <button type="button" class="dropdown-btn" aria-haspopup="listbox" aria-expanded="false">
-                            <span class="dropdown-label">English</span>
-                            <span class="dropdown-caret" style="margin-left: 8px;" aria-hidden>▾</span>
-                        </button>
+                            <div class="meta">
+                                <div class="meta-top">
+                                    <b data-label="language" data-label-type="main">Language</b>
+                                    <span class="reset-icon" title="Reset to default" data-target="language">&times;</span>
+                                </div>
+                                <span class="muted" data-label="language" data-label-type="alt">Select interface language</span>
+                            </div>
+                        </div>
 
-                        <div class="dropdown-menu" role="listbox" tabindex="-1">
-                            <button type="button" class="dropdown-item" role="option" data-value="en"
-                                aria-selected="true">English</button>
-                            <button type="button" class="dropdown-item" role="option" data-value="es"
-                                aria-selected="false">Español</button>
-                            <button type="button" class="dropdown-item" role="option" data-value="ja"
-                                aria-selected="false">日本語</button>
-                            <button type="button" class="dropdown-item" role="option" data-value="de"
-                                aria-selected="false">Deutsch</button>
-                            <button type="button" class="dropdown-item" role="option" data-value="fr"
-                                aria-selected="false">Français</button>
-                            <button type="button" class="dropdown-item" role="option" data-value="ko"
-                                aria-selected="false">한국어</button>
+                        <div class="dropdown" data-dropdown id="language" style="min-width: 200px">
+                            <input type="hidden" id="languageValue" value="en" />
+
+                            <button type="button" class="dropdown-btn" aria-haspopup="listbox" aria-expanded="false">
+                                <span class="dropdown-label">English</span>
+                                <span class="dropdown-caret" style="margin-left: 8px" aria-hidden>▾</span>
+                            </button>
+
+                            <div class="dropdown-menu" role="listbox" tabindex="-1">
+                                <button type="button" class="dropdown-item" role="option" data-value="en" aria-selected="true">English</button>
+                                <button type="button" class="dropdown-item" role="option" data-value="es" aria-selected="false">Español</button>
+                                <button type="button" class="dropdown-item" role="option" data-value="ja" aria-selected="false">日本語</button>
+                                <button type="button" class="dropdown-item" role="option" data-value="de" aria-selected="false">Deutsch</button>
+                                <button type="button" class="dropdown-item" role="option" data-value="fr" aria-selected="false">Français</button>
+                                <button type="button" class="dropdown-item" role="option" data-value="ko" aria-selected="false">한국어</button>
+                            </div>
                         </div>
                     </div>
+                </section>
+
+                <div class="social-row">
+                    <a href="https://twitter.com/oswiny_" class="icon-btn" target="_blank" aria-label="Twitter">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 1200 1227" fill="none">
+                            <path d="M714.163 519.284L1160.89 0H1055.03L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.866L515.491 750.218L842.672 1226.37H1200L714.137 519.284H714.163ZM569.165 687.828L521.697 619.934L144.011 79.6944H306.615L611.412 515.685L658.88 583.579L1055.08 1150.3H892.476L569.165 687.854V687.828Z" fill="currentColor" />
+                        </svg>
+                    </a>
+
+                    <a href="https://github.com/oswiny" class="icon-btn" target="_blank" aria-label="GitHub">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 98 96">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M48.854 0C21.839 0 0 22 0 49.217c0 21.756 13.993 40.172 33.405 46.69 2.427.49 3.316-1.059 3.316-2.362 0-1.141-.08-5.052-.08-9.127-13.59 2.934-16.42-5.867-16.42-5.867-2.184-5.704-5.42-7.17-5.42-7.17-4.448-3.015.324-3.015.324-3.015 4.934.326 7.523 5.052 7.523 5.052 4.367 7.496 11.404 5.378 14.235 4.074.404-3.178 1.699-5.378 3.074-6.6-10.839-1.141-22.243-5.378-22.243-24.283 0-5.378 1.94-9.778 5.014-13.2-.485-1.222-2.184-6.275.486-13.038 0 0 4.125-1.304 13.426 5.052a46.97 46.97 0 0 1 12.214-1.63c4.125 0 8.33.571 12.213 1.63 9.302-6.356 13.427-5.052 13.427-5.052 2.67 6.763.97 11.816.485 13.038 3.155 3.422 5.015 7.822 5.015 13.2 0 18.905-11.404 23.06-22.324 24.283 1.78 1.548 3.316 4.481 3.316 9.126 0 6.6-.08 11.897-.08 13.526 0 1.304.89 2.853 3.316 2.364 19.412-6.52 33.405-24.935 33.405-46.691C97.707 22 75.788 0 48.854 0z" fill="currentColor" />
+                        </svg>
+                    </a>
+
+                    <a href="https://instagram.com/contactoswiny" class="icon-btn" target="_blank" aria-label="Instagram">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 1000 1000">
+                            <path fill="currentColor" d="M295.42,6c-53.2,2.51-89.53,11-121.29,23.48-32.87,12.81-60.73,30-88.45,57.82S40.89,143,28.17,175.92c-12.31,31.83-20.65,68.19-23,121.42S2.3,367.68,2.56,503.46,3.42,656.26,6,709.6c2.54,53.19,11,89.51,23.48,121.28,12.83,32.87,30,60.72,57.83,88.45S143,964.09,176,976.83c31.8,12.29,68.17,20.67,121.39,23s70.35,2.87,206.09,2.61,152.83-.86,206.16-3.39S799.1,988,830.88,975.58c32.87-12.86,60.74-30,88.45-57.84S964.1,862,976.81,829.06c12.32-31.8,20.69-68.17,23-121.35,2.33-53.37,2.88-70.41,2.62-206.17s-.87-152.78-3.4-206.1-11-89.53-23.47-121.32c-12.85-32.87-30-60.7-57.82-88.45S862,40.87,829.07,28.19c-31.82-12.31-68.17-20.7-121.39-23S637.33,2.3,501.54,2.56,348.75,3.4,295.42,6m5.84,903.88c-48.75-2.12-75.22-10.22-92.86-17-23.36-9-40-19.88-57.58-37.29s-28.38-34.11-37.5-57.42c-6.85-17.64-15.1-44.08-17.38-92.83-2.48-52.69-3-68.51-3.29-202s.22-149.29,2.53-202c2.08-48.71,10.23-75.21,17-92.84,9-23.39,19.84-40,37.29-57.57s34.1-28.39,57.43-37.51c17.62-6.88,44.06-15.06,92.79-17.38,52.73-2.5,68.53-3,202-3.29s149.31.21,202.06,2.53c48.71,2.12,75.22,10.19,92.83,17,23.37,9,40,19.81,57.57,37.29s28.4,34.07,37.52,57.45c6.89,17.57,15.07,44,17.37,92.76,2.51,52.73,3.08,68.54,3.32,202s-.23,149.31-2.54,202c-2.13,48.75-10.21,75.23-17,92.89-9,23.35-19.85,40-37.31,57.56s-34.09,28.38-57.43,37.5c-17.6,6.87-44.07,15.07-92.76,17.39-52.73,2.48-68.53,3-202.05,3.29s-149.27-.25-202-2.53m407.6-674.61a60,60,0,1,0,59.88-60.1,60,60,0,0,0-59.88,60.1M245.77,503c.28,141.8,115.44,256.49,257.21,256.22S759.52,643.8,759.25,502,643.79,245.48,502,245.76,245.5,361.22,245.77,503m90.06-.18a166.67,166.67,0,1,1,167,166.34,166.65,166.65,0,0,1-167-166.34" transform="translate(-2.5 -2.5)" />
+                        </svg>
+                    </a>
+
+                    <a href="mailto:contactoswiny@gmail.com" title="contactoswiny@gmail.com" class="icon-btn" target="_blank" aria-label="mail">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4 7.00005L10.2 11.65C11.2667 12.45 12.7333 12.45 13.8 11.65L20 7" stroke-linecap="round" stroke-linejoin="round" />
+                            <rect x="3" y="5" width="18" height="14" rx="2" stroke-linecap="round" />
+                        </svg>
+                    </a>
+
+                    <a href="https://discordapp.com/users/293055366688931850" title="oswiny" class="icon-btn" target="_blank" aria-label="Discord">
+                        <svg width="24" height="24" viewBox="0 0 126.644 96" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path xmlns="http://www.w3.org/2000/svg" id="Discord-Symbol-White" class="cls-1" d="M81.15,0c-1.2376,2.1973-2.3489,4.4704-3.3591,6.794-9.5975-1.4396-19.3718-1.4396-28.9945,0-.985-2.3236-2.1216-4.5967-3.3591-6.794-9.0166,1.5407-17.8059,4.2431-26.1405,8.0568C2.779,32.5304-1.6914,56.3725.5312,79.8863c9.6732,7.1476,20.5083,12.603,32.0505,16.0884,2.6014-3.4854,4.8998-7.1981,6.8698-11.0623-3.738-1.3891-7.3497-3.1318-10.8098-5.1523.9092-.6567,1.7932-1.3386,2.6519-1.9953,20.281,9.547,43.7696,9.547,64.0758,0,.8587.7072,1.7427,1.3891,2.6519,1.9953-3.4601,2.0457-7.0718,3.7632-10.835,5.1776,1.97,3.8642,4.2683,7.5769,6.8698,11.0623,11.5419-3.4854,22.3769-8.9156,32.0509-16.0631,2.626-27.2771-4.496-50.9172-18.817-71.8548C98.9811,4.2684,90.1918,1.5659,81.1752.0505l-.0252-.0505ZM42.2802,65.4144c-6.2383,0-11.4159-5.6575-11.4159-12.6535s4.9755-12.6788,11.3907-12.6788,11.5169,5.708,11.4159,12.6788c-.101,6.9708-5.026,12.6535-11.3907,12.6535ZM84.3576,65.4144c-6.2637,0-11.3907-5.6575-11.3907-12.6535s4.9755-12.6788,11.3907-12.6788,11.4917,5.708,11.3906,12.6788c-.101,6.9708-5.026,12.6535-11.3906,12.6535Z" />
+                        </svg>
+                    </a>
                 </div>
+            </main>
 
-            </section>
-
-            <div class="social-row">
-                <a href="https://twitter.com/oswiny_" class="icon-btn" target="_blank" aria-label="Twitter">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 1200 1227" fill="none">
-                        <path
-                            d="M714.163 519.284L1160.89 0H1055.03L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.866L515.491 750.218L842.672 1226.37H1200L714.137 519.284H714.163ZM569.165 687.828L521.697 619.934L144.011 79.6944H306.615L611.412 515.685L658.88 583.579L1055.08 1150.3H892.476L569.165 687.854V687.828Z"
-                            fill="currentColor" />
-                    </svg>
-                </a>
-
-                <a href="https://github.com/oswiny" class="icon-btn" target="_blank" aria-label="GitHub">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 98 96">
-                        <path fill-rule="evenodd" clip-rule="evenodd"
-                            d="M48.854 0C21.839 0 0 22 0 49.217c0 21.756 13.993 40.172 33.405 46.69 2.427.49 3.316-1.059 3.316-2.362 0-1.141-.08-5.052-.08-9.127-13.59 2.934-16.42-5.867-16.42-5.867-2.184-5.704-5.42-7.17-5.42-7.17-4.448-3.015.324-3.015.324-3.015 4.934.326 7.523 5.052 7.523 5.052 4.367 7.496 11.404 5.378 14.235 4.074.404-3.178 1.699-5.378 3.074-6.6-10.839-1.141-22.243-5.378-22.243-24.283 0-5.378 1.94-9.778 5.014-13.2-.485-1.222-2.184-6.275.486-13.038 0 0 4.125-1.304 13.426 5.052a46.97 46.97 0 0 1 12.214-1.63c4.125 0 8.33.571 12.213 1.63 9.302-6.356 13.427-5.052 13.427-5.052 2.67 6.763.97 11.816.485 13.038 3.155 3.422 5.015 7.822 5.015 13.2 0 18.905-11.404 23.06-22.324 24.283 1.78 1.548 3.316 4.481 3.316 9.126 0 6.6-.08 11.897-.08 13.526 0 1.304.89 2.853 3.316 2.364 19.412-6.52 33.405-24.935 33.405-46.691C97.707 22 75.788 0 48.854 0z"
-                            fill="currentColor" />
-                    </svg>
-                </a>
-
-                <a href="https://instagram.com/contactoswiny" class="icon-btn" target="_blank" aria-label="Instagram">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 1000 1000">
-                        <path fill="currentColor"
-                            d="M295.42,6c-53.2,2.51-89.53,11-121.29,23.48-32.87,12.81-60.73,30-88.45,57.82S40.89,143,28.17,175.92c-12.31,31.83-20.65,68.19-23,121.42S2.3,367.68,2.56,503.46,3.42,656.26,6,709.6c2.54,53.19,11,89.51,23.48,121.28,12.83,32.87,30,60.72,57.83,88.45S143,964.09,176,976.83c31.8,12.29,68.17,20.67,121.39,23s70.35,2.87,206.09,2.61,152.83-.86,206.16-3.39S799.1,988,830.88,975.58c32.87-12.86,60.74-30,88.45-57.84S964.1,862,976.81,829.06c12.32-31.8,20.69-68.17,23-121.35,2.33-53.37,2.88-70.41,2.62-206.17s-.87-152.78-3.4-206.1-11-89.53-23.47-121.32c-12.85-32.87-30-60.7-57.82-88.45S862,40.87,829.07,28.19c-31.82-12.31-68.17-20.7-121.39-23S637.33,2.3,501.54,2.56,348.75,3.4,295.42,6m5.84,903.88c-48.75-2.12-75.22-10.22-92.86-17-23.36-9-40-19.88-57.58-37.29s-28.38-34.11-37.5-57.42c-6.85-17.64-15.1-44.08-17.38-92.83-2.48-52.69-3-68.51-3.29-202s.22-149.29,2.53-202c2.08-48.71,10.23-75.21,17-92.84,9-23.39,19.84-40,37.29-57.57s34.1-28.39,57.43-37.51c17.62-6.88,44.06-15.06,92.79-17.38,52.73-2.5,68.53-3,202-3.29s149.31.21,202.06,2.53c48.71,2.12,75.22,10.19,92.83,17,23.37,9,40,19.81,57.57,37.29s28.4,34.07,37.52,57.45c6.89,17.57,15.07,44,17.37,92.76,2.51,52.73,3.08,68.54,3.32,202s-.23,149.31-2.54,202c-2.13,48.75-10.21,75.23-17,92.89-9,23.35-19.85,40-37.31,57.56s-34.09,28.38-57.43,37.5c-17.6,6.87-44.07,15.07-92.76,17.39-52.73,2.48-68.53,3-202.05,3.29s-149.27-.25-202-2.53m407.6-674.61a60,60,0,1,0,59.88-60.1,60,60,0,0,0-59.88,60.1M245.77,503c.28,141.8,115.44,256.49,257.21,256.22S759.52,643.8,759.25,502,643.79,245.48,502,245.76,245.5,361.22,245.77,503m90.06-.18a166.67,166.67,0,1,1,167,166.34,166.65,166.65,0,0,1-167-166.34"
-                            transform="translate(-2.5 -2.5)" />
-                    </svg>
-                </a>
-
-                <a href="mailto:contactoswiny@gmail.com" title="contactoswiny@gmail.com" class="icon-btn"
-                    target="_blank" aria-label="mail">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path d="M4 7.00005L10.2 11.65C11.2667 12.45 12.7333 12.45 13.8 11.65L20 7"
-                            stroke-linecap="round" stroke-linejoin="round" />
-                        <rect x="3" y="5" width="18" height="14" rx="2" stroke-linecap="round" />
-                    </svg>
-                </a>
-
-                <a href="https://discordapp.com/users/293055366688931850" title="oswiny" class="icon-btn"
-                    target="_blank" aria-label="Discord">
-                    <svg width="24" height="24" viewBox="0 0 126.644 96" fill="currentColor"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path xmlns="http://www.w3.org/2000/svg" id="Discord-Symbol-White" class="cls-1"
-                            d="M81.15,0c-1.2376,2.1973-2.3489,4.4704-3.3591,6.794-9.5975-1.4396-19.3718-1.4396-28.9945,0-.985-2.3236-2.1216-4.5967-3.3591-6.794-9.0166,1.5407-17.8059,4.2431-26.1405,8.0568C2.779,32.5304-1.6914,56.3725.5312,79.8863c9.6732,7.1476,20.5083,12.603,32.0505,16.0884,2.6014-3.4854,4.8998-7.1981,6.8698-11.0623-3.738-1.3891-7.3497-3.1318-10.8098-5.1523.9092-.6567,1.7932-1.3386,2.6519-1.9953,20.281,9.547,43.7696,9.547,64.0758,0,.8587.7072,1.7427,1.3891,2.6519,1.9953-3.4601,2.0457-7.0718,3.7632-10.835,5.1776,1.97,3.8642,4.2683,7.5769,6.8698,11.0623,11.5419-3.4854,22.3769-8.9156,32.0509-16.0631,2.626-27.2771-4.496-50.9172-18.817-71.8548C98.9811,4.2684,90.1918,1.5659,81.1752.0505l-.0252-.0505ZM42.2802,65.4144c-6.2383,0-11.4159-5.6575-11.4159-12.6535s4.9755-12.6788,11.3907-12.6788,11.5169,5.708,11.4159,12.6788c-.101,6.9708-5.026,12.6535-11.3907,12.6535ZM84.3576,65.4144c-6.2637,0-11.3907-5.6575-11.3907-12.6535s4.9755-12.6788,11.3907-12.6788,11.4917,5.708,11.3906,12.6788c-.101,6.9708-5.026,12.6535-11.3906,12.6535Z" />
-                    </svg>
-                </a>
-            </div>
-
-        </main>
-
-        <footer>
-            <div class="note">v1.0.0-beta</div>
-        </footer>
-    </div>
-    <script src="popup.js" type="module"></script>
-</body>
-
+            <footer>
+                <div class="note">v1.0.0-beta</div>
+            </footer>
+        </div>
+        <script src="popup.js" type="module"></script>
+    </body>
 </html>

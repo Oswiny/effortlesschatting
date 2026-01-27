@@ -2,17 +2,26 @@
 import { labels } from "./config.js";
 (async () => {
 
+    let isInjected = false;
     let config = {};
+
+    let resolveConfigReady;
+    const configReady = new Promise((resolve, reject) => { resolveConfigReady = resolve })
     window.postMessage({ source: "effortless", type: "CONFIG_SYNC" }, "*");
 
     window.addEventListener("message", (event) => {
         if (event.data?.source === "effortless" && event.data.type === "CONFIG_SYNC" && event.data.payload?.config) {
             const oldConfig = config;
             config = event.data.payload.config;
+            resolveConfigReady?.();
             updateLabels(config);
             updateScannerMethod(config.scannerMethod, oldConfig.scannerMethod)
         }
     });
+
+    await configReady;
+
+
 
     function updateScannerMethod(newScannerMethod, oldScannerMethod = null) {
         if (!isInjected || (oldScannerMethod !== null && oldScannerMethod === newScannerMethod)) {
@@ -458,7 +467,6 @@ import { labels } from "./config.js";
     let textbox = null;
     let textBoxControllers = null;
     let sendMessage = null;
-    let isInjected = false;
 
     //if for some reason chat box gets removed we inject it
     function checkInjection() {
@@ -571,7 +579,7 @@ import { labels } from "./config.js";
         startElement = document.querySelector(".chat-room__content");
         startFiber = startElement[Object.keys(startElement).find(item => item.includes("reactFiber"))]
         fiber = findPathToTarget(startFiber, functionName).fiber
-        
+
         if (originalOnChatMessageEvent !== null) {
             fiber.stateNode.onChatMessageEvent = originalOnChatMessageEvent
         }
@@ -628,5 +636,14 @@ import { labels } from "./config.js";
                 return originalInsertBefore.apply(this, args);
             }
         }
+        if (config.scannerMethod === "injection-with-emotes" && !isSevenTvInstalled) {
+            const noMessages = document.querySelector("#noMessages")
+            noMessages.setAttribute("data-label", "seventv-not-detected")
+        }
+        else {
+            noMessages.setAttribute("data-label", "noMessages")
+        }
+        updateLabels(config)
+
     }
 })()

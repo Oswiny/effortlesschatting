@@ -13,6 +13,31 @@ import { defaultConfig, labels } from "../config.js";
     }
     updateLabels(currentConfig["language"])
 
+    async function updateStatusDots() {
+        //might just scrape this.
+        const twitchPill = document.querySelector("#twitch.status-pill")
+        const twitchDot = twitchPill.querySelector(".status-dot")
+        /*
+        const seventvPill = document.querySelector("#seventv.status-pill")
+        const seventvDot = seventvPill.querySelector(".status-dot")
+        */
+        const [tab] = await browser.tabs.query({ active: true, currentWindow: true });
+        const isOnTwitch = /^https?:\/\/(www\.)?twitch\.tv(\/.*)?$/i.test(tab.url);
+        const colors = ["green", "red"]
+        //const dots = [twitchDot, seventvDot]
+        const dots = [twitchDot]
+        dots.forEach(statusDot => colors.forEach(color => statusDot.classList.toggle(color, false)))
+        if (isOnTwitch){
+            twitchDot.classList.toggle("green", true)
+        }
+        else{
+            twitchDot.classList.toggle("red", true)
+        }
+
+    
+
+    }
+    await updateStatusDots()
 
     function updateResetState(element, defaultValue, on) {
         const changed = JSON.stringify(defaultValue) !== JSON.stringify(on)
@@ -92,7 +117,7 @@ import { defaultConfig, labels } from "../config.js";
             if (dropdown.id === "language") {
                 updateLabels(item.dataset.value)
             }
-            if (dropdown.id = "scannerMethod" && item.dataset.value === "injection-with-emotes")  {
+            if (dropdown.id = "scannerMethod" && item.dataset.value === "injection-with-emotes") {
                 alert(labels[currentConfig.language]["seventv-alert"]["main"])
             }
             setDropdownValue(dropdown, item.dataset.value)
