@@ -19,8 +19,6 @@ import { labels } from "./config.js";
             return
         }
         scannerMethod();
-        //still working on this
-        //needs resetting after changing config, will do it tomorrow
     }
 
     function updateLabels(config) {
