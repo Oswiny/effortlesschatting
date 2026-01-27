@@ -257,7 +257,7 @@ import { labels } from "./config.js";
             flushDiv.classList.add("effortlesschatting-flush-button-outer")
             flushDiv.innerHTML = `
                 <div class="effortlesschatting-flush-button-inner">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="m16 22-1-4"></path>
                         <path
                             d="M19 13.99a1 1 0 0 0 1-1V12a2 2 0 0 0-2-2h-3a1 1 0 0 1-1-1V4a2 2 0 0 0-4 0v5a1 1 0 0 1-1 1H6a2 2 0 0 0-2 2v.99a1 1 0 0 0 1 1">
@@ -400,7 +400,7 @@ import { labels } from "./config.js";
         displayOn(message) {
             let associatedChild = this.node.querySelector(`.contentImg`)
             associatedChild.alt = message.text;
-            associatedChild.srcset = message.srcset;
+                        associatedChild.srcset = message.srcset;
             associatedChild.classList.remove("hidden")
             this.node.classList.remove("hidden")
             this.printWrapper = function () {

@@ -28,7 +28,6 @@
             "js": [
                 "injector.js"
             ],
-            "type": "module",
             "run_at": "document_end"
         }
     ],
@@ -40,7 +39,8 @@
             "resources": [
                 "effortlesschatting.js",
                 "effortlesschatting.css",
-                "config.js"
+                "config.js",
+                "configAccess.js"
             ]
         }
     ]

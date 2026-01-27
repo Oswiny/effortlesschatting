@@ -83,7 +83,7 @@ import { defaultConfig, labels } from "../config.js";
 
         hidden.value = value;
         label.textContent = matchedItem.textContent;
-        label.setAttribute("data-label", value)
+        if (!(dropdown.id === "language")) label.setAttribute("data-label", value)
     }
 
     function toggleDropdown(dropdown, btn, menu, forcedState) {
@@ -113,11 +113,12 @@ import { defaultConfig, labels } from "../config.js";
 
         menu.addEventListener("click", (e) => {
             const item = e.target.closest(".dropdown-item");
+            if (!item) return
             configAccess.setConfig(dropdown.id, item.dataset.value)
             if (dropdown.id === "language") {
                 updateLabels(item.dataset.value)
             }
-            if (dropdown.id = "scannerMethod" && item.dataset.value === "injection-with-emotes") {
+            if (dropdown.id === "scannerMethod" && item.dataset.value === "injection-with-emotes") {
                 alert(labels[currentConfig.language]["seventv-alert"]["main"])
             }
             setDropdownValue(dropdown, item.dataset.value)

@@ -124,7 +124,6 @@
 .effortlesschatting-flush-tooltip {
     position: absolute;
     bottom: 138%;
-    /* your Twitch-like offset */
     left: 50%;
     transform: translateX(-50%) translateY(5px);
     background-color: #fff;
@@ -140,19 +139,16 @@
     z-index: 9999;
 }
 
-/* arrow as rotated square */
 .effortlesschatting-flush-tooltip::before {
     content: "";
     position: absolute;
     bottom: -3px;
     left: 50%;
     display: block;
-    /* must have this */
     width: 6px;
     height: 6px;
     background-color: #fff;
     transform: translateX(-50%) rotate(45deg);
-    /* rotates into diamond */
     box-shadow: rgba(0, 0, 0, 0.1) -1px -1px 1px;
     opacity: 0;
     transition: opacity 0.2s ease, transform 0.2s ease;
