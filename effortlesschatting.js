@@ -154,7 +154,7 @@ import { labels } from "./config.js";
             })
             root.innerHTML = `
                 <div id="noMessages" style="transition: display 125ms;" class="effortlesschatting-no-message" data-label="noMessages" data-label-type="main">
-                    No Messages Were Found
+                    No Messages Found
                 </div>
                 <div class="effortlesschatting-messagebox-area hidden">
                 </div>

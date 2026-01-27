@@ -92,6 +92,9 @@ import { defaultConfig, labels } from "../config.js";
             if (dropdown.id === "language") {
                 updateLabels(item.dataset.value)
             }
+            if (dropdown.id = "scannerMethod" && item.dataset.value === "injection-with-emotes")  {
+                alert(labels[currentConfig.language]["seventv-alert"]["main"])
+            }
             setDropdownValue(dropdown, item.dataset.value)
             updateResetState(dropdown.closest(".row").querySelector(".reset-icon"), defaultConfig[dropdown.id], hidden.value)
             toggleDropdown(dropdown, btn, menu, false);

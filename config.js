@@ -28,11 +28,11 @@ export const labels = {
     en: {
         scannerMethod: {
             main: "Scanner Method",
-            alt: "Choose what to use to scan and detect incoming messages"
+            alt: "Choose the method for detecting incoming messages"
         },
         allowSelf: {
             main: "Allow Self Scan",
-            alt: "Allow scanner to scan self messages"
+            alt: "Allow the scanner to detect your own messages"
         },
         addButton: {
             main: "Add"
@@ -42,11 +42,11 @@ export const labels = {
         },
         setMessageBox: {
             main: "Message Box Settings",
-            alt: "Change how the message boxes behave",
+            alt: "Customize message box behavior",
         },
         setInsert: {
             main: "Insert Settings",
-            alt: "Adjust how inserter behaves",
+            alt: "Adjust insertion behavior",
         },
         mainTag: {
             main: "Effortless Chatting",
@@ -54,15 +54,15 @@ export const labels = {
         },
         setScanner: {
             main: "Scanner Settings",
-            alt: "Adjust how scanner behaves",
+            alt: "Adjust scanner behavior",
         },
         useStartAsDefaultOffset: {
             main: "Default Insert Position",
-            alt: "Whether to insert a message to start or end if no cursor is available",
+            alt: "Insert at the start or end if no cursor is active",
         },
         autoSpace: {
-            main: "Automatic Space",
-            alt: "Automatically put spaces when inserting a message",
+            main: "Automatic Spacing",
+            alt: "Automatically add spaces when inserting a message",
         },
         allowText: {
             main: "Allow Text",
@@ -70,11 +70,11 @@ export const labels = {
         },
         deleteAfterMs: {
             main: "Message Lifespan",
-            alt: "Time a scanned message is alive for",
+            alt: "Duration a scanned message remains visible",
         },
         contentNodeAmount: {
-            main: "Message Box Amount",
-            alt: "Amount of message boxes displayed",
+            main: "Number of Message Boxes",
+            alt: "Count of message boxes displayed",
         },
         bannedWords: {
             main: "Blocked Words",
@@ -90,43 +90,43 @@ export const labels = {
         },
         scrapeBots: {
             main: "Allow Bots",
-            alt: "Allow scanning messages of bots",
+            alt: "Allow scanning messages from bots",
         },
         scrapeMods: {
             main: "Allow Mods",
-            alt: "Allow scanning messages of moderators",
+            alt: "Allow scanning messages from moderators",
         },
         scrapeVIPs: {
             main: "Allow VIPs",
-            alt: "Allow scanning messages of VIPs",
+            alt: "Allow scanning messages from VIPs",
         },
         scrapeOnlySubs: {
             main: "Allow Only Subscribers",
-            alt: "Allow scanning only messages of subscribed users",
+            alt: "Only scan messages from subscribed users",
         },
         scrapeSubsWithMinimumMonths: {
-            main: "Minimum Subscribed Month Requirement",
-            alt: "Scans only users who have been subscribed for at least selected amount of months",
+            main: "Minimum Subscription Duration",
+            alt: "Only scan users subscribed for at least the selected number of months",
         },
         updateNodesAfterTimeout: {
-            main: "Refresh Message Boxes After Lifespan Ends",
-            alt: "Refreshes message boxes after lifespan of a message ends",
+            main: "Refresh After Expiration",
+            alt: "Refresh message boxes after the message lifespan ends",
         },
         autoHide: {
-            main: "Automatic Hide",
-            alt: "Automatically hide extension panel when no messages are available",
+            main: "Auto-Hide",
+            alt: "Automatically hide the panel when no messages are available",
         },
         scrapeAlreadySentMessages: {
-            main: "Scan Existing Messages",
-            alt: "Starts scanning from the messages already shown in chat",
+            main: "Scan Chat History",
+            alt: "Scan messages already visible in chat",
         },
         requiredHoldTime: {
-            main: "Hold Time For Automatic Send",
-            alt: "Sends message after being held for this amount of time",
+            main: "Long-Press to Send",
+            alt: "Duration to hold the message box to auto-send",
         },
         messageClickAnimationTime: {
-            main: "Animation Length For Click",
-            alt: "Time animation plays out when a message box has been clicked on",
+            main: "Click Animation Duration",
+            alt: "Length of the animation when a message box is clicked",
         },
         other: {
             main: "Other",
@@ -134,10 +134,10 @@ export const labels = {
         },
         language: {
             main: "Language",
-            alt: "Choose which language to use",
+            alt: "Select interface language",
         },
         noMessages: {
-            main: "No Messages Were Found"
+            main: "No Messages Found"
         },
         month: {
             main: "Month"
@@ -161,19 +161,25 @@ export const labels = {
             main: "Injection Based (With Emotes)",
         },
         seventvInstallationWaitTime: {
-            main: "7TV Installation Detection Time",
-            alt: "How long the app waits after the last detected change to the head element before deciding that loading is finished. Increase this if you see “7TV installation not detected”."
+            main: "7TV Detection Timeout",
+            alt: "Time to wait for 7TV to load. Increase this if you see '7TV installation not detected'."
+        },
+        "seventv-alert": {
+            main: "Note: 7TV must be installed for this feature to work!"
+        },
+        "seventv-not-detected": {
+            main: "7TV installation not detected"
         }
     },
 
     es: {
         scannerMethod: {
             main: "Método de Escaneo",
-            alt: "Elige qué usar para escanear y detectar mensajes entrantes"
+            alt: "Elige el método para detectar mensajes entrantes"
         },
         allowSelf: {
             main: "Permitir autoescaneo",
-            alt: "Permite que el escáner escanee sus propios mensajes"
+            alt: "Permitir que el escáner detecte tus propios mensajes"
         },
         addButton: {
             main: "Agregar"
@@ -183,11 +189,11 @@ export const labels = {
         },
         setMessageBox: {
             main: "Configuración de Cajas de Mensajes",
-            alt: "Cambia cómo se comportan las cajas de mensajes",
+            alt: "Personaliza el comportamiento de las cajas de mensajes",
         },
         setInsert: {
             main: "Configuración de Inserción",
-            alt: "Ajusta cómo se comporta el insertador",
+            alt: "Ajusta el comportamiento de inserción",
         },
         mainTag: {
             main: "Effortless Chatting",
@@ -195,14 +201,14 @@ export const labels = {
         },
         setScanner: {
             main: "Configuración del Escáner",
-            alt: "Ajusta cómo se comporta el escáner",
+            alt: "Ajusta el comportamiento del escáner",
         },
         useStartAsDefaultOffset: {
             main: "Posición de Inserción Predeterminada",
-            alt: "Inserta el mensaje al inicio o al final si no hay cursor disponible",
+            alt: "Inserta al inicio o al final si no hay cursor activo",
         },
         autoSpace: {
-            main: "Espacio Automático",
+            main: "Espaciado Automático",
             alt: "Agrega espacios automáticamente al insertar un mensaje",
         },
         allowText: {
@@ -211,11 +217,11 @@ export const labels = {
         },
         deleteAfterMs: {
             main: "Duración del Mensaje",
-            alt: "Tiempo durante el cual un mensaje escaneado permanece activo",
+            alt: "Tiempo que un mensaje escaneado permanece visible",
         },
         contentNodeAmount: {
-            main: "Cantidad de Cajas de Mensajes",
-            alt: "Número de cajas de mensajes mostradas",
+            main: "Número de Cajas de Mensajes",
+            alt: "Cantidad de cajas de mensajes mostradas",
         },
         bannedWords: {
             main: "Palabras Bloqueadas",
@@ -227,7 +233,7 @@ export const labels = {
         },
         bannedUsers: {
             main: "Usuarios Bloqueados",
-            alt: "Los mensajes de estos usuarios serán ignorados por el escáner",
+            alt: "Los mensajes de estos usuarios serán ignorados",
         },
         scrapeBots: {
             main: "Permitir Bots",
@@ -247,27 +253,27 @@ export const labels = {
         },
         scrapeSubsWithMinimumMonths: {
             main: "Meses Mínimos de Suscripción",
-            alt: "Escanea solo usuarios suscritos durante al menos la cantidad de meses seleccionada",
+            alt: "Escanea solo usuarios suscritos durante al menos el número de meses seleccionado",
         },
         updateNodesAfterTimeout: {
-            main: "Actualizar Cajas al Expirar",
+            main: "Actualizar al Expirar",
             alt: "Actualiza las cajas de mensajes cuando finaliza la duración del mensaje",
         },
         autoHide: {
             main: "Ocultar Automáticamente",
-            alt: "Oculta automáticamente el panel cuando no hay mensajes disponibles",
+            alt: "Oculta el panel automáticamente cuando no hay mensajes",
         },
         scrapeAlreadySentMessages: {
             main: "Escanear Historial",
-            alt: "Comienza a escanear desde los mensajes ya mostrados",
+            alt: "Escanea mensajes ya visibles en el chat",
         },
         requiredHoldTime: {
-            main: "Tiempo de Pulsación para Envío",
-            alt: "Envía el mensaje tras mantenerlo presionado este tiempo",
+            main: "Mantener pulsado para enviar",
+            alt: "Tiempo que debes mantener pulsado para el envío automático",
         },
         messageClickAnimationTime: {
             main: "Duración Animación Clic",
-            alt: "Tiempo que dura la animación al hacer clic en una caja de mensaje",
+            alt: "Duración de la animación al hacer clic en una caja",
         },
         other: {
             main: "Otros",
@@ -275,7 +281,7 @@ export const labels = {
         },
         language: {
             main: "Idioma",
-            alt: "Elige el idioma a utilizar",
+            alt: "Seleccionar idioma de la interfaz",
         },
         noMessages: {
             main: "No se encontraron mensajes"
@@ -296,14 +302,20 @@ export const labels = {
             main: "Legado (Legacy)",
         },
         "injection-without-emotes": {
-            main: "Basado en inyección (sin emoticonos)",
+            main: "Basado en inyección (sin emotes)",
         },
         "injection-with-emotes": {
-            main: "Basado en inyección (con emoticonos)",
+            main: "Basado en inyección (con emotes)",
         },
         seventvInstallationWaitTime: {
-            main: "Tiempo de detección de instalación de 7TV",
-            alt: "Cuánto tiempo espera la aplicación tras el último cambio detectado en el elemento 'head' antes de decidir que la carga ha finalizado. Aumenta esto si ves el mensaje '7TV installation not detected'."
+            main: "Tiempo de espera detección 7TV",
+            alt: "Tiempo de espera para cargar 7TV. Aumenta esto si ves el mensaje 'Instalación de 7TV no detectada'."
+        },
+        "seventv-alert": {
+            main: "Nota: ¡7TV debe estar instalado para que esto funcione!"
+        },
+        "seventv-not-detected": {
+            main: "Instalación de 7TV no detectada"
         }
     },
 
@@ -314,7 +326,7 @@ export const labels = {
         },
         allowSelf: {
             main: "セルフスキャンを許可",
-            alt: "スキャナーが自身のメッセージをスキャンすることを許可します"
+            alt: "スキャナーが自身のメッセージを検出することを許可します"
         },
         addButton: {
             main: "追加"
@@ -324,7 +336,7 @@ export const labels = {
         },
         setMessageBox: {
             main: "メッセージボックス設定",
-            alt: "メッセージボックスの動作を変更します",
+            alt: "メッセージボックスの動作をカスタマイズします",
         },
         setInsert: {
             main: "挿入設定",
@@ -352,7 +364,7 @@ export const labels = {
         },
         deleteAfterMs: {
             main: "メッセージ表示時間",
-            alt: "スキャンされたメッセージが表示される時間",
+            alt: "スキャンされたメッセージが表示され続ける時間",
         },
         contentNodeAmount: {
             main: "メッセージボックス数",
@@ -368,23 +380,23 @@ export const labels = {
         },
         bannedUsers: {
             main: "ブロックされたユーザー",
-            alt: "これらのユーザーのメッセージはスキャンされません",
+            alt: "これらのユーザーからのメッセージは無視されます",
         },
         scrapeBots: {
             main: "ボットを許可",
-            alt: "ボットのメッセージをスキャンします",
+            alt: "ボットからのメッセージをスキャンします",
         },
         scrapeMods: {
             main: "モデレーターを許可",
-            alt: "モデレーターのメッセージをスキャンします",
+            alt: "モデレーターからのメッセージをスキャンします",
         },
         scrapeVIPs: {
             main: "VIPを許可",
-            alt: "VIPユーザーのメッセージをスキャンします",
+            alt: "VIPユーザーからのメッセージをスキャンします",
         },
         scrapeOnlySubs: {
             main: "サブスクライバーのみ許可",
-            alt: "サブスクライバーのメッセージのみをスキャンします",
+            alt: "サブスクライバーからのメッセージのみをスキャンします",
         },
         scrapeSubsWithMinimumMonths: {
             main: "最低サブスク期間（月）",
@@ -399,12 +411,12 @@ export const labels = {
             alt: "メッセージがない場合、パネルを自動で非表示にします",
         },
         scrapeAlreadySentMessages: {
-            main: "既存ログをスキャン",
-            alt: "すでに表示されているメッセージからスキャンを開始します",
+            main: "履歴をスキャン",
+            alt: "すでにチャットに表示されているメッセージをスキャンします",
         },
         requiredHoldTime: {
-            main: "自動送信の長押し時間",
-            alt: "メッセージボックスをこの時間長押しすると自動送信されます",
+            main: "長押しで送信",
+            alt: "自動送信するためにメッセージボックスを長押しする時間",
         },
         messageClickAnimationTime: {
             main: "クリック時のアニメーション時間",
@@ -416,7 +428,7 @@ export const labels = {
         },
         language: {
             main: "言語",
-            alt: "使用する言語を選択します",
+            alt: "インターフェース言語を選択",
         },
         noMessages: {
             main: "メッセージが見つかりませんでした"
@@ -443,19 +455,25 @@ export const labels = {
             main: "インジェクション方式 (絵文字あり)",
         },
         seventvInstallationWaitTime: {
-            main: "7TV インストール検出時間",
-            alt: "ヘッド要素（head）の最終変更から、読み込み完了と判断するまでの待機時間です。「7TV installation not detected」と表示される場合は、この値を増やしてください。"
+            main: "7TV 検出待機時間",
+            alt: "7TVの読み込みを待機する時間です。「7TVのインストールが検出されませんでした」と表示される場合は、この値を増やしてください。"
+        },
+        "seventv-alert": {
+            main: "注意: この機能を使用するには7TVがインストールされている必要があります！"
+        },
+        "seventv-not-detected": {
+            main: "7TVのインストールが検出されませんでした"
         }
     },
 
     de: {
         scannerMethod: {
             main: "Scan-Methode",
-            alt: "Wähle aus, wie eingehende Nachrichten gescannt und erkannt werden"
+            alt: "Wähle die Methode zur Erkennung eingehender Nachrichten"
         },
         allowSelf: {
             main: "Selbst-Scan erlauben",
-            alt: "Erlaubt dem Scanner, eigene Nachrichten zu scannen"
+            alt: "Erlaubt dem Scanner, deine eigenen Nachrichten zu erkennen"
         },
         addButton: {
             main: "Hinzufügen"
@@ -465,11 +483,11 @@ export const labels = {
         },
         setMessageBox: {
             main: "Nachrichtenbox-Einstellungen",
-            alt: "Ändere das Verhalten der Nachrichtenboxen",
+            alt: "Verhalten der Nachrichtenboxen anpassen",
         },
         setInsert: {
             main: "Einfüge-Einstellungen",
-            alt: "Passe das Einfügeverhalten an",
+            alt: "Einfügeverhalten anpassen",
         },
         mainTag: {
             main: "Effortless Chatting",
@@ -477,15 +495,15 @@ export const labels = {
         },
         setScanner: {
             main: "Scanner-Einstellungen",
-            alt: "Passe das Verhalten des Scanners an",
+            alt: "Scanner-Verhalten anpassen",
         },
         useStartAsDefaultOffset: {
             main: "Standard-Einfügeposition",
-            alt: "Fügt eine Nachricht am Anfang oder Ende ein, wenn kein Cursor verfügbar ist",
+            alt: "Fügt am Anfang oder Ende ein, wenn kein Cursor aktiv ist",
         },
         autoSpace: {
             main: "Automatischer Abstand",
-            alt: "Fügt beim Einfügen einer Nachricht automatisch Leerzeichen hinzu",
+            alt: "Fügt beim Einfügen automatisch Leerzeichen hinzu",
         },
         allowText: {
             main: "Text Erlauben",
@@ -493,7 +511,7 @@ export const labels = {
         },
         deleteAfterMs: {
             main: "Nachrichtenlebensdauer",
-            alt: "Zeit, die eine gescannte Nachricht aktiv bleibt",
+            alt: "Dauer, die eine gescannte Nachricht sichtbar bleibt",
         },
         contentNodeAmount: {
             main: "Anzahl der Nachrichtenboxen",
@@ -509,7 +527,7 @@ export const labels = {
         },
         bannedUsers: {
             main: "Blockierte Benutzer",
-            alt: "Nachrichten dieser Benutzer werden vom Scanner ignoriert",
+            alt: "Nachrichten dieser Benutzer werden ignoriert",
         },
         scrapeBots: {
             main: "Bots Erlauben",
@@ -528,28 +546,28 @@ export const labels = {
             alt: "Scannt nur Nachrichten von abonnierten Benutzern",
         },
         scrapeSubsWithMinimumMonths: {
-            main: "Minimale Abodauer (Monate)",
-            alt: "Scannt nur Benutzer, die mindestens die ausgewählte Anzahl an Monaten abonniert sind",
+            main: "Minimale Abodauer",
+            alt: "Scannt nur Benutzer, die mindestens die gewählte Anzahl an Monaten abonniert sind",
         },
         updateNodesAfterTimeout: {
-            main: "Boxen nach Ablauf aktualisieren",
-            alt: "Aktualisiert Nachrichtenboxen nach Ablauf der Nachrichtenlebensdauer",
+            main: "Aktualisieren nach Ablauf",
+            alt: "Aktualisiert Boxen nach Ablauf der Nachrichtenlebensdauer",
         },
         autoHide: {
             main: "Automatisch Ausblenden",
-            alt: "Blendet das Panel automatisch aus, wenn keine Nachrichten verfügbar sind",
+            alt: "Blendet das Panel automatisch aus, wenn keine Nachrichten da sind",
         },
         scrapeAlreadySentMessages: {
             main: "Chat-Verlauf Scannen",
-            alt: "Beginnt mit dem Scannen der bereits angezeigten Nachrichten",
+            alt: "Scannt Nachrichten, die bereits im Chat sichtbar sind",
         },
         requiredHoldTime: {
-            main: "Dauer für Auto-Senden",
-            alt: "Sendet eine Nachricht, nachdem sie für diese Zeit gedrückt gehalten wurde",
+            main: "Lange Drücken zum Senden",
+            alt: "Dauer, die gedrückt werden muss, um automatisch zu senden",
         },
         messageClickAnimationTime: {
-            main: "Animationsdauer beim Klicken",
-            alt: "Dauer der Animation beim Klicken auf eine Nachrichtenbox",
+            main: "Klick-Animationsdauer",
+            alt: "Dauer der Animation beim Klicken auf eine Box",
         },
         other: {
             main: "Sonstiges",
@@ -557,7 +575,7 @@ export const labels = {
         },
         language: {
             main: "Sprache",
-            alt: "Wähle die zu verwendende Sprache",
+            alt: "Sprache der Benutzeroberfläche wählen",
         },
         noMessages: {
             main: "Keine Nachrichten gefunden"
@@ -584,19 +602,25 @@ export const labels = {
             main: "Injektionsbasiert (Mit Emotes)",
         },
         seventvInstallationWaitTime: {
-            main: "7TV-Installationserkennungszeit",
-            alt: "Wie lange die App nach der letzten Änderung am Head-Element wartet, bevor sie entscheidet, dass das Laden abgeschlossen ist. Erhöhen Sie diesen Wert, wenn die Meldung „7TV installation not detected“ angezeigt wird."
+            main: "7TV-Erkennungszeit",
+            alt: "Wartezeit für das Laden von 7TV. Erhöhen Sie dies, wenn '7TV-Installation nicht erkannt' angezeigt wird."
+        },
+        "seventv-alert": {
+            main: "Hinweis: 7TV muss installiert sein, damit dies funktioniert!"
+        },
+        "seventv-not-detected": {
+            main: "7TV-Installation nicht erkannt"
         }
     },
 
     fr: {
         scannerMethod: {
             main: "Méthode de Scan",
-            alt: "Choisissez comment scanner et détecter les messages entrants"
+            alt: "Choisissez la méthode pour détecter les messages entrants"
         },
         allowSelf: {
             main: "Autoriser l'auto-scan",
-            alt: "Autoriser le scanner à scanner ses propres messages"
+            alt: "Autoriser le scanner à détecter vos propres messages"
         },
         addButton: {
             main: "Ajouter"
@@ -606,11 +630,11 @@ export const labels = {
         },
         setMessageBox: {
             main: "Réglages des Messages",
-            alt: "Modifiez le comportement des boîtes de messages",
+            alt: "Personnalisez le comportement des boîtes de messages",
         },
         setInsert: {
             main: "Réglages d’Insertion",
-            alt: "Ajustez le comportement de l’insertion",
+            alt: "Ajustez le comportement d’insertion",
         },
         mainTag: {
             main: "Effortless Chatting",
@@ -622,11 +646,11 @@ export const labels = {
         },
         useStartAsDefaultOffset: {
             main: "Position d’Insertion par Défaut",
-            alt: "Insère un message au début ou à la fin si aucun curseur n’est disponible",
+            alt: "Insère au début ou à la fin si aucun curseur n’est actif",
         },
         autoSpace: {
-            main: "Espace Automatique",
-            alt: "Ajoute automatiquement des espaces lors de l’insertion d’un message",
+            main: "Espacement Automatique",
+            alt: "Ajoute automatiquement des espaces lors de l’insertion",
         },
         allowText: {
             main: "Autoriser le Texte",
@@ -634,10 +658,10 @@ export const labels = {
         },
         deleteAfterMs: {
             main: "Durée de Vie du Message",
-            alt: "Durée pendant laquelle un message scanné reste actif",
+            alt: "Durée pendant laquelle un message scanné reste visible",
         },
         contentNodeAmount: {
-            main: "Nombre de Boîtes",
+            main: "Nombre de Boîtes de Messages",
             alt: "Nombre de boîtes de messages affichées",
         },
         bannedWords: {
@@ -650,7 +674,7 @@ export const labels = {
         },
         bannedUsers: {
             main: "Utilisateurs Bloqués",
-            alt: "Les messages de ces utilisateurs seront ignorés par le scanner",
+            alt: "Les messages de ces utilisateurs seront ignorés",
         },
         scrapeBots: {
             main: "Autoriser les Bots",
@@ -662,35 +686,35 @@ export const labels = {
         },
         scrapeVIPs: {
             main: "Autoriser les VIPs",
-            alt: "Autorise le scan des messages des utilisateurs VIP",
+            alt: "Autorise le scan des messages des VIPs",
         },
         scrapeOnlySubs: {
             main: "Autoriser Uniquement les Abonnés",
             alt: "Scanne uniquement les messages des utilisateurs abonnés",
         },
         scrapeSubsWithMinimumMonths: {
-            main: "Durée Min. d’Abonnement (Mois)",
-            alt: "Scanne uniquement les utilisateurs abonnés depuis au moins le nombre de mois sélectionné",
+            main: "Durée Min. d’Abonnement",
+            alt: "Scanne uniquement les utilisateurs abonnés depuis au moins le nombre de mois choisi",
         },
         updateNodesAfterTimeout: {
             main: "Actualiser Après Expiration",
-            alt: "Actualise les boîtes de messages après la fin de la durée de vie",
+            alt: "Actualise les boîtes après la fin de la durée de vie du message",
         },
         autoHide: {
             main: "Masquage Automatique",
-            alt: "Masque automatiquement le panneau lorsqu’aucun message n’est disponible",
+            alt: "Masque automatiquement le panneau s'il n'y a pas de messages",
         },
         scrapeAlreadySentMessages: {
             main: "Scanner l'Historique",
-            alt: "Commence le scan à partir des messages déjà affichés",
+            alt: "Scanne les messages déjà visibles dans le chat",
         },
         requiredHoldTime: {
-            main: "Durée d'Appui pour Envoi",
-            alt: "Envoie le message après avoir maintenu l'appui ce laps de temps",
+            main: "Appui Long pour Envoyer",
+            alt: "Durée de l'appui nécessaire pour l'envoi automatique",
         },
         messageClickAnimationTime: {
-            main: "Durée de l’Animation au Clic",
-            alt: "Durée de l’animation lors du clic sur une boîte de message",
+            main: "Durée Animation au Clic",
+            alt: "Durée de l’animation lors du clic sur une boîte",
         },
         other: {
             main: "Autres",
@@ -698,7 +722,7 @@ export const labels = {
         },
         language: {
             main: "Langue",
-            alt: "Choisissez la langue à utiliser",
+            alt: "Choisir la langue de l'interface",
         },
         noMessages: {
             main: "Aucun message trouvé"
@@ -719,25 +743,31 @@ export const labels = {
             main: "Hérité (Legacy)",
         },
         "injection-without-emotes": {
-            main: "Basé sur l'injection (sans émoticônes)",
+            main: "Basé sur l'injection (sans emotes)",
         },
         "injection-with-emotes": {
-            main: "Basé sur l'injection (avec émoticônes)",
+            main: "Basé sur l'injection (avec emotes)",
         },
         seventvInstallationWaitTime: {
-            main: "Temps de détection de l'installation 7TV",
-            alt: "Temps d'attente après le dernier changement détecté dans l'élément 'head' avant de décider que le chargement est terminé. Augmentez cette valeur si vous voyez '7TV installation not detected'."
+            main: "Délai détection 7TV",
+            alt: "Temps d'attente pour 7TV. Augmentez ceci si vous voyez 'Installation de 7TV non détectée'."
+        },
+        "seventv-alert": {
+            main: "Note : 7TV doit être installé pour que cela fonctionne !"
+        },
+        "seventv-not-detected": {
+            main: "Installation de 7TV non détectée"
         }
     },
 
     ko: {
         scannerMethod: {
             main: "스캐너 방식",
-            alt: "들어오는 메시지를 감지하고 스캔할 방식을 선택합니다"
+            alt: "들어오는 메시지를 감지하는 방식을 선택합니다"
         },
         allowSelf: {
             main: "셀프 스캔 허용",
-            alt: "스캐너가 자신의 메시지를 스캔하도록 허용합니다"
+            alt: "스캐너가 본인의 메시지를 감지하도록 허용합니다"
         },
         addButton: {
             main: "추가"
@@ -747,7 +777,7 @@ export const labels = {
         },
         setMessageBox: {
             main: "메시지 박스 설정",
-            alt: "메시지 박스의 동작을 변경합니다",
+            alt: "메시지 박스의 동작을 사용자 정의합니다",
         },
         setInsert: {
             main: "삽입 설정",
@@ -775,11 +805,11 @@ export const labels = {
         },
         deleteAfterMs: {
             main: "메시지 표시 시간",
-            alt: "스캔된 메시지가 유지되는 시간",
+            alt: "스캔된 메시지가 화면에 유지되는 시간",
         },
         contentNodeAmount: {
             main: "메시지 박스 수",
-            alt: "표시되는 메시지 박스의 개수",
+            alt: "표시할 메시지 박스의 개수",
         },
         bannedWords: {
             main: "차단된 단어",
@@ -791,7 +821,7 @@ export const labels = {
         },
         bannedUsers: {
             main: "차단된 사용자",
-            alt: "이 사용자들의 메시지는 스캔되지 않습니다",
+            alt: "이 사용자들의 메시지는 무시됩니다",
         },
         scrapeBots: {
             main: "봇 허용",
@@ -810,28 +840,28 @@ export const labels = {
             alt: "구독한 사용자의 메시지만 스캔합니다",
         },
         scrapeSubsWithMinimumMonths: {
-            main: "최소 구독 기간 (개월)",
+            main: "최소 구독 기간",
             alt: "선택한 개월 수 이상 구독한 사용자만 스캔합니다",
         },
         updateNodesAfterTimeout: {
-            main: "시간 만료 후 새로고침",
-            alt: "메시지 유지 시간이 끝난 후 메시지 박스를 새로고침합니다",
+            main: "만료 후 새로고침",
+            alt: "메시지 유지 시간이 끝난 후 박스를 새로고침합니다",
         },
         autoHide: {
             main: "자동 숨김",
-            alt: "표시할 메시지가 없을 경우 패널을 자동으로 숨깁니다",
+            alt: "표시할 메시지가 없으면 패널을 자동으로 숨깁니다",
         },
         scrapeAlreadySentMessages: {
-            main: "기존 메시지 스캔",
-            alt: "이미 표시된 메시지부터 스캔을 시작합니다",
+            main: "채팅 기록 스캔",
+            alt: "채팅창에 이미 보이는 메시지를 스캔합니다",
         },
         requiredHoldTime: {
-            main: "자동 전송 길게 누르기 시간",
-            alt: "메시지 박스를 이 시간 동안 누르고 있으면 자동으로 전송됩니다",
+            main: "길게 눌러 전송",
+            alt: "자동 전송을 위해 박스를 길게 누르는 시간",
         },
         messageClickAnimationTime: {
             main: "클릭 애니메이션 시간",
-            alt: "메시지 박스를 클릭했을 때 재생되는 애니메이션 시간",
+            alt: "메시지 박스를 클릭했을 때의 애니메이션 재생 시간",
         },
         other: {
             main: "기타",
@@ -839,7 +869,7 @@ export const labels = {
         },
         language: {
             main: "언어",
-            alt: "사용할 언어를 선택합니다",
+            alt: "인터페이스 언어 선택",
         },
         noMessages: {
             main: "메시지를 찾을 수 없습니다"
@@ -866,8 +896,14 @@ export const labels = {
             main: "인젝션 방식 (이모티콘 포함)",
         },
         seventvInstallationWaitTime: {
-            main: "7TV 설치 감지 시간",
-            alt: "헤드(head) 요소의 마지막 변경 감지 후 로딩이 완료되었다고 판단할 때까지 대기하는 시간입니다. '7TV installation not detected'라는 메시지가 표시되면 이 값을 늘리세요."
+            main: "7TV 감지 대기 시간",
+            alt: "7TV 로딩을 기다리는 시간입니다. '7TV 설치가 감지되지 않음'이 표시되면 이 값을 늘리세요."
+        },
+        "seventv-alert": {
+            main: "참고: 이 기능이 작동하려면 7TV가 설치되어 있어야 합니다!"
+        },
+        "seventv-not-detected": {
+            main: "7TV 설치가 감지되지 않음"
         }
     },
 }
