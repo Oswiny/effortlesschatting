@@ -268,6 +268,7 @@ import { labels } from "./config.js";
                     })
                 })
                 messages.list.splice(0, messages.list.length);
+                emotes = {}
                 ContentNode.updateNodes();
             }
             flushDiv.querySelector(".effortlesschatting-flush-button-inner").addEventListener("click", flushMessagesStorage)
@@ -351,11 +352,11 @@ import { labels } from "./config.js";
 
         waitForTwitch() {
             function isLoaded() {
-                if (document.body.querySelector("[role=textbox]") && document.body.querySelector("#WYSIWGChatInputEditor_SkipChat")){
+                if (document.body.querySelector("[role=textbox]") && document.body.querySelector("#WYSIWGChatInputEditor_SkipChat")) {
                     return true
                 }
                 return false
-            } 
+            }
 
             return new Promise((resolve, reject) => {
                 let observer = new MutationObserver((mutations) => {
@@ -561,17 +562,32 @@ import { labels } from "./config.js";
         uniqueWordsInMessage.forEach(word => messages.add(new Message(word, "", emotes[word])));
     }
 
+    let startElement = null;
+    let startFiber = null;
+    const functionName = "onChatMessageEvent";
+    let fiber = null;
+    let originalOnChatMessageEvent = null;
+    let originalInsertBefore = Node.prototype.insertBefore
     function scannerMethod() {
+        emotes = {}
+        startElement = document.querySelector(".chat-room__content");
+        startFiber = startElement[Object.keys(startElement).find(item => item.includes("reactFiber"))]
+        fiber = findPathToTarget(startFiber, functionName).fiber
+        
+        if (originalOnChatMessageEvent !== null) {
+            fiber.stateNode.onChatMessageEvent = originalOnChatMessageEvent
+        }
+        else {
+            originalOnChatMessageEvent = fiber.stateNode.onChatMessageEvent
+        }
+        Node.prototype.insertBefore = originalInsertBefore;
+
         if (config.scannerMethod === "legacy") {
             chatEntry = document.querySelector("#live-page-chat #seventv-message-container main.seventv-chat-list")
             chatListener.observe(chatEntry, { childList: true, subtree: false });
         }
         if (config.scannerMethod === "injection-without-emotes") {
-            let startElement = document.querySelector(".chat-room__content");
-            let startFiber = startElement[Object.keys(startElement).find(item => item.includes("reactFiber"))]
-            let functionName = "onChatMessageEvent"
-            let fiber = findPathToTarget(startFiber, functionName).fiber
-            let onChatMessageEvent = fiber.stateNode.onChatMessageEvent
+
             fiber.stateNode.onChatMessageEvent = function (...args) {
                 if (args[0] && (config.allowSelf || (!config.allowSelf && !args[0].sentByCurrentUser))) {
                     scrapeOnEvent(args[0])
@@ -579,23 +595,17 @@ import { labels } from "./config.js";
                         ContentNode.updateNodes()
                     }
                 }
-                return onChatMessageEvent.apply(this, args)
+                return originalOnChatMessageEvent.apply(this, args)
             }
         }
         if (config.scannerMethod === "injection-with-emotes") {
-            let startElement = document.querySelector(".chat-room__content");
-            let startFiber = startElement[Object.keys(startElement).find(item => item.includes("reactFiber"))]
-            let functionName = "onChatMessageEvent"
-            let fiber = findPathToTarget(startFiber, functionName).fiber
-            let onChatMessageEvent = fiber.stateNode.onChatMessageEvent
             let scanEmotesFlag = { flag: false, param: null };
             fiber.stateNode.onChatMessageEvent = function (...args) {
                 if (args[0] && (config.allowSelf || (!config.allowSelf && !args[0].sentByCurrentUser))) {
                     scanEmotesFlag = { flag: true, param: args[0] };
                 };
-                return onChatMessageEvent.apply(this, args)
+                return originalOnChatMessageEvent.apply(this, args)
             }
-            let insertBefore = Node.prototype.insertBefore
             Node.prototype.insertBefore = function (...args) {
                 if (scanEmotesFlag.flag && scanEmotesFlag.param) {
                     if (args[0].className === "seventv-user-message") {
@@ -617,7 +627,7 @@ import { labels } from "./config.js";
                     scanEmotesFlag.flag = false;
                     scanEmotesFlag.param = null
                 }
-                return insertBefore.apply(this, args);
+                return originalInsertBefore.apply(this, args);
             }
         }
     }
