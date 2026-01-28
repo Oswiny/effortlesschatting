@@ -4,6 +4,9 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <title>Extension — Settings</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
         <link rel="stylesheet" href="popup.css" />
     </head>
 
@@ -12,14 +15,25 @@
             <header>
                 <div class="title">
                     <div class="logo">
-                        <img src="../logo/48/logo.png" alt="Effortless Chatting Logo" width="48" height="48" />
+                        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 256 256" fill="currentColor">
+                            <g id="Layer_1" data-name="Layer 1">
+                                <path class="cls-1" d="M221.51,16c10.16.05,18.45,9.63,18.49,21.33v127.96c-.03,11.76-8.33,21.34-18.46,21.38h-101.63c-5.13,0-10.06,1.91-13.88,5.37l-30.95,27.95v-17.32c0-8.84-7.16-16-16-16h-24.57c-10.18-.03-18.48-9.62-18.51-21.33V37.38c.03-11.76,8.33-21.34,18.46-21.38h187.05M221.54,0H34.46C15.45.06.05,16.74,0,37.33v128c.05,20.59,15.45,37.27,34.46,37.33h24.62v53.33l57.67-52.09c.89-.8,2-1.24,3.16-1.24h101.63c19.01-.06,34.41-16.74,34.46-37.33V37.33c-.05-20.59-15.45-37.27-34.46-37.33h0Z" />
+                                <text />
+                            </g>
+                            <g id="Layer_3" data-name="Layer 3">
+                                <g>
+                                    <path class="cls-1" d="M58.64,138.8V63.86c0-2.21,1.79-4,4-4h47.94c2.21,0,4,1.79,4,4v6.14c0,2.21-1.79,4-4,4h-30.96c-2.21,0-4,1.79-4,4v11.93c0,2.21,1.79,4,4,4h28.07c2.21,0,4,1.79,4,4v5.92c0,2.21-1.79,4-4,4h-28.07c-2.21,0-4,1.79-4,4v12.82c0,2.21,1.79,4,4,4h31.08c2.21,0,4,1.79,4,4v6.14c0,2.21-1.79,4-4,4h-48.05c-2.21,0-4-1.79-4-4Z" />
+                                    <path class="cls-1" d="M164.24,143.92c-7.38,0-13.99-1.67-19.82-5.01-5.83-3.34-10.43-8.18-13.8-14.53-3.38-6.35-5.07-14.01-5.07-22.99s1.7-16.71,5.09-23.07c3.39-6.36,8.02-11.22,13.86-14.56,5.85-3.34,12.42-5.01,19.73-5.01,4.71,0,9.1.66,13.16,1.98,4.06,1.32,7.68,3.26,10.85,5.82,3.17,2.56,5.76,5.67,7.77,9.32,1.26,2.3,2.25,4.8,2.97,7.49.67,2.51-1.29,4.95-3.89,4.95h-9.22c-1.73,0-3.26-1.12-3.8-2.77-.39-1.21-.9-2.32-1.51-3.36-1.06-1.78-2.38-3.29-3.95-4.54-1.58-1.24-3.4-2.19-5.46-2.84-2.06-.65-4.26-.97-6.6-.97-4.38,0-8.19,1.09-11.44,3.26-3.25,2.17-5.77,5.3-7.57,9.38-1.8,4.08-2.7,9.06-2.7,14.92s.91,10.95,2.73,15.03c1.82,4.08,4.34,7.17,7.57,9.27,3.23,2.1,7.01,3.15,11.36,3.15,2.34,0,4.53-.32,6.57-.97,2.04-.65,3.87-1.6,5.48-2.87,1.62-1.26,2.95-2.78,4.01-4.56.62-1.04,1.13-2.15,1.53-3.35.55-1.62,2.07-2.72,3.78-2.72h9.24c2.66,0,4.59,2.55,3.85,5.11-.61,2.1-1.43,4.13-2.46,6.11-1.86,3.54-4.31,6.7-7.38,9.46-3.06,2.77-6.69,4.94-10.88,6.51-4.2,1.58-8.87,2.37-14.03,2.37Z" />
+                                </g>
+                            </g>
+                        </svg>
                     </div>
                     <div>
                         <h1 data-label="mainTag" data-label-type="main">Effortless Chatting</h1>
                         <p class="lead" data-label="mainTag" data-label-type="alt">Settings</p>
                     </div>
                 </div>
-                <div style="display: flex; gap: 10px; align-items: center">
+                <div class="header-actions">
                     <div id="twitch" class="status-pill">
                         <span class="status-dot red"></span>
                         Twitch
@@ -60,12 +74,12 @@
                             </div>
                         </div>
 
-                        <div class="dropdown" data-dropdown id="scannerMethod" style="min-width: 200px">
+                        <div class="dropdown" data-dropdown id="scannerMethod">
                             <input type="hidden" id="scannerMethodValue" value="legacy" />
 
                             <button type="button" class="dropdown-btn" aria-haspopup="listbox" aria-expanded="false">
                                 <span class="dropdown-label" data-label="legacy" data-label-type="main">Legacy</span>
-                                <span class="dropdown-caret" style="margin-left: 8px" aria-hidden>▾</span>
+                                <span class="dropdown-caret" aria-hidden>▾</span>
                             </button>
 
                             <div class="dropdown-menu" role="listbox" tabindex="-1">
@@ -84,7 +98,7 @@
                                     <circle cx="12" cy="7" r="4" />
                                 </svg>
                             </div>
-                            <div class="meta" style="user-select: none">
+                            <div class="meta">
                                 <div class="meta-top">
                                     <b data-label="allowSelf" data-label-type="main">Allow Self Scan</b>
                                     <span class="reset-icon" title="Reset to default" data-target="allowSelf">&times;</span>
@@ -106,7 +120,7 @@
                                     <path d="m15 17.75c0-.414-.336-.75-.75-.75h-11.5c-.414 0-.75.336-.75.75s.336.75.75.75h11.5c.414 0 .75-.336.75-.75zm7-4c0-.414-.336-.75-.75-.75h-18.5c-.414 0-.75.336-.75.75s.336.75.75.75h18.5c.414 0 .75-.336.75-.75zm0-4c0-.414-.336-.75-.75-.75h-18.5c-.414 0-.75.336-.75.75s.336.75.75.75h18.5c.414 0 .75-.336.75-.75zm0-4c0-.414-.336-.75-.75-.75h-18.5c-.414 0-.75.336-.75.75s.336.75.75.75h18.5c.414 0 .75-.336.75-.75z" fill-rule="nonzero" />
                                 </svg>
                             </div>
-                            <div class="meta" style="user-select: none">
+                            <div class="meta">
                                 <div class="meta-top">
                                     <b data-label="allowText" data-label-type="main">Allow Text</b>
                                     <span class="reset-icon" title="Reset to default" data-target="allowText">&times;</span>
@@ -230,10 +244,10 @@
                                 <span class="muted" data-label="scrapeSubsWithMinimumMonths" data-label-type="alt">Only scan users subscribed for at least the selected number of months</span>
                             </div>
                         </div>
-                        <div style="min-width: 200px">
+                        <div class="input-wrapper">
                             <div class="range-wrap">
-                                <input id="scrapeSubsWithMinimumMonths" type="range" min="0" max="120" value="24" step="6" style="width: 100%" />
-                                <span class="muted" style="margin-left: 8px"></span>
+                                <input id="scrapeSubsWithMinimumMonths" type="range" min="0" max="120" value="24" step="6" />
+                                <span class="muted range-value"></span>
                                 <span class="muted" data-label="month" data-label-type="main">month</span>
                             </div>
                         </div>
@@ -273,12 +287,12 @@
                                 <p class="desc" data-label="bannedWords" data-label-type="alt">These words will be ignored by the scanner</p>
                             </div>
                         </div>
-                        <div class="add-row" style="display: flex; gap: 8px; align-items: center">
-                            <input class="bannedInput" type="text" data-label="enterItem" data-label-type="main" placeholder="Enter item..." style="flex: 1" />
+                        <div class="add-row">
+                            <input class="bannedInput" type="text" data-label="enterItem" data-label-type="main" placeholder="Enter item..." />
                             <button class="btn primary addBannedButton" data-label="addButton" data-label-type="main">Add</button>
                         </div>
 
-                        <ul class="bannedList" style="list-style: none; margin: 12px 0 0; padding: 0; display: flex; flex-direction: column; gap: 8px"></ul>
+                        <ul class="banned-list"></ul>
                     </section>
 
                     <section class="subsection" id="bannedEmotes">
@@ -291,12 +305,12 @@
                                 <p class="desc" data-label="bannedEmotes" data-label-type="alt">These emotes will be ignored by the scanner</p>
                             </div>
                         </div>
-                        <div class="add-row" style="display: flex; gap: 8px; align-items: center">
-                            <input class="bannedInput" type="text" data-label="enterItem" data-label-type="main" placeholder="Enter item..." style="flex: 1" />
+                        <div class="add-row">
+                            <input class="bannedInput" type="text" data-label="enterItem" data-label-type="main" placeholder="Enter item..." />
                             <button class="btn primary addBannedButton" data-label="addButton" data-label-type="main">Add</button>
                         </div>
 
-                        <ul class="bannedList" style="list-style: none; margin: 12px 0 0; padding: 0; display: flex; flex-direction: column; gap: 8px"></ul>
+                        <ul class="banned-list"></ul>
                     </section>
 
                     <section class="subsection" id="bannedUsers">
@@ -309,12 +323,12 @@
                                 <p class="desc" data-label="bannedUsers" data-label-type="alt">These users' messages will be ignored by the scanner</p>
                             </div>
                         </div>
-                        <div class="add-row" style="display: flex; gap: 8px; align-items: center">
-                            <input class="bannedInput" type="text" data-label="enterItem" data-label-type="main" placeholder="Enter item..." style="flex: 1" />
+                        <div class="add-row">
+                            <input class="bannedInput" type="text" data-label="enterItem" data-label-type="main" placeholder="Enter item..." />
                             <button class="btn primary addBannedButton" data-label="addButton" data-label-type="main">Add</button>
                         </div>
 
-                        <ul class="bannedList" style="list-style: none; margin: 12px 0 0; padding: 0; display: flex; flex-direction: column; gap: 8px"></ul>
+                        <ul class="banned-list"></ul>
                     </section>
                 </section>
 
@@ -385,10 +399,10 @@
                                 <span class="muted" data-label="requiredHoldTime" data-label-type="alt">Duration to hold the message box to auto-send</span>
                             </div>
                         </div>
-                        <div style="min-width: 200px">
+                        <div class="input-wrapper">
                             <div class="range-wrap">
-                                <input id="requiredHoldTime" type="range" min="1000" max="10000" value="5000" step="250" style="width: 100%" />
-                                <span class="muted" style="margin-left: 8px"></span>
+                                <input id="requiredHoldTime" type="range" min="1000" max="10000" value="5000" step="250" />
+                                <span class="muted range-value"></span>
                                 <span class="muted" data-label="milliseconds" data-label-type="main">Milliseconds</span>
                             </div>
                         </div>
@@ -414,10 +428,10 @@
                                 <span class="muted" data-label="contentNodeAmount" data-label-type="alt">Count of message boxes displayed</span>
                             </div>
                         </div>
-                        <div style="min-width: 200px">
+                        <div class="input-wrapper">
                             <div class="range-wrap">
-                                <input id="contentNodeAmount" type="range" min="1" max="5" value="5" style="width: 100%" />
-                                <span class="muted" style="margin-left: 8px"></span>
+                                <input id="contentNodeAmount" type="range" min="1" max="5" value="5" />
+                                <span class="muted" class="muted range-value"></span>
                             </div>
                         </div>
                     </div>
@@ -459,10 +473,10 @@
                                 <span class="muted" data-label="deleteAfterMs" data-label-type="alt">Duration a scanned message remains visible</span>
                             </div>
                         </div>
-                        <div style="min-width: 200px">
+                        <div class="input-wrapper">
                             <div class="range-wrap">
-                                <input id="deleteAfterMs" type="range" min="1000" max="60000" value="10000" step="250" style="width: 100%" />
-                                <span class="muted" style="margin-left: 8px"></span>
+                                <input id="deleteAfterMs" type="range" min="1000" max="60000" value="10000" step="250" />
+                                <span class="muted" class="muted range-value"></span>
                                 <span class="muted" data-label="milliseconds" data-label-type="main">Milliseconds</span>
                             </div>
                         </div>
@@ -549,10 +563,10 @@
                                 <span class="muted" data-label="messageClickAnimationTime" data-label-type="alt">Length of the animation when a message box is clicked</span>
                             </div>
                         </div>
-                        <div style="min-width: 200px">
+                        <div class="input-wrapper">
                             <div class="range-wrap">
-                                <input id="messageClickAnimationTime" type="range" min="25" max="250" value="125" step="5" style="width: 100%" />
-                                <span class="muted" style="margin-left: 8px"></span>
+                                <input id="messageClickAnimationTime" type="range" min="25" max="250" value="125" step="5" />
+                                <span class="muted" class="muted range-value"></span>
                                 <span class="muted" data-label="milliseconds" data-label-type="main">Milliseconds</span>
                             </div>
                         </div>
@@ -583,10 +597,10 @@
                                 <span class="muted" data-label="seventvInstallationWaitTime" data-label-type="alt">"Time to wait for 7TV to load. Increase this if you see '7TV installation not detected'."</span>
                             </div>
                         </div>
-                        <div style="min-width: 200px">
+                        <div class="input-wrapper">
                             <div class="range-wrap">
-                                <input id="seventvInstallationWaitTime" type="range" min="500" max="8000" value="2000" step="250" style="width: 100%" />
-                                <span class="muted" style="margin-left: 8px"></span>
+                                <input id="seventvInstallationWaitTime" type="range" min="500" max="8000" value="2000" step="250" />
+                                <span class="muted" class="muted range-value"></span>
                                 <span class="muted" data-label="milliseconds" data-label-type="main">Milliseconds</span>
                             </div>
                         </div>
@@ -614,12 +628,12 @@
                             </div>
                         </div>
 
-                        <div class="dropdown" data-dropdown id="language" style="min-width: 200px">
+                        <div class="dropdown" data-dropdown id="language">
                             <input type="hidden" id="languageValue" value="en" />
 
                             <button type="button" class="dropdown-btn" aria-haspopup="listbox" aria-expanded="false">
                                 <span class="dropdown-label">English</span>
-                                <span class="dropdown-caret" style="margin-left: 8px" aria-hidden>▾</span>
+                                <span class="dropdown-caret" aria-hidden>▾</span>
                             </button>
 
                             <div class="dropdown-menu" role="listbox" tabindex="-1">
@@ -635,19 +649,19 @@
                 </section>
 
                 <div class="social-row">
-                    <a href="https://twitter.com/oswiny_" class="icon-btn" target="_blank" aria-label="Twitter">
+                    <a href="https://twitter.com/oswiny_" title="twitter/oswiny_" class="icon-btn" target="_blank" aria-label="Twitter">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 1200 1227" fill="none">
                             <path d="M714.163 519.284L1160.89 0H1055.03L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.866L515.491 750.218L842.672 1226.37H1200L714.137 519.284H714.163ZM569.165 687.828L521.697 619.934L144.011 79.6944H306.615L611.412 515.685L658.88 583.579L1055.08 1150.3H892.476L569.165 687.854V687.828Z" fill="currentColor" />
                         </svg>
                     </a>
 
-                    <a href="https://github.com/oswiny" class="icon-btn" target="_blank" aria-label="GitHub">
+                    <a href="https://github.com/oswiny" title="github/oswiny" class="icon-btn" target="_blank" aria-label="GitHub">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 98 96">
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M48.854 0C21.839 0 0 22 0 49.217c0 21.756 13.993 40.172 33.405 46.69 2.427.49 3.316-1.059 3.316-2.362 0-1.141-.08-5.052-.08-9.127-13.59 2.934-16.42-5.867-16.42-5.867-2.184-5.704-5.42-7.17-5.42-7.17-4.448-3.015.324-3.015.324-3.015 4.934.326 7.523 5.052 7.523 5.052 4.367 7.496 11.404 5.378 14.235 4.074.404-3.178 1.699-5.378 3.074-6.6-10.839-1.141-22.243-5.378-22.243-24.283 0-5.378 1.94-9.778 5.014-13.2-.485-1.222-2.184-6.275.486-13.038 0 0 4.125-1.304 13.426 5.052a46.97 46.97 0 0 1 12.214-1.63c4.125 0 8.33.571 12.213 1.63 9.302-6.356 13.427-5.052 13.427-5.052 2.67 6.763.97 11.816.485 13.038 3.155 3.422 5.015 7.822 5.015 13.2 0 18.905-11.404 23.06-22.324 24.283 1.78 1.548 3.316 4.481 3.316 9.126 0 6.6-.08 11.897-.08 13.526 0 1.304.89 2.853 3.316 2.364 19.412-6.52 33.405-24.935 33.405-46.691C97.707 22 75.788 0 48.854 0z" fill="currentColor" />
                         </svg>
                     </a>
 
-                    <a href="https://instagram.com/contactoswiny" class="icon-btn" target="_blank" aria-label="Instagram">
+                    <a href="https://instagram.com/contactoswiny" title="instagram/contactoswiny" class="icon-btn" target="_blank" aria-label="Instagram">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 1000 1000">
                             <path fill="currentColor" d="M295.42,6c-53.2,2.51-89.53,11-121.29,23.48-32.87,12.81-60.73,30-88.45,57.82S40.89,143,28.17,175.92c-12.31,31.83-20.65,68.19-23,121.42S2.3,367.68,2.56,503.46,3.42,656.26,6,709.6c2.54,53.19,11,89.51,23.48,121.28,12.83,32.87,30,60.72,57.83,88.45S143,964.09,176,976.83c31.8,12.29,68.17,20.67,121.39,23s70.35,2.87,206.09,2.61,152.83-.86,206.16-3.39S799.1,988,830.88,975.58c32.87-12.86,60.74-30,88.45-57.84S964.1,862,976.81,829.06c12.32-31.8,20.69-68.17,23-121.35,2.33-53.37,2.88-70.41,2.62-206.17s-.87-152.78-3.4-206.1-11-89.53-23.47-121.32c-12.85-32.87-30-60.7-57.82-88.45S862,40.87,829.07,28.19c-31.82-12.31-68.17-20.7-121.39-23S637.33,2.3,501.54,2.56,348.75,3.4,295.42,6m5.84,903.88c-48.75-2.12-75.22-10.22-92.86-17-23.36-9-40-19.88-57.58-37.29s-28.38-34.11-37.5-57.42c-6.85-17.64-15.1-44.08-17.38-92.83-2.48-52.69-3-68.51-3.29-202s.22-149.29,2.53-202c2.08-48.71,10.23-75.21,17-92.84,9-23.39,19.84-40,37.29-57.57s34.1-28.39,57.43-37.51c17.62-6.88,44.06-15.06,92.79-17.38,52.73-2.5,68.53-3,202-3.29s149.31.21,202.06,2.53c48.71,2.12,75.22,10.19,92.83,17,23.37,9,40,19.81,57.57,37.29s28.4,34.07,37.52,57.45c6.89,17.57,15.07,44,17.37,92.76,2.51,52.73,3.08,68.54,3.32,202s-.23,149.31-2.54,202c-2.13,48.75-10.21,75.23-17,92.89-9,23.35-19.85,40-37.31,57.56s-34.09,28.38-57.43,37.5c-17.6,6.87-44.07,15.07-92.76,17.39-52.73,2.48-68.53,3-202.05,3.29s-149.27-.25-202-2.53m407.6-674.61a60,60,0,1,0,59.88-60.1,60,60,0,0,0-59.88,60.1M245.77,503c.28,141.8,115.44,256.49,257.21,256.22S759.52,643.8,759.25,502,643.79,245.48,502,245.76,245.5,361.22,245.77,503m90.06-.18a166.67,166.67,0,1,1,167,166.34,166.65,166.65,0,0,1-167-166.34" transform="translate(-2.5 -2.5)" />
                         </svg>
@@ -660,7 +674,7 @@
                         </svg>
                     </a>
 
-                    <a href="https://discordapp.com/users/293055366688931850" title="oswiny" class="icon-btn" target="_blank" aria-label="Discord">
+                    <a href="https://discordapp.com/users/293055366688931850" title="discord/oswiny" class="icon-btn" target="_blank" aria-label="Discord">
                         <svg width="24" height="24" viewBox="0 0 126.644 96" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path xmlns="http://www.w3.org/2000/svg" id="Discord-Symbol-White" class="cls-1" d="M81.15,0c-1.2376,2.1973-2.3489,4.4704-3.3591,6.794-9.5975-1.4396-19.3718-1.4396-28.9945,0-.985-2.3236-2.1216-4.5967-3.3591-6.794-9.0166,1.5407-17.8059,4.2431-26.1405,8.0568C2.779,32.5304-1.6914,56.3725.5312,79.8863c9.6732,7.1476,20.5083,12.603,32.0505,16.0884,2.6014-3.4854,4.8998-7.1981,6.8698-11.0623-3.738-1.3891-7.3497-3.1318-10.8098-5.1523.9092-.6567,1.7932-1.3386,2.6519-1.9953,20.281,9.547,43.7696,9.547,64.0758,0,.8587.7072,1.7427,1.3891,2.6519,1.9953-3.4601,2.0457-7.0718,3.7632-10.835,5.1776,1.97,3.8642,4.2683,7.5769,6.8698,11.0623,11.5419-3.4854,22.3769-8.9156,32.0509-16.0631,2.626-27.2771-4.496-50.9172-18.817-71.8548C98.9811,4.2684,90.1918,1.5659,81.1752.0505l-.0252-.0505ZM42.2802,65.4144c-6.2383,0-11.4159-5.6575-11.4159-12.6535s4.9755-12.6788,11.3907-12.6788,11.5169,5.708,11.4159,12.6788c-.101,6.9708-5.026,12.6535-11.3907,12.6535ZM84.3576,65.4144c-6.2637,0-11.3907-5.6575-11.3907-12.6535s4.9755-12.6788,11.3907-12.6788,11.4917,5.708,11.3906,12.6788c-.101,6.9708-5.026,12.6535-11.3906,12.6535Z" />
                         </svg>

@@ -62,7 +62,7 @@ import { defaultConfig, labels } from "../config.js";
 
         })
         arrayBasedSettings.forEach(async (item) => {
-            const list = item.querySelector(".bannedList")
+            const list = item.querySelector(".banned-list")
             await renderBanned(list, item.id)
             updateResetState(item, defaultConfig[item.id], currentConfig[item.id])
         })
@@ -174,13 +174,11 @@ import { defaultConfig, labels } from "../config.js";
         })
     })
 
-
-    // should probably switch to set or a object since lookups will be faster
     let arrayBasedSettings = [...document.querySelectorAll(".subsection")]
     arrayBasedSettings.forEach(async (item) => {
         const id = item.id
         const input = item.querySelector(".bannedInput");
-        const list = item.querySelector(".bannedList");
+        const list = item.querySelector(".banned-list");
         const button = item.querySelector(".addBannedButton")
 
         button.addEventListener('click', async () => {
@@ -224,17 +222,10 @@ import { defaultConfig, labels } from "../config.js";
                 return;
             }
             const li = document.createElement("li");
-            li.style.cssText = `
-                display:flex;
-                justify-content:space-between;
-                align-items:center;
-                padding:8px 10px;
-                background:rgba(255,255,255,0.02);
-                border-radius:8px;
-                `;
+            li.classList.add("banned-item")
             li.innerHTML = `
                 <span>${item}</span>
-                <button class="btn ghost" style="padding:4px 8px;font-size:12px;" data-value="${item}" data-label="remove" data-label-type="main"> ${labels[currentConfig["language"]]["remove"]["main"]}</button>
+                <button class="btn-remove" data-value="${item}" data-label="remove" data-label-type="main"> ${labels[currentConfig["language"]]["remove"]["main"]}</button>
                 `;
             list.appendChild(li);
         })
@@ -267,7 +258,7 @@ import { defaultConfig, labels } from "../config.js";
                 el.parentElement.querySelector("span").textContent = el.value;
             }
             else if (el.classList.contains("subsection")) {
-                await renderBanned(el.querySelector(".bannedList"), id)
+                await renderBanned(el.querySelector(".banned-list"), id)
             }
             else if (el.classList.contains("dropdown")) {
                 setDropdownValue(el, defaultSetting)
