@@ -7,8 +7,9 @@ import { defaultConfig, labels } from "../config.js";
     async function updateLabels(language) {
         const labelElements = document.querySelectorAll("[data-label]")
         labelElements.forEach((element) => {
-            element.hasAttribute("placeholder") && (element.placeholder = labels[language][element.getAttribute("data-label")][element.getAttribute("data-label-type")]);
-            element.textContent = labels[language][element.getAttribute("data-label")][element.getAttribute("data-label-type")]
+            if (element.hasAttribute("placeholder")) (element.placeholder = labels[language][element.getAttribute("data-label")][element.getAttribute("data-label-type")]);
+            else if (element.getAttribute("data-label") === "reset-icon") (element.setAttribute("title", labels[language]["reset-icon"]["main"]))
+            else element.textContent = labels[language][element.getAttribute("data-label")][element.getAttribute("data-label-type")]
         })
     }
     updateLabels(currentConfig["language"])

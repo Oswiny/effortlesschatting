@@ -169,6 +169,9 @@ export const labels = {
         },
         "seventv-not-detected": {
             main: "7TV installation not detected"
+        },
+        "reset-icon": {
+            main: "Reset to default"
         }
     },
 
@@ -316,6 +319,9 @@ export const labels = {
         },
         "seventv-not-detected": {
             main: "Instalación de 7TV no detectada"
+        },
+        "reset-icon": {
+            main: "Restablecer a predeterminado"
         }
     },
 
@@ -463,6 +469,9 @@ export const labels = {
         },
         "seventv-not-detected": {
             main: "7TVのインストールが検出されませんでした"
+        },
+        "reset-icon": {
+            main: "デフォルトに戻す"
         }
     },
 
@@ -610,6 +619,9 @@ export const labels = {
         },
         "seventv-not-detected": {
             main: "7TV-Installation nicht erkannt"
+        },
+        "reset-icon": {
+            main: "Auf Standard zurücksetzen"
         }
     },
 
@@ -757,6 +769,9 @@ export const labels = {
         },
         "seventv-not-detected": {
             main: "Installation de 7TV non détectée"
+        },
+        "reset-icon": {
+            main: "Réinitialiser par défaut"
         }
     },
 
@@ -904,6 +919,9 @@ export const labels = {
         },
         "seventv-not-detected": {
             main: "7TV 설치가 감지되지 않음"
+        },
+        "reset-icon": {
+            main: "기본값으로 초기화"
         }
     },
 }
