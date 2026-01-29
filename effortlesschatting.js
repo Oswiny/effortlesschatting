@@ -192,21 +192,22 @@ import { labels } from "./config.js";
             const maxClickDuration = 200;
             let clickStartTime = null;
 
-            const tapColor = "rgba(128, 128, 128, 0.4)";
-            const holdColor = "rgba(128, 128, 128, 0.231)";
+            const tapColor = "rgba(255, 255, 255, 0.15)";
+            const holdColor = "rgba(169, 112, 255, 0.4)";
+
 
             function startHold() {
                 hasHeld = false;
                 clickStartTime = Date.now();
                 holdAnimation = contentNode.animate([
                     {
-                        backgroundImage: `linear-gradient(${holdColor}}, ${holdColor})`,
+                        backgroundImage: `linear-gradient(${holdColor}, ${holdColor})`,
                         backgroundRepeat: "no-repeat",
                         backgroundPosition: "bottom left",
                         backgroundSize: "100% 0%"
                     },
                     {
-                        backgroundImage: `linear-gradient(${holdColor}}, ${holdColor})`,
+                        backgroundImage: `linear-gradient(${holdColor}, ${holdColor})`,
                         backgroundRepeat: "no-repeat",
                         backgroundPosition: "bottom left",
                         backgroundSize: "100% 100%"
@@ -254,8 +255,8 @@ import { labels } from "./config.js";
                     return;
                 }
                 contentNode.animate([
-                    { transform: "scale(0.9)", background: tapColor },
-                    { transform: "scale(1)", background: "transparent" }
+                    { transform: "scale(0.9)", backgroundColor: tapColor },
+                    { transform: "scale(1)", backgroundColor: "transparent" }
                 ], {
                     duration: 120,
                     easing: "ease-out"

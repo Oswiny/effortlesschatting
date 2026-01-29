@@ -1,6 +1,7 @@
 :root {
     --color-hinted-grey-1: #0e0e10;
     --color-hinted-grey-14: #efeff1;
+    --color-background: #18181b;
     --font-base: "Inter", "Noto Sans Arabic", "Roobert", "Helvetica Neue", Helvetica, Arial, sans-serif;
     --font-weight-normal: 400;
     --line-height-body: 1.4;
@@ -8,8 +9,14 @@
     --font-size-base: var(--font-size-4);
     --color-background-body: var(--color-hinted-grey-1);
     --color-text-base: var(--color-hinted-grey-14);
+
     --color-background-scrollbar: #fff6;
     --color-background-scrollbar-track: #0000;
+
+    --color-background-tooltip: #ffffff;
+    --color-text-tooltip: #0e0e10;
+    --border-radius-medium: 0.4rem;
+    --border-radius-small: 0.2rem;
 }
 
 #effortlesschatting,
@@ -19,6 +26,8 @@
     align-items: flex-start;
     position: relative;
     width: 100%;
+    z-index: 0;
+    margin-bottom: 0.5rem;
 }
 
 .effortlesschatting-messagebox-area {
@@ -28,9 +37,22 @@
     column-gap: 0.5rem;
     width: 100%;
     box-sizing: border-box;
-    outline: 0.1rem solid rgba(255, 255, 255, 0.102);
-    border-radius: 0.25rem;
-    background: #171717;
+    border: 1px solid var(--color-border-input, rgba(255, 255, 255, 0.1));
+    border-radius: var(--border-radius-medium, 0.4rem);
+    background-color: var(--color-background-input, rgba(255, 255, 255, 0.05));
+    transition: background-color 0.1s ease, border-color 0.1s ease, box-shadow 0.1s ease;
+}
+
+.effortlesschatting-messagebox-area:hover {
+    background-color: var(--color-background-input);
+    border-color: var(--color-border-input-hover, rgba(255, 255, 255, 0.2));
+    outline: none;
+}
+
+.effortlesschatting-messagebox-area:focus-within {
+    background-color: var(--color-background-input-focus, #000);
+    border-color: var(--color-border-input-focus, #a970ff);
+    box-shadow: 0 0 0 2px var(--color-border-input-focus, #a970ff), inset 0 0 0 1px var(--color-border-input-focus, #a970ff);
 }
 
 .effortlesschatting-no-message {
@@ -43,15 +65,15 @@
     margin: auto;
     padding: 1rem;
     box-sizing: border-box;
-    border-radius: 0.25rem;
-    outline: 0.1rem solid #ffffff1a;
-    background: #171717;
-    backdrop-filter: blur(1.5rem);
-    font-weight: 900;
+    border-radius: var(--border-radius-medium, 0.4rem);
+    border: 1px solid var(--color-border-input, rgba(255, 255, 255, 0.1));
+    background-color: var(--color-background-input, rgba(0, 0, 0, 0.1));
+    font-weight: 600;
+    color: var(--color-text-alt-2, #adadb8);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    z-index: 10;
+    z-index: 1;
     object-fit: contain;
     user-select: none;
 }
@@ -59,17 +81,22 @@
 .effortlesschatting-messagebox {
     display: grid;
     grid-template-columns: repeat(3, auto);
-
     min-height: 5rem;
-    padding: 1rem;
-
+    padding: 0.5rem;
     cursor: pointer;
     overflow: hidden;
-    /* Changed 'clip' to 'hidden' for better browser support */
-    z-index: 10;
+    z-index: 1;
     text-overflow: ellipsis;
     white-space: nowrap;
     user-select: none;
+    border-radius: 0.25rem;
+    transition: background-color 0.1s ease, box-shadow 0.1s ease;
+    will-change: transform, filter;
+    touch-action: none;
+}
+
+.effortlesschatting-messagebox:hover {
+    background-color: var(--color-background-interactable-hover, rgba(255, 255, 255, 0.08));
 }
 
 .effortlesschatting-message-img {
@@ -79,6 +106,7 @@
     font-weight: 900;
     object-fit: contain;
     pointer-events: none;
+    max-height: 4rem;
 }
 
 .effortlesschatting-flush-button-outer {
@@ -87,6 +115,7 @@
     align-items: center !important;
     align-content: center !important;
     flex-direction: row !important;
+    height: 100%;
 }
 
 .effortlesschatting-flush-button-inner {
@@ -94,63 +123,80 @@
     display: flex;
     justify-content: center;
     align-items: center;
-
     width: 3rem;
     height: 3rem;
-
     cursor: pointer;
-    border-radius: 0.5rem;
-    transition: background-color 0.25s ease;
+    border-radius: var(--border-radius-medium, 0.4rem);
+    transition: background-color 0.2s ease, color 0.2s ease;
     user-select: none;
+    color: var(--color-fill-button-icon, #efeff1);
 }
 
 .effortlesschatting-flush-button-inner:hover {
-    background-color: rgba(255, 255, 255, 0.15);
+    background-color: var(--color-background-button-text-hover, rgba(255, 255, 255, 0.15));
+    color: var(--color-fill-button-icon-hover, #fff);
 }
 
 .effortlesschatting-flush-tooltip {
     position: absolute;
-    bottom: 138%;
+    bottom: 100%;
     left: 50%;
-    transform: translateX(-50%) translateY(5px);
-    background-color: #fff;
-    color: #000;
+    margin-bottom: 10px;
+    transform: translateX(-50%);
+
+    background-color: var(--color-background-tooltip);
+    color: var(--color-text-tooltip);
+
     font-weight: 600;
     font-size: 1.4rem;
-    padding: 6px;
-    border-radius: 4px;
+    padding: 0.5rem 0.8rem;
+    border-radius: var(--border-radius-medium);
+
     white-space: nowrap;
     opacity: 0;
     pointer-events: none;
     z-index: 9999;
-    transition: opacity 0.2s ease, transform 0.2s ease;
+    transition: opacity 0.2s ease;
+
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.effortlesschatting-flush-tooltip::before {
-    content: "";
+.effortlesschatting-flush-tooltip::after {
+    content: " ";
     position: absolute;
-    bottom: -3px;
+
+    width: 12px;
+    height: 12px;
+
+    bottom: -5px;
     left: 50%;
-    display: block;
-    width: 6px;
-    height: 6px;
-    background-color: #fff;
-    transform: translateX(-50%) rotate(45deg);
-    box-shadow: rgba(0, 0, 0, 0.1) -1px -1px 1px;
-    opacity: 0;
-    transition: opacity 0.2s ease, transform 0.2s ease;
+    margin-left: -6px;
+
+    background-color: var(--color-background-tooltip);
+
+    transform: rotate(45deg);
+
+    border-radius: 0 0 2px 0;
+
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.05);
+
+    z-index: -1;
 }
 
 .effortlesschatting-flush-button-inner:hover .effortlesschatting-flush-tooltip {
     opacity: 1;
-    transform: translateX(-50%) translateY(0);
-}
-
-.effortlesschatting-flush-button-inner:hover .effortlesschatting-flush-tooltip::before {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0) rotate(45deg);
 }
 
 .hidden {
     display: none !important;
+}
+
+.seventv-chat-input-container .chat-input {
+    display: flex;
+    flex-direction: column;
+}
+
+.seventv-chat-input-container .chat-input>div:not(.effortlesschatting-root) {
+    position: relative;
+    z-index: 2;
 }
