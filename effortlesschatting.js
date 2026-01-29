@@ -186,59 +186,87 @@ import { labels } from "./config.js";
             <img loading="lazy" decoding="async" class="effortlesschatting-message-img contentImg hidden" srcset="null">
             `
 
+            let holdTimer = null;
+            let hasHeld = false;
+            let holdAnimation = null;
+            const maxClickDuration = 200;
+            let clickStartTime = null;
+
+            const tapColor = "rgba(128, 128, 128, 0.4)";
+            const holdColor = "rgba(128, 128, 128, 0.231)";
+
+            function startHold() {
+                hasHeld = false;
+                clickStartTime = Date.now();
+                holdAnimation = contentNode.animate([
+                    {
+                        backgroundImage: `linear-gradient(${holdColor}}, ${holdColor})`,
+                        backgroundRepeat: "no-repeat",
+                        backgroundPosition: "bottom left",
+                        backgroundSize: "100% 0%"
+                    },
+                    {
+                        backgroundImage: `linear-gradient(${holdColor}}, ${holdColor})`,
+                        backgroundRepeat: "no-repeat",
+                        backgroundPosition: "bottom left",
+                        backgroundSize: "100% 100%"
+                    }
+                ], {
+                    duration: config.requiredHoldTime,
+                    easing: 'linear',
+                    fill: 'forwards'
+                });
+
+                holdTimer = setTimeout(() => {
+                    hasHeld = true;
+                    holdAnimation.cancel();
+                    holdAnimation = null;
+                    const message = contentNode.children[0].alt;
+                    sendMessage(message);
+
+                    contentNode.animate([
+                        { transform: "scale(1)", filter: "brightness(1)" },
+                        { transform: "scale(1.15)", filter: "brightness(1.2)" },
+                        { transform: "scale(1)", filter: "brightness(1)" }
+                    ], {
+                        duration: 300,
+                        easing: "cubic-bezier(0.175, 0.885, 0.32, 1.275)"
+                    });
+                }, config.requiredHoldTime);
+            }
+
+            function stopHold(e) {
+                if (holdTimer) clearTimeout(holdTimer);
+                if (holdAnimation) {
+                    holdAnimation.pause();
+                    holdAnimation.playbackRate = -4;
+                    holdAnimation.play();
+                    holdAnimation = null;
+                }
+            }
+
             contentNode.addEventListener("click", (e) => {
-                if (hasHeld) {
-                    e.stopImmediatePropagation()
-                    e.preventDefault()
+                const clickDuration = Date.now() - clickStartTime;
+                if (hasHeld || clickDuration > maxClickDuration) {
+                    e.stopImmediatePropagation();
+                    e.preventDefault();
                     hasHeld = false;
                     return;
                 }
+                contentNode.animate([
+                    { transform: "scale(0.9)", background: tapColor },
+                    { transform: "scale(1)", background: "transparent" }
+                ], {
+                    duration: 120,
+                    easing: "ease-out"
+                });
 
-                contentNode.style.background = "rgba(128, 128, 128, 0.231)"
-                setTimeout(() => {
-                    contentNode.style.background = ""
-                }, config.messageClickAnimationTime);
+                console.log("Normal click");
+            });
 
-            })
 
-            let whileHeldId = null
-            let hasHeld = false;
-            function whileHeld(currentTime) {
-                whileHeldId = requestAnimationFrame(whileHeld);
-                if (currentTime - startTime >= config.requiredHoldTime) {
-                    stopHold();
-                    hasHeld = true;
-                    let message = null;
-                    function getMessage() {
-                        return contentNode.children[0].alt;
-                    }
-                    sendMessage(getMessage())
-                    return;
-                }
-                else {
-                    contentNode.style.setProperty("transition", `background ${config.requiredHoldTime}ms ease`)
-                    contentNode.style.background = "rgba(128, 128, 128, 0.231)"
-                }
-            }
-            let startTime = 0
-            function startHold() {
-                stopHold();
-                hasHeld = false;
-                startTime = performance.now();
-                requestAnimationFrame(whileHeld)
-            }
-            function stopHold() {
-                if (whileHeldId) {
-                    cancelAnimationFrame(whileHeldId)
-                    startTime = 0;
-                    whileHeldId = null
-                    contentNode.style.setProperty("transition", `background ${config.messageClickAnimationTime}ms ease`)
-                    contentNode.style.background = ""
-                }
-            }
             contentNode.addEventListener("mousedown", startHold);
-            ["mouseup", "mouseleave"].forEach(e => { contentNode.addEventListener(e, stopHold) });
-
+            ["mouseup", "mouseleave"].forEach(e => contentNode.addEventListener(e, stopHold));
             return new ContentNode(contentNode);
         }
 
@@ -400,7 +428,7 @@ import { labels } from "./config.js";
         displayOn(message) {
             let associatedChild = this.node.querySelector(`.contentImg`)
             associatedChild.alt = message.text;
-                        associatedChild.srcset = message.srcset;
+            associatedChild.srcset = message.srcset;
             associatedChild.classList.remove("hidden")
             this.node.classList.remove("hidden")
             this.printWrapper = function () {

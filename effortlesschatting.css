@@ -4,40 +4,33 @@
     --font-base: "Inter", "Noto Sans Arabic", "Roobert", "Helvetica Neue", Helvetica, Arial, sans-serif;
     --font-weight-normal: 400;
     --line-height-body: 1.4;
-    --color-background-body: var(--color-hinted-grey-1);
-    --color-text-base: var(--color-hinted-grey-14);
     --font-size-4: 1.4rem;
     --font-size-base: var(--font-size-4);
+    --color-background-body: var(--color-hinted-grey-1);
+    --color-text-base: var(--color-hinted-grey-14);
     --color-background-scrollbar: #fff6;
     --color-background-scrollbar-track: #0000;
 }
 
-#effortlesschatting {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    position: relative;
-}
-
+#effortlesschatting,
 .effortlesschatting-root {
     display: flex;
     justify-content: center;
     align-items: flex-start;
     position: relative;
+    width: 100%;
 }
 
 .effortlesschatting-messagebox-area {
     display: flex;
     justify-content: space-evenly;
     align-items: stretch;
-    column-gap: .5rem;
+    column-gap: 0.5rem;
     width: 100%;
     box-sizing: border-box;
     outline: 0.1rem solid rgba(255, 255, 255, 0.102);
-    border-radius: .25rem;
+    border-radius: 0.25rem;
     background: #171717;
-    -webkit-backdrop-filter: blur(1.5rem);
-    backdrop-filter: blur(1.5rem);
 }
 
 .effortlesschatting-no-message {
@@ -60,40 +53,33 @@
     text-overflow: ellipsis;
     z-index: 10;
     object-fit: contain;
+    user-select: none;
 }
 
 .effortlesschatting-messagebox {
     display: grid;
-    z-index: 10;
     grid-template-columns: repeat(3, auto);
-    cursor: pointer;
-    overflow: clip;
+
     min-height: 5rem;
     padding: 1rem;
+
+    cursor: pointer;
+    overflow: hidden;
+    /* Changed 'clip' to 'hidden' for better browser support */
+    z-index: 10;
     text-overflow: ellipsis;
     white-space: nowrap;
-    overflow: hidden
+    user-select: none;
 }
 
-
 .effortlesschatting-message-img {
-    font-weight: 900;
     grid-column: 1;
     grid-row: 1;
     margin: auto;
+    font-weight: 900;
     object-fit: contain;
+    pointer-events: none;
 }
-
-/*
-.effortlesschatting-flush-button-outer {
-    margin-left: auto;
-    display: flex !important;
-    -moz-box-align: center !important;
-    align-items: center !important;
-    align-content: center !important;
-    flex-direction: row !important;
-}
-*/
 
 .effortlesschatting-flush-button-outer {
     margin-left: auto;
@@ -108,19 +94,20 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
     width: 3rem;
     height: 3rem;
+
     cursor: pointer;
     border-radius: 0.5rem;
     transition: background-color 0.25s ease;
+    user-select: none;
 }
 
-/* hover highlight */
 .effortlesschatting-flush-button-inner:hover {
     background-color: rgba(255, 255, 255, 0.15);
 }
 
-/* tooltip container */
 .effortlesschatting-flush-tooltip {
     position: absolute;
     bottom: 138%;
@@ -135,8 +122,8 @@
     white-space: nowrap;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.2s ease, transform 0.2s ease;
     z-index: 9999;
+    transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
 .effortlesschatting-flush-tooltip::before {
@@ -154,166 +141,16 @@
     transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
-.effortlesschatting-flush-button-inner:hover .effortlesschatting-flush-tooltip,
-.effortlesschatting-flush-button-inner:hover .effortlesschatting-flush-tooltip::before {
+.effortlesschatting-flush-button-inner:hover .effortlesschatting-flush-tooltip {
     opacity: 1;
     transform: translateX(-50%) translateY(0);
 }
 
-/* show tooltip + arrow on hover */
 .effortlesschatting-flush-button-inner:hover .effortlesschatting-flush-tooltip::before {
     opacity: 1;
     transform: translateX(-50%) translateY(0) rotate(45deg);
 }
 
-
-/*
-.effortlesschatting-flush-button-inner:hover {
-    border-radius: .4rem;
-    background-color: var(--color-background-button-text-hover);
-    color: var(--color-fill-button-icon-hover)
-}
-
-.effortlesschatting-flush-button-inner::after {
-    content: "Flush";
-    position: absolute;
-    bottom: 125%;
-    left: 75%;
-    transform: translateX(-50%) translateY(-10px);
-    background: #fff;
-    color: #333;
-    padding: 0.5rem 0.9rem;
-    border-radius: 8px;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
-    font-size: 0.85rem;
-    font-weight: 500;
-    white-space: nowrap;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.25s ease, transform 0.25s ease;
-    z-index: 99999;
-    background-color: var(--color-text-base);
-    color: var(--color-text-tooltip);
-    text-align: center;
-    border-radius: .4rem;
-    display: flex;
-    font-weight: 600;
-    margin-top: -1.3rem;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    width: fit-content;
-    white-space: nowrap;
-    padding: .25em .35em;
-    margin-left: -3.5em;
-    z-index: 9999;
-    visibility: hidden;
-    opacity: 0;
-}
-
-.effortlesschatting-flush-button-inner::before {
-    content: "";
-    font-weight: 600;
-    position: absolute;
-    top: 115%;
-    left: 50%;
-    transform: translateX(-50%) rotate(180deg);
-    border-width: 7px;
-    border-style: solid;
-    border-color: #fff transparent transparent transparent;
-    opacity: 0;
-    transition: opacity 0.25s ease;
-    z-index: 99999;
-}
-
-.effortlesschatting-flush-button-inner:hover::after,
-.effortlesschatting-flush-button-inner:hover::before {
-    opacity: 1;
-}
-
-
-
-.effortlesschatting-flush-button-inner {
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    width: 3rem;
-    height: 3rem;
-    position: relative;
-}
-
-.effortlesschatting-flush-button {
-    border: 0;
-    background: transparent;
-    width: var(--button-size-default);
-    height: var(--button-size-default);
-    padding: .5rem;
-    justify-content: center;
-    align-items: center;
-    display: flex
-}
-*/
-
-/* v2 */
-/*
-.effortlesschatting-flush-button-inner {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 3rem;
-    height: 3rem;
-    cursor: pointer;
-    border-radius: 0.5rem;
-    transition: background-color 0.25s ease;
-}
-
-.effortlesschatting-flush-button-inner:hover {
-    background-color: rgba(255, 255, 255, 0.15);
-}
-
-.effortlesschatting-flush-button-inner::after {
-    content: "Flush";
-    position: absolute;
-    bottom: 138%;
-    left: 50%;
-    transform: translateX(-50%) translateY(5px);
-    background: #fff;
-    color: #000;
-    font-weight: 600;
-    font-size: 1.4rem;
-    padding: 6px 6px;
-    border-radius: 4px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-    white-space: nowrap;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.2s ease, transform 0.2s ease;
-    z-index: 9999;
-}
-
-.effortlesschatting-flush-button-inner::before {
-    content: "";
-    position: absolute;
-    bottom: 75%;
-    left: 50%;
-    transform: translateX(-50%);
-    border-width: 15px;
-    border-style: solid;
-    border-color: #fff transparent transparent transparent;
-    opacity: 0;
-    transition: opacity 0.2s ease, transform 0.2s ease;
-    z-index: 9999;
-}
-
-.effortlesschatting-flush-button-inner:hover::after,
-.effortlesschatting-flush-button-inner:hover::before {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-}
-*/
-
-
 .hidden {
-    display: none;
+    display: none !important;
 }

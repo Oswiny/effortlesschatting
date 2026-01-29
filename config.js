@@ -17,7 +17,7 @@ export let defaultConfig = {
     autoHide: false,
     scrapeAlreadySentMessages: true,
     requiredHoldTime: 5000,
-    messageClickAnimationTime: 125,
+    messageClickAnimationTime: 150,
     scannerMethod: "injection-with-emotes",
     language: "en",
     allowSelf: true,
