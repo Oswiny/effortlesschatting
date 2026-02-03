@@ -40,7 +40,9 @@
                 "effortlesschatting.js",
                 "effortlesschatting.css",
                 "config.js",
-                "configAccess.js"
+                "configAccess.js",
+                "emoteRequestHandler.js",
+                "internalTraversalHandler.js"
             ]
         }
     ]

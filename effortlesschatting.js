@@ -1,10 +1,15 @@
 "use strict";
 import { labels } from "./config.js";
+
+import { getAllCustomEmotes, getAllNativeEmotes, getAllEmotes } from "./emoteRequestHandler.js";
+import { findPathToTarget } from "./internalTraversalHandler.js";
 (async () => {
+    console.log("here is all custom emotes: ", await getAllCustomEmotes())
+    console.log("here is all native emotes: ", await getAllNativeEmotes())
+    console.log("here is all emotes: ", await getAllEmotes())
 
     let isInjected = false;
     let config = {};
-
     let resolveConfigReady;
     const configReady = new Promise((resolve, reject) => { resolveConfigReady = resolve })
     window.postMessage({ source: "effortless", type: "CONFIG_SYNC" }, "*");
@@ -20,8 +25,6 @@ import { labels } from "./config.js";
     });
 
     await configReady;
-
-
 
     function updateScannerMethod(newScannerMethod, oldScannerMethod = null) {
         if (!isInjected || (oldScannerMethod !== null && oldScannerMethod === newScannerMethod)) {
@@ -520,7 +523,7 @@ import { labels } from "./config.js";
             observer.disconnect()
             console.log("starting inject process")
             domManager = new DomManager();
-            isSevenTvInstalled = await domManager.checkSevenTVInstallation()
+            isSevenTvInstalled = await domManager.checkSevenTVInstallation() // i guess normally you do this by checking if window.seventv exists. but i already done it this way. so lets just wait and see, if changing it is better i will change it.
             console.log("Is SevenTV Installed: ", isSevenTvInstalled);
             if (isSevenTvInstalled) {
                 await domManager.waitForSevenTV();
@@ -543,36 +546,7 @@ import { labels } from "./config.js";
     }
     checkInjection();
 
-    function findPathToTarget(startFiber, functionName) {
-        const queue = [{ fiber: startFiber, path: [] }];
-        const visited = new Set();
 
-        while (queue.length > 0) {
-            const { fiber, path } = queue.shift();
-            if (!fiber || visited.has(fiber)) continue;
-            visited.add(fiber);
-
-            if (fiber.stateNode && fiber.stateNode[functionName]) {
-                return { fiber, path, success: true };
-            }
-
-            const nextNodes = [
-                { node: fiber.child, key: 'child' },
-                { node: fiber.sibling, key: 'sibling' },
-                { node: fiber.return, key: 'return' },
-                { node: fiber.alternate, key: 'alternate' },
-                { node: fiber.stateNode?._reactInternals, key: 'stateNode._reactInternals' }
-            ];
-
-            nextNodes.forEach(({ node, key }) => {
-                if (node && !visited.has(node)) {
-                    queue.push({ fiber: node, path: [...path, key] });
-                }
-            });
-        }
-
-        return { success: false };
-    }
 
     let emotes = {}
     function scrapeOnEvent(messageData) {
@@ -605,8 +579,8 @@ import { labels } from "./config.js";
     let originalInsertBefore = Node.prototype.insertBefore
     function scannerMethod() {
         emotes = {}
-        startElement = document.querySelector(".chat-room__content");
-        startFiber = startElement[Object.keys(startElement).find(item => item.includes("reactFiber"))]
+
+        startFiber = document.reactFiberSelector(".chat-room__content")
         fiber = findPathToTarget(startFiber, functionName).fiber
 
         if (originalOnChatMessageEvent !== null) {
@@ -665,6 +639,28 @@ import { labels } from "./config.js";
                 return originalInsertBefore.apply(this, args);
             }
         }
+        if (config.scannerMethod === "injection-and-fetch") {
+            emotes = getAllEmotes();
+            fiber.stateNode.onChatMessageEvent = function (...args) {
+                if (args[0] && (config.allowSelf || (!config.allowSelf && !args[0].sentByCurrentUser))) {
+                    scrapeOnEvent(args[0])
+                    if (!domManager.isMouseOver()) {
+                        ContentNode.updateNodes()
+                    }
+                }
+                return originalOnChatMessageEvent.apply(this, args)
+            }
+        }
+        if (config.scannerMethod === "injection-and-capture") {
+
+        }
+        if (config.scannerMethod === "injection-no-cache") {
+
+        }
+
+
+
+
         if (config.scannerMethod === "injection-with-emotes" && !isSevenTvInstalled) {
             const noMessages = document.querySelector("#noMessages")
             noMessages.setAttribute("data-label", "seventv-not-detected")
