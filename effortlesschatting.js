@@ -107,53 +107,7 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
 
 
         scrapeAlreadySent() {
-            if (config.scrapeAlreadySentMessages) {
-                chatEntry.childNodes.forEach(item => { this.scrape(item) });
-                ContentNode.updateNodes()
-            }
-        }
-
-        scrape(message) {
-            if (!(message.nodeName === "DIV" && message.classList.contains("seventv-message"))) {
-                return
-            }
-            const badges = Array.from(message.querySelector("span.seventv-chat-user-badge-list")?.querySelectorAll("img") ?? []).map(item => item.alt);
-            const userName = message.querySelector("span.seventv-chat-user-username")?.innerText;
-            let messageBody = message.querySelector("span.seventv-chat-message-body");
-
-            if ((!config.scrapeMods && badges.includes("Moderator")) || (!config.scrapeVIPs && badges.includes("VIP")) || (!config.scrapeBots && badges.includes("Chat Bot"))) {
-                return;
-            }
-
-            //only on english
-            if (config.scrapeOnlySubs) {
-                let subBadge = (badges.filter(item => item.includes("Subscriber")).length > 0)
-                if (!subBadge.length) {
-                    return
-                }
-                if (subscriberMonthCalculator(subBadge) < config.scrapeSubsWithMinimumMonths) {
-                    return
-                }
-            }
-
-            if (!config.bannedUsers.has(userName)) {
-                if (config.allowText) {
-                    if (messageBody) {
-                        let uniqueWordsInMessage = Array.from(new Set(messageBody.innerText.split(" ").filter(item => !config.bannedWords.has(item))));
-                        uniqueWordsInMessage.forEach(word => {
-                            messages.add(new Message(word));
-                        })
-                    }
-                }
-
-                let emotesInAMessage = messageBody?.querySelectorAll("img.seventv-chat-emote")
-                if (emotesInAMessage) {
-                    let uniqueEmotesInAMessage = [...new Map(Array.from(emotesInAMessage).map(item => [item["currentSrc"], item])).values()].filter(item => !config.bannedEmotes.has(item.alt));
-                    uniqueEmotesInAMessage.forEach(emote => {
-                        messages.add(new Message(emote.alt, emote.currentSrc, emote.srcset))
-                    })
-                }
-            }
+            //needs to readapt
         }
 
         injectRoot() {
@@ -479,20 +433,6 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
         return amount
     }
 
-    let chatListener = new MutationObserver((mutationList, observer) => {
-        for (let mutation of mutationList) {
-            if (mutation.type === "childList" && mutation.addedNodes.length > 0) {
-                for (let message of mutation.addedNodes) {
-                    domManager.scrape(message);
-                }
-                if (!domManager.isMouseOver()) {
-                    ContentNode.updateNodes();
-                }
-            }
-        }
-    });
-
-
     let domManager = null;
     let isSevenTvInstalled = null;
     let messages = null;
@@ -571,6 +511,30 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
         uniqueWordsInMessage.forEach(word => messages.add(new Message(word, "", emotes[word])));
     }
 
+    function scrapeOnSeventv(messageData) {
+        if (messageData.badges && ((!config.scrapeMods && messageData.badges.moderator) || (!config.scrapeVIPs && messageData.vip) || (!config.scrapeBots && messageData.badges.chatbot))) //make sure vip and chatbot are the way they are
+        {
+            return;
+        }
+
+        if (!messages) return
+
+        if (config.scrapeOnlySubs) {
+            if (!messageData.badges.Subscriber || (messageData.badges.Subscriber && (Number(messageData.badges.Subscriber) < config.scrapeSubsWithMinimumMonths))) {
+                return
+            }
+        }
+
+        if (config.bannedUsers.has(messageData.author.username)) {
+            return
+        }
+
+        let uniqueWordsInMessage = Array.from(new Set(messageData.message.body.trim().split(" ").filter(item => !config.bannedWords.has(item))))
+        let emotesInCurrentMessage = {}
+        messageData.tokens.forEach(token => emotesInCurrentMessage[token.content.emote.data.name] = token.content.emote.data.host.srcset)
+        uniqueWordsInMessage.forEach(word => messages.add(new Message(word, "", emotes[word])));
+    }
+
     let startElement = null;
     let startFiber = null;
     const functionName = "onChatMessageEvent";
@@ -591,12 +555,7 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
         }
         Node.prototype.insertBefore = originalInsertBefore;
 
-        if (config.scannerMethod === "legacy") {
-            chatEntry = document.querySelector("#live-page-chat #seventv-message-container main.seventv-chat-list")
-            chatListener.observe(chatEntry, { childList: true, subtree: false });
-        }
         if (config.scannerMethod === "injection-without-emotes") {
-
             fiber.stateNode.onChatMessageEvent = function (...args) {
                 if (args[0] && (config.allowSelf || (!config.allowSelf && !args[0].sentByCurrentUser))) {
                     scrapeOnEvent(args[0])
@@ -651,11 +610,31 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
                 return originalOnChatMessageEvent.apply(this, args)
             }
         }
-        if (config.scannerMethod === "injection-and-capture") {
-
+        if (config.scannerMethod === "injection-tokens-tooltip") {
+            const seventvRoot = document.querySelector("#seventv-root")
+            const patchOrig = seventvRoot.__vue_app__._context.directives.tooltip.mounted
+            seventvRoot.__vue_app__._context.directives.tooltip.mounted = function (...args) {
+                if (args[1]?.value === "Copy" || args[1]?.value === "Pin" || args[1]?.value === "Reply" || (args[1]?.value !== "")) {
+                    scrapeOnSeventv(args[1]._.props.msg)
+                    if (!domManager.isMouseOver()) {
+                        ContentNode.updateNodes()
+                    }
+                }
+                return patchOrig.apply(this, args)
+            }
         }
-        if (config.scannerMethod === "injection-no-cache") {
-
+        if (config.scannerMethod === "injection-tokens-paint") {
+            const seventvRoot = document.querySelector("#seventv-root")
+            const patchOrig = seventvRoot.__vue_app__._context.directives["cosmetic-paint"].mounted
+            seventvRoot.__vue_app__._context.directives["cosmetic-paint"].mounted = function (...args) {
+                if (args[1].instance._.parent.props.msg) {
+                    scrapeOnSeventv(args[1].instance._.parent.props.msg)
+                    if (!domManager.isMouseOver()) {
+                        ContentNode.updateNodes()
+                    }
+                }
+                return patchOrig.apply(this, args)
+            }
         }
 
 
