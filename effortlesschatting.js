@@ -424,15 +424,7 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
         }
 
     }
-
-    function subscriberMonthCalculator(badgeText) {
-        let amount = parseFloat(badgeText.split("-"));
-        if (badgeText.includes("-Year")) {
-            return amount * 12
-        }
-        return amount
-    }
-
+    
     let domManager = null;
     let isSevenTvInstalled = null;
     let messages = null;
