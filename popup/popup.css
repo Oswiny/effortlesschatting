@@ -199,7 +199,7 @@ p.lead {
     opacity: 0;
     transition: opacity 0.5s ease;
     animation: liveGradient 3s linear infinite;
-    background: 
+    background:
         linear-gradient(#141414, #141414) padding-box,
         var(--gradient) border-box;
     background-size: 200% 200%;
@@ -550,7 +550,6 @@ footer {
 
 .reset-icon:hover {
     color: #ff6b6b;
-    transform: rotate(90deg) scale(1.2);
     text-shadow: 0 0 10px var(--danger-glow);
 }
 
@@ -914,6 +913,7 @@ input:focus {
 }
 
 @keyframes knobGlow {
+
     0%,
     100% {
         box-shadow: 0 0 8px var(--accent);

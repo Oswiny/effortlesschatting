@@ -28,21 +28,23 @@ import { defaultConfig, labels } from "../config.js";
         //const dots = [twitchDot, seventvDot]
         const dots = [twitchDot]
         dots.forEach(statusDot => colors.forEach(color => statusDot.classList.toggle(color, false)))
-        if (isOnTwitch){
+        if (isOnTwitch) {
             twitchDot.classList.toggle("green", true)
         }
-        else{
+        else {
             twitchDot.classList.toggle("red", true)
         }
-
-    
-
     }
     await updateStatusDots()
 
     function updateResetState(element, defaultValue, on) {
         const changed = JSON.stringify(defaultValue) !== JSON.stringify(on)
         element.classList.toggle("modified", changed)
+        const section = element.closest("section.card.section")
+        const sectionResetIcon = section.querySelector(".heading-row .reset-icon")
+        const selfCount = sectionResetIcon.classList.contains("modified") ? 1 : 0
+        const isAnyModified = section.querySelectorAll(".modified").length - selfCount > 0
+        sectionResetIcon.classList.toggle("modified", isAnyModified)
     }
 
     async function updateVisualStates() {
@@ -236,39 +238,79 @@ import { defaultConfig, labels } from "../config.js";
     }
 
     document.querySelectorAll('.reset-icon').forEach(async (reset) => {
-        reset.addEventListener('click', async () => {
-            const id = reset.dataset.target;
-            const el = document.getElementById(id);
-            if (!el) {
-                return
-            };
-            if (!confirm('Reset this setting to default?')) {
-                return
-            };
+        if (reset.dataset.target === "section") {
+            reset.addEventListener("click", async () => {
+                if (!confirm('Reset this setting to default?')) {
+                    return
+                };
+                const section = reset.closest("section.card.section")
+                const allResetsInSection = section.querySelectorAll(".reset-icon")
+                allResetsInSection.forEach(async (reset) => {
+                    if (reset.dataset.target === "section") return
+                    const id = reset.dataset.target;
+                    const el = document.getElementById(id);
+                    if (!el) {
+                        return
+                    };
 
-            let defaultSetting = await configAccess.resetConfig(id);
-            reset.classList.toggle("modified", false);
+                    let defaultSetting = await configAccess.resetConfig(id);
+                    reset.classList.toggle("modified", false);
 
-            if (el.classList.contains('toggle')) {
-                const on = defaultSetting;
-                el.classList.toggle('on', on);
-                el.setAttribute('aria-checked', on);
-            }
-            else if (el.type === "range") {
-                el.value = String(defaultSetting);
-                el.parentElement.querySelector("span").textContent = el.value;
-            }
-            else if (el.classList.contains("subsection")) {
-                await renderBanned(el.querySelector(".banned-list"), id)
-            }
-            else if (el.classList.contains("dropdown")) {
-                setDropdownValue(el, defaultSetting)
-                if (el.id === "language") {
-                    updateLabels(defaultSetting)
+                    if (el.classList.contains('toggle')) {
+                        const on = defaultSetting;
+                        el.classList.toggle('on', on);
+                        el.setAttribute('aria-checked', on);
+                    }
+                    else if (el.type === "range") {
+                        el.value = String(defaultSetting);
+                        el.parentElement.querySelector("span").textContent = el.value;
+                    }
+                    else if (el.classList.contains("subsection")) {
+                        await renderBanned(el.querySelector(".banned-list"), id)
+                    }
+                    else if (el.classList.contains("dropdown")) {
+                        setDropdownValue(el, defaultSetting)
+                        if (el.id === "language") {
+                            updateLabels(defaultSetting)
+                        }
+                    }
+                })
+            })
+        }
+        else {
+            reset.addEventListener('click', async () => {
+                const id = reset.dataset.target;
+                const el = document.getElementById(id);
+                if (!el) {
+                    return
+                };
+                if (!confirm('Reset this setting to default?')) {
+                    return
+                };
+
+                let defaultSetting = await configAccess.resetConfig(id);
+                reset.classList.toggle("modified", false);
+
+                if (el.classList.contains('toggle')) {
+                    const on = defaultSetting;
+                    el.classList.toggle('on', on);
+                    el.setAttribute('aria-checked', on);
                 }
-            }
-
-        });
+                else if (el.type === "range") {
+                    el.value = String(defaultSetting);
+                    el.parentElement.querySelector("span").textContent = el.value;
+                }
+                else if (el.classList.contains("subsection")) {
+                    await renderBanned(el.querySelector(".banned-list"), id)
+                }
+                else if (el.classList.contains("dropdown")) {
+                    setDropdownValue(el, defaultSetting)
+                    if (el.id === "language") {
+                        updateLabels(defaultSetting)
+                    }
+                }
+            });
+        }
     });
 
     document.getElementById('closeButton').addEventListener('click', () => {

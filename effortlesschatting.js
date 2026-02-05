@@ -4,10 +4,6 @@ import { labels } from "./config.js";
 import { getAllCustomEmotes, getAllNativeEmotes, getAllEmotes } from "./emoteRequestHandler.js";
 import { findPathToTarget } from "./internalTraversalHandler.js";
 (async () => {
-    console.log("here is all custom emotes: ", await getAllCustomEmotes())
-    console.log("here is all native emotes: ", await getAllNativeEmotes())
-    console.log("here is all emotes: ", await getAllEmotes())
-
     let isInjected = false;
     let config = {};
     let resolveConfigReady;
@@ -424,7 +420,7 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
         }
 
     }
-    
+
     let domManager = null;
     let isSevenTvInstalled = null;
     let messages = null;
@@ -521,10 +517,10 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
             return
         }
 
-        let uniqueWordsInMessage = Array.from(new Set(messageData.message.body.trim().split(" ").filter(item => !config.bannedWords.has(item))))
+        let uniqueWordsInMessage = Array.from(new Set(messageData.body.trim().split(" ").filter(item => !config.bannedWords.has(item))))
         let emotesInCurrentMessage = {}
         messageData.tokens.forEach(token => emotesInCurrentMessage[token.content.emote.data.name] = token.content.emote.data.host.srcset)
-        uniqueWordsInMessage.forEach(word => messages.add(new Message(word, "", emotes[word])));
+        uniqueWordsInMessage.forEach(word => messages.add(new Message(word, "", emotesInCurrentMessage[word])));
     }
 
     let startElement = null;
@@ -548,6 +544,18 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
         Node.prototype.insertBefore = originalInsertBefore;
 
         if (config.scannerMethod === "injection-without-emotes") {
+            fiber.stateNode.onChatMessageEvent = function (...args) {
+                if (args[0] && (config.allowSelf || (!config.allowSelf && !args[0].sentByCurrentUser))) {
+                    scrapeOnEvent(args[0])
+                    if (!domManager.isMouseOver()) {
+                        ContentNode.updateNodes()
+                    }
+                }
+                return originalOnChatMessageEvent.apply(this, args)
+            }
+        }
+        if (config.scannerMethod === "injection-fetch-native") {
+            emotes = getAllNativeEmotes();
             fiber.stateNode.onChatMessageEvent = function (...args) {
                 if (args[0] && (config.allowSelf || (!config.allowSelf && !args[0].sentByCurrentUser))) {
                     scrapeOnEvent(args[0])
@@ -607,7 +615,7 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
             const patchOrig = seventvRoot.__vue_app__._context.directives.tooltip.mounted
             seventvRoot.__vue_app__._context.directives.tooltip.mounted = function (...args) {
                 if (args[1]?.value === "Copy" || args[1]?.value === "Pin" || args[1]?.value === "Reply" || (args[1]?.value !== "")) {
-                    scrapeOnSeventv(args[1]._.props.msg)
+                    scrapeOnSeventv(args[1].instance._.props.msg)
                     if (!domManager.isMouseOver()) {
                         ContentNode.updateNodes()
                     }

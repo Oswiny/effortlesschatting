@@ -172,6 +172,24 @@ export const labels = {
         },
         "reset-icon": {
             main: "Reset to default"
+        },
+        "injection-fetch-native": {
+        
+        },
+        "injection-with-emotes": {
+
+        },
+        "injection-and-fetch": {
+
+        },
+        "injection-tokens-tooltip": {
+
+        },
+        "injection-tokens-paint": {
+
+        },
+        default: {
+            main: "NO TRANSLATION HAS BEEN FOUND"
         }
     },
 

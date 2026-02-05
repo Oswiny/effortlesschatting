@@ -51,7 +51,11 @@
 
             <main>
                 <section class="card section">
-                    <h2 data-label="setScanner" data-label-type="main">Scanner settings</h2>
+                    <div class="heading-row">
+                        <h2 data-label="setScanner" data-label-type="main">Scanner settings</h2>
+                        <span class="reset-icon" title="Reset to default" data-target="section">&times;</span>
+                    </div>
+
                     <p class="desc" data-label="setScanner" data-label-type="alt">Adjust scanner behavior</p>
 
                     <div class="row">
@@ -83,9 +87,12 @@
                             </button>
 
                             <div class="dropdown-menu" role="listbox" tabindex="-1">
-                                <button type="button" class="dropdown-item" role="option" data-value="legacy" aria-selected="true" data-label="legacy" data-label-type="main">Legacy</button>
-                                <button type="button" class="dropdown-item" role="option" data-value="injection-without-emotes" aria-selected="false" data-label="injection-without-emotes" data-label-type="main">Injection Based (Without Emotes)</button>
-                                <button type="button" class="dropdown-item" role="option" data-value="injection-with-emotes" aria-selected="false" data-label="injection-with-emotes" data-label-type="main">Injection Based (With Emotes)</button>
+                                <button type="button" class="dropdown-item" role="option" data-value="injection-without-emotes" aria-selected="true" data-label="injection-without-emotes" data-label-type="main">Text Only</button>
+                                <button type="button" class="dropdown-item" role="option" data-value="injection-fetch-native" aria-selected="false" data-label="injection-fetch-native" data-label-type="main">Fetch Native Emotes</button>
+                                <button type="button" class="dropdown-item" role="option" data-value="injection-with-emotes" aria-selected="false" data-label="injection-with-emotes" data-label-type="main">Grab From Insert Before (7TV Only)</button>
+                                <button type="button" class="dropdown-item" role="option" data-value="injection-and-fetch" aria-selected="false" data-label="injection-and-fetch" data-label-type="main">Fetch All Emotes</button>
+                                <button type="button" class="dropdown-item" role="option" data-value="injection-tokens-tooltip" aria-selected="false" data-label="injection-tokens-tooltip" data-label-type="main">Grab From Tokens (Tooltip) (7TV Only)</button>
+                                <button type="button" class="dropdown-item" role="option" data-value="injection-tokens-paint" aria-selected="false" data-label="injection-tokens-paint" data-label-type="main">Grab From Tokens (Paint) (7TV Only)</button>
                             </div>
                         </div>
                     </div>
@@ -148,8 +155,7 @@
                             <div class="meta">
                                 <div class="meta-top">
                                     <b data-label="scrapeBots" data-label-type="main">Allow Bots</b>
-                                    <span class="reset-icon" title="Reset to default" data-target="scrapeBots"
-                                    data-label="reset-icon" data-label-type="main">&times;</span>
+                                    <span class="reset-icon" title="Reset to default" data-target="scrapeBots" data-label="reset-icon" data-label-type="main">&times;</span>
                                 </div>
                                 <span class="muted" data-label="scrapeBots" data-label-type="alt">Allow scanning messages from bots</span>
                             </div>
@@ -171,8 +177,7 @@
                             <div class="meta">
                                 <div class="meta-top">
                                     <b data-label="scrapeMods" data-label-type="main">Allow Mods</b>
-                                    <span class="reset-icon" title="Reset to default" data-target="scrapeMods"
-                                    data-label="reset-icon" data-label-type="main">&times;</span>
+                                    <span class="reset-icon" title="Reset to default" data-target="scrapeMods" data-label="reset-icon" data-label-type="main">&times;</span>
                                 </div>
                                 <span class="muted" data-label="scrapeMods" data-label-type="alt">Allow scanning messages from moderators</span>
                             </div>
@@ -194,8 +199,7 @@
                             <div class="meta">
                                 <div class="meta-top">
                                     <b data-label="scrapeVIPs" data-label-type="main">Allow VIPs</b>
-                                    <span class="reset-icon" title="Reset to default" data-target="scrapeVIPs"
-                                    data-label="reset-icon" data-label-type="main">&times;</span>
+                                    <span class="reset-icon" title="Reset to default" data-target="scrapeVIPs" data-label="reset-icon" data-label-type="main">&times;</span>
                                 </div>
                                 <span class="muted" data-label="scrapeVIPs" data-label-type="alt">Allow scanning messages from VIPs</span>
                             </div>
@@ -217,8 +221,7 @@
                             <div class="meta">
                                 <div class="meta-top">
                                     <b data-label="scrapeOnlySubs" data-label-type="main">Allow Only Subscribers</b>
-                                    <span class="reset-icon" title="Reset to default" data-target="scrapeOnlySubs"
-                                    data-label="reset-icon" data-label-type="main">&times;</span>
+                                    <span class="reset-icon" title="Reset to default" data-target="scrapeOnlySubs" data-label="reset-icon" data-label-type="main">&times;</span>
                                 </div>
                                 <span class="muted" data-label="scrapeOnlySubs" data-label-type="alt">Only scan messages from subscribed users</span>
                             </div>
@@ -337,7 +340,10 @@
                 </section>
 
                 <section class="card section">
-                    <h2 data-label="setInsert" data-label-type="main">Insert Settings</h2>
+                    <div class="heading-row">
+                        <h2 data-label="setInsert" data-label-type="main">Insert Settings</h2>
+                        <span class="reset-icon" title="Reset to default" data-target="setInsert">&times;</span>
+                    </div>
                     <p class="desc" data-label="setInsert" data-label-type="alt">Adjust insertion behavior</p>
 
                     <div class="row">
@@ -414,7 +420,10 @@
                 </section>
 
                 <section class="card section">
-                    <h2 data-label="setMessageBox" data-label-type="main">Message Box Settings</h2>
+                    <div class="heading-row">
+                        <h2 data-label="setMessageBox" data-label-type="main">Message Box Settings</h2>
+                        <span class="reset-icon" title="Reset to default" data-target="setMessageBox">&times;</span>
+                    </div>
                     <p class="desc" data-label="setMessageBox" data-label-type="alt">Customize message box behavior</p>
 
                     <div class="row">
@@ -578,7 +587,10 @@
                 </section>
 
                 <section class="card section">
-                    <h2 data-label="other" data-label-type="main">Other</h2>
+                    <div class="heading-row">
+                        <h2 data-label="other" data-label-type="main">Other</h2>
+                        <span class="reset-icon" title="Reset to default" data-target="other">&times;</span>
+                    </div>
                     <p class="desc" data-label="other" data-label-type="alt">Other settings</p>
 
                     <div class="row">
