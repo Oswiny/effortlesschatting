@@ -491,7 +491,9 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
             return
         }
 
-        let uniqueWordsInMessage = Array.from(new Set(messageData.message.body.trim().split(" ").filter(item => !config.bannedWords.has(item))))
+        let uniqueWordsInMessage = Array.from(new Set(messageData.message.body.trim().split(" ").filter(item => {
+            return (!config.bannedWords.has(item) && (config.allowLinks || item?.test(linkRegex)) && (config.allowMentions || item?.[0] === "@"))
+        })))
         uniqueWordsInMessage.forEach(word => messages.add(new Message(word, "", emotes[word])));
     }
 
@@ -513,7 +515,11 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
             return
         }
 
-        let uniqueWordsInMessage = Array.from(new Set(messageData.body.trim().split(" ").filter(item => !config.bannedWords.has(item))))
+        const linkRegex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/g;
+
+        let uniqueWordsInMessage = Array.from(new Set(messageData.body.trim().split(" ").filter(item => {
+            return (!config.bannedWords.has(item) && (config.allowLinks || item?.test(linkRegex)) && (config.allowMentions || item?.[0] === "@"))
+        })))
         let emotesInCurrentMessage = {}
         messageData.tokens.forEach(token => emotesInCurrentMessage[token.content.emote.data.name] = token.content.emote.data.host.srcset)
         uniqueWordsInMessage.forEach(word => messages.add(new Message(word, "", emotesInCurrentMessage[word])));

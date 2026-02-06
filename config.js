@@ -24,7 +24,9 @@ export let defaultConfig = {
     seventvInstallationWaitTime: 2000,
     drainPlaybackRate: 4,
     tapColor: "rgba(255, 255, 255, 0.15)",
-    holdColor: "rgba(169, 112, 255, 0.4)", 
+    holdColor: "rgba(169, 112, 255, 0.4)",
+    allowLinks: false,
+    allowMentions: false,
 }
 
 export const labels = {
@@ -194,6 +196,14 @@ export const labels = {
         "drainPlaybackRate": {
             main: "Hold Animation Drain Playback Rate",
             alt: "Playback rate of how fast the drain animation plays after releasing hold without reaching full capacity"
+        },
+        "allowLinks": {
+            main: "Allow Links",
+            alt: "Allow scanning of links"
+        },
+        "allowMentions": {
+            main: "Allow Mentions",
+            alt: "Allow scanning of mentions"
         },
         times: {
             main: "x"
