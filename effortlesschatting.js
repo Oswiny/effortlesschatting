@@ -193,7 +193,7 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
                 if (holdTimer) clearTimeout(holdTimer);
                 if (holdAnimation) {
                     holdAnimation.pause();
-                    holdAnimation.playbackRate = -4;
+                    holdAnimation.playbackRate = -config.drainPlaybackRate;
                     holdAnimation.play();
                     holdAnimation = null;
                 }

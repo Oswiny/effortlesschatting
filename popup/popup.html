@@ -584,6 +584,28 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="control">
+                            <div class="icon" aria-hidden>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 22h14"/><path d="M5 2h14"/><path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22"/><path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2"/></svg>
+                            </div>
+                            <div class="meta">
+                                <div class="meta-top">
+                                    <b data-label="drainPlaybackRate" data-label-type="main">Hold Animation Drain Playback Rate</b>
+                                    <span class="reset-icon" title="Reset to default" data-target="drainPlaybackRate" data-label="reset-icon" data-label-type="main">&times;</span>
+                                </div>
+                                <span class="muted" data-label="drainPlaybackRate" data-label-type="alt">Playback rate of how fast the drain animation plays after releasing hold without reaching full capacity</span>
+                            </div>
+                        </div>
+                        <div class="input-wrapper">
+                            <div class="range-wrap">
+                                <input id="drainPlaybackRate" type="range" min="1" max="50" value="4" step="1" />
+                                <span class="muted" class="muted range-value"></span>
+                                <span class="muted" data-label="times" data-label-type="main">x</span>
+                            </div>
+                        </div>
+                    </div>
                 </section>
 
                 <section class="card section">
@@ -596,7 +618,7 @@
                     <div class="row">
                         <div class="control">
                             <div class="icon" aria-hidden>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock-fading-icon lucide-clock-fading">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M12 2a10 10 0 0 1 7.38 16.75" />
                                     <path d="M12 6v6l4 2" />
                                     <path d="M2.5 8.875a10 10 0 0 0-.5 3" />
@@ -610,7 +632,7 @@
                                     <b data-label="seventvInstallationWaitTime" data-label-type="main">7TV Detection Timeout</b>
                                     <span class="reset-icon" title="Reset to default" data-target="seventvInstallationWaitTime" data-label="reset-icon" data-label-type="main">&times;</span>
                                 </div>
-                                <span class="muted" data-label="seventvInstallationWaitTime" data-label-type="alt">"Time to wait for 7TV to load. Increase this if you see '7TV installation not detected'."</span>
+                                <span class="muted" data-label="seventvInstallationWaitTime" data-label-type="alt">Time to wait for 7TV to load. Increase this if you see '7TV installation not detected'.</span>
                             </div>
                         </div>
                         <div class="input-wrapper">

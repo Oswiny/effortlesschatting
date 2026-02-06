@@ -22,6 +22,7 @@ export let defaultConfig = {
     language: "en",
     allowSelf: true,
     seventvInstallationWaitTime: 2000,
+    drainPlaybackRate: 4
 }
 
 export const labels = {
@@ -174,7 +175,7 @@ export const labels = {
             main: "Reset to default"
         },
         "injection-fetch-native": {
-        
+
         },
         "injection-with-emotes": {
 
@@ -187,6 +188,13 @@ export const labels = {
         },
         "injection-tokens-paint": {
 
+        },
+        "drainPlaybackRate": {
+            main: "Hold Animation Drain Playback Rate",
+            alt: "Playback rate of how fast the drain animation plays after releasing hold without reaching full capacity"
+        },
+        times: {
+            main: "x"
         },
         default: {
             main: "NO TRANSLATION HAS BEEN FOUND"
