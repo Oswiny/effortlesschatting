@@ -145,22 +145,18 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
             const maxClickDuration = 200;
             let clickStartTime = null;
 
-            const tapColor = "rgba(255, 255, 255, 0.15)";
-            const holdColor = "rgba(169, 112, 255, 0.4)";
-
-
             function startHold() {
                 hasHeld = false;
                 clickStartTime = Date.now();
                 holdAnimation = contentNode.animate([
                     {
-                        backgroundImage: `linear-gradient(${holdColor}, ${holdColor})`,
+                        backgroundImage: `linear-gradient(${config.holdColor}, ${config.holdColor})`,
                         backgroundRepeat: "no-repeat",
                         backgroundPosition: "bottom left",
                         backgroundSize: "100% 0%"
                     },
                     {
-                        backgroundImage: `linear-gradient(${holdColor}, ${holdColor})`,
+                        backgroundImage: `linear-gradient(${config.holdColor}, ${config.holdColor})`,
                         backgroundRepeat: "no-repeat",
                         backgroundPosition: "bottom left",
                         backgroundSize: "100% 100%"
@@ -208,7 +204,7 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
                     return;
                 }
                 contentNode.animate([
-                    { transform: "scale(0.9)", backgroundColor: tapColor },
+                    { transform: "scale(0.9)", backgroundColor: config.tapColor },
                     { transform: "scale(1)", backgroundColor: "transparent" }
                 ], {
                     duration: 120,

@@ -22,7 +22,9 @@ export let defaultConfig = {
     language: "en",
     allowSelf: true,
     seventvInstallationWaitTime: 2000,
-    drainPlaybackRate: 4
+    drainPlaybackRate: 4,
+    tapColor: "rgba(255, 255, 255, 0.15)",
+    holdColor: "rgba(169, 112, 255, 0.4)", 
 }
 
 export const labels = {
