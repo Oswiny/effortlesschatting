@@ -177,14 +177,15 @@ import { defaultConfig, labels } from "../config.js";
         })
     })
 
-    let arrayBasedSettings = [...document.querySelectorAll(".subsection")]
+    let arrayBasedSettings = [...document.querySelectorAll(".subsection")].filter(element => element.id !== "regexTest")
     arrayBasedSettings.forEach(async (item) => {
         const id = item.id
         const input = item.querySelector(".bannedInput");
         const list = item.querySelector(".banned-list");
-        const button = item.querySelector(".addBannedButton")
+        const addButton = item.querySelector("[data-label='addButton']")
+        const addButtonRegex = item.querySelector("[data-label='addButtonRegex']")
 
-        button.addEventListener('click', async () => {
+        addButton.addEventListener('click', async () => {
             let currentConfig = await configAccess.currentConfig()
             const value = input.value.trim();
             if (!value) return;
@@ -196,12 +197,31 @@ import { defaultConfig, labels } from "../config.js";
             await renderBanned(list, id);
         });
 
+        addButtonRegex.addEventListener('click', async () => {
+            let currentConfig = await configAccess.currentConfig()
+            const value = input.value
+            let regex = null
+            try {
+                regex = RegExp(value);
+            } catch (error) {
+                return alert("There was a error in evaluation your regex please use the test area first.")
+            }
+            if (currentConfig[id + "Regex"].has(regex)) {
+                return alert('Already added!')
+            }
+            await configAccess.setConfig(id + "Regex", currentConfig[id + "Regex"].add(value))
+            input.value = ''
+            await renderBanned(list, id)
+        })
+
         list.addEventListener('click', async (e) => {
             let currentConfig = await configAccess.currentConfig()
             if (e.target.matches('button[data-value]')) {
                 const item = e.target.dataset.value;
                 currentConfig[id].delete(item)
+                currentConfig[id + "Regex"].delete(item)
                 await configAccess.setConfig(id, currentConfig[id])
+                await configAccess.setConfig(id + "Regex", currentConfig[id + "Regex"])
                 await renderBanned(list, id);
             }
         });
@@ -233,9 +253,61 @@ import { defaultConfig, labels } from "../config.js";
             list.appendChild(li);
         })
 
+        currentConfig[id + "Regex"].forEach((item) => {
+            if (defaultConfig[id].has(item)) {
+                return;
+            }
+
+            const li = document.createElement("li");
+            li.classList.add("banned-item")
+            li.innerHTML = `
+                <span>Regex - ${item}</span>
+                <button class="btn-remove" data-value="${item}" data-label="remove" data-label-type="main"> ${labels[currentConfig["language"]]["remove"]["main"]}</button>
+                `;
+            list.appendChild(li);
+        })
+
         currentConfig = await configAccess.currentConfig()
         updateResetState(document.querySelector(`.reset-icon[data-target="${id}"]`), defaultConfig[id], currentConfig[id])
     }
+
+
+    const regexTest = document.querySelector("#regexTest");
+    const regexTestButton = regexTest.querySelector("button")
+    const regexPatternInput = regexTest.querySelector("input#regexPattern")
+    const regexTextInput = regexTest.querySelector("input#regexInputText")
+    const regexResults = regexTest.querySelector("#regexResultDisplay")
+    regexTestButton.addEventListener("click", async () => {
+        regexResults.replaceChildren();
+        if (regexPatternInput.value === "") {
+            return;
+        }
+        if (regexTextInput.value === "") {
+            return;
+        }
+        const words = regexTextInput.value.split(" ")
+        let wordAndTest = []
+        try {
+            const regex = new RegExp(regexPatternInput.value)
+            words.forEach(word => {
+                if (word === "") return
+                wordAndTest.push({
+                    text: word, isMatch: regex.test(word)
+                })
+            })
+        } catch (error) {
+            regexResults.textContent = "Error: " + error.message;
+            return
+        }
+
+        wordAndTest.forEach(wordObject => {
+            const span = document.createElement("span");
+            span.textContent = wordObject.text
+            span.classList.add("regex-word")
+            wordObject.isMatch ? span.classList.add("match") : span.classList.add("no-match")
+            regexResults.appendChild(span)
+        })
+    })
 
     document.querySelectorAll('.reset-icon').forEach(async (reset) => {
         if (reset.dataset.target === "section") {

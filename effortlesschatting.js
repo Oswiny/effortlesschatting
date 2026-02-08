@@ -520,7 +520,7 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
         const linkRegex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
 
         let uniqueWordsInMessage = Array.from(new Set(messageData.body.trim().split(" ").filter(item => {
-            return (!config.bannedWords.has(item) && (config.allowLinks || !linkRegex.test(item)) && (config.allowMentions || !(item?.[0] === "@")))
+            return (!config.bannedWords.has(item) && (config.allowLinks || !linkRegex.test(item)) && (config.allowMentions || !(item?.[0] === "@")) && !config.bannedWordsRegex.some(regex => {RegExp(regex).test(item)}))
         })))
         let emotesInCurrentMessage = {}
         messageData.tokens.forEach(token => emotesInCurrentMessage[token.content.emote.data.name] = token.content.emote.data.host.srcset)

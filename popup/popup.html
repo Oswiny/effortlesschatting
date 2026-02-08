@@ -342,7 +342,8 @@
                         </div>
                         <div class="add-row">
                             <input class="bannedInput" type="text" data-label="enterItem" data-label-type="main" placeholder="Enter item..." />
-                            <button class="btn primary addBannedButton" data-label="addButton" data-label-type="main">Add</button>
+                            <button class="btn primary addBannedButton" data-label="addButton" data-label-type="main">Add as Text</button>
+                            <button class="btn primary addBannedButton" data-label="addButtonRegex" data-label-type="main">Add as Regex</button>
                         </div>
 
                         <ul class="banned-list"></ul>
@@ -360,7 +361,8 @@
                         </div>
                         <div class="add-row">
                             <input class="bannedInput" type="text" data-label="enterItem" data-label-type="main" placeholder="Enter item..." />
-                            <button class="btn primary addBannedButton" data-label="addButton" data-label-type="main">Add</button>
+                            <button class="btn primary addBannedButton" data-label="addButton" data-label-type="main">Add as Text</button>
+                            <button class="btn primary addBannedButton" data-label="addButtonRegex" data-label-type="main">Add as Regex</button>
                         </div>
 
                         <ul class="banned-list"></ul>
@@ -378,10 +380,41 @@
                         </div>
                         <div class="add-row">
                             <input class="bannedInput" type="text" data-label="enterItem" data-label-type="main" placeholder="Enter item..." />
-                            <button class="btn primary addBannedButton" data-label="addButton" data-label-type="main">Add</button>
+                            <button class="btn primary addBannedButton" data-label="addButton" data-label-type="main">Add as Text</button>
+                            <button class="btn primary addBannedButton" data-label="addButtonRegex" data-label-type="main">Add as Regex</button>
                         </div>
 
                         <ul class="banned-list"></ul>
+                    </section>
+
+                    <section class="subsection" id="regexTest">
+                        <div class="control">
+                            <div class="meta">
+                                <div class="meta-top">
+                                    <b data-label="regexTest" data-label-type="main">Regex Test Area</b>
+                                </div>
+                                <p class="desc" data-label="regexTest" data-label-type="alt">Test your patterns against custom text to verify matching behavior.</p>
+                            </div>
+                        </div>
+
+                        <div class="regex-tool-grid">
+                            <div class="regex-field">
+                                <input class="regex-input-field" type="text" id="regexPattern" placeholder="Regex / Pattern" />
+                            </div>
+                            <div class="regex-field">
+                                <input class="regex-input-field" type="text" id="regexInputText" placeholder="Text to match..." />
+                            </div>
+                            <button class="btn primary regex-test-btn" id="runRegexTest">Test</button>
+                        </div>
+
+                        <div class="regex-result-wrapper">
+                            <div class="regex-result-label">
+                                <span class="muted">Result:</span>
+                            </div>
+                            <div class="regex-word-container" id="regexResultDisplay">
+                                <span class="muted">Result will appear here...</span>
+                            </div>
+                        </div>
                     </section>
                 </section>
 

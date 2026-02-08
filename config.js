@@ -6,8 +6,11 @@ export let defaultConfig = {
     deleteAfterMs: 10000,
     contentNodeAmount: 5,
     bannedWords: new Set(["\n", "", "͏", "​", "‌", "‍", "﻿", "͏", "⁠", "⁣", "⁢", "⁤", "", "", "", "", "", "", "", "", "", "", ""]),
+    bannedWordsRegex: new Set([]),
     bannedEmotes: new Set([]),
+    bannedEmotesRegex: new Set([]),
     bannedUsers: new Set([]),
+    bannedUsersRegex: new Set([]),
     scrapeBots: false,
     scrapeMods: false,
     scrapeVIPs: true,
@@ -40,7 +43,7 @@ export const labels = {
             alt: "Allow the scanner to detect your own messages"
         },
         addButton: {
-            main: "Add"
+            main: "Add as Text"
         },
         resetButton: {
             main: "Reset All"
@@ -210,6 +213,13 @@ export const labels = {
         },
         resetAll: {
             main: "Reset settings to defaults?"
+        },
+        regexTest: {
+            main: "Regex Test Area",
+            alt: "Test your patterns against custom text to verify matching behavior."
+        },
+        addButtonRegex: {
+            main: "Add as Regex"
         },
         default: {
             main: "NO TRANSLATION HAS BEEN FOUND"
