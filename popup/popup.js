@@ -240,7 +240,8 @@ import { defaultConfig, labels } from "../config.js";
     document.querySelectorAll('.reset-icon').forEach(async (reset) => {
         if (reset.dataset.target === "section") {
             reset.addEventListener("click", async () => {
-                if (!confirm('Reset this setting to default?')) {
+                currentConfig = await configAccess.currentConfig()
+                if (!confirm(labels[currentConfig["language"]]["resetSection"]["main"])) {
                     return
                 };
                 const section = reset.closest("section.card.section")
@@ -284,7 +285,7 @@ import { defaultConfig, labels } from "../config.js";
                 if (!el) {
                     return
                 };
-                if (!confirm('Reset this setting to default?')) {
+                if (!confirm(labels[currentConfig["language"]]["resetSingle"]["main"])) {
                     return
                 };
 
@@ -318,7 +319,7 @@ import { defaultConfig, labels } from "../config.js";
     });
 
     document.getElementById("resetButton").addEventListener('click', async () => {
-        if (!confirm('Reset settings to defaults?')) return;
+        if (!confirm(labels[currentConfig["language"]]["resetAll"]["main"])) return;
         configAccess.clearStorage();
         await updateVisualStates();
         updateLabels(defaultConfig["language"])

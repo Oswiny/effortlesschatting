@@ -18,7 +18,7 @@ export let defaultConfig = {
     scrapeAlreadySentMessages: true,
     requiredHoldTime: 5000,
     messageClickAnimationTime: 150,
-    scannerMethod: "injection-with-emotes",
+    scannerMethod: "text-only",
     language: "en",
     allowSelf: true,
     seventvInstallationWaitTime: 2000,
@@ -156,15 +156,6 @@ export const labels = {
         milliseconds: {
             main: "Milliseconds"
         },
-        legacy: {
-            main: "Legacy",
-        },
-        "injection-without-emotes": {
-            main: "Injection Based (Without Emotes)",
-        },
-        "injection-with-emotes": {
-            main: "Injection Based (With Emotes)",
-        },
         seventvInstallationWaitTime: {
             main: "7TV Detection Timeout",
             alt: "Time to wait for 7TV to load. Increase this if you see '7TV installation not detected'."
@@ -178,20 +169,23 @@ export const labels = {
         "reset-icon": {
             main: "Reset to default"
         },
-        "injection-fetch-native": {
-
+        "text-only": {
+            main: "Text Only"
         },
-        "injection-with-emotes": {
-
+        "fetch-native": {
+            main: "Fetch Native Emotes"
         },
-        "injection-and-fetch": {
-
+        "insert-before": {
+            main: "Grab From Insert Before (7TV Only)"
         },
-        "injection-tokens-tooltip": {
-
+        "fetch-all": {
+            main: "Fetch All Emotes"
         },
-        "injection-tokens-paint": {
-
+        "tokens-tooltip": {
+            main: "Grab From Tokens (Tooltip) (7TV Only)"
+        },
+        "tokens-paint": {
+            main: "Grab From Tokens (Paint) (7TV Only)"
         },
         "drainPlaybackRate": {
             main: "Hold Animation Drain Playback Rate",
@@ -207,6 +201,15 @@ export const labels = {
         },
         times: {
             main: "x"
+        },
+        resetSingle: {
+            main: "Reset this setting to default?"
+        },
+        resetSection: {
+            main: "Reset this section to default?"
+        },
+        resetAll: {
+            main: "Reset settings to defaults?"
         },
         default: {
             main: "NO TRANSLATION HAS BEEN FOUND"
@@ -339,15 +342,6 @@ export const labels = {
         milliseconds: {
             main: "Milisegundos"
         },
-        legacy: {
-            main: "Legado (Legacy)",
-        },
-        "injection-without-emotes": {
-            main: "Basado en inyección (sin emotes)",
-        },
-        "injection-with-emotes": {
-            main: "Basado en inyección (con emotes)",
-        },
         seventvInstallationWaitTime: {
             main: "Tiempo de espera detección 7TV",
             alt: "Tiempo de espera para cargar 7TV. Aumenta esto si ves el mensaje 'Instalación de 7TV no detectada'."
@@ -360,6 +354,51 @@ export const labels = {
         },
         "reset-icon": {
             main: "Restablecer a predeterminado"
+        },
+        "text-only": {
+            main: "Solo texto"
+        },
+        "fetch-native": {
+            main: "Obtener emotes nativos"
+        },
+        "insert-before": {
+            main: "Capturar de Insert Before (Solo 7TV)"
+        },
+        "fetch-all": {
+            main: "Obtener todos los emotes"
+        },
+        "tokens-tooltip": {
+            main: "Capturar de Tokens (Tooltip) (Solo 7TV)"
+        },
+        "tokens-paint": {
+            main: "Capturar de Tokens (Paint) (Solo 7TV)"
+        },
+        "drainPlaybackRate": {
+            main: "Velocidad de drenaje de animación",
+            alt: "Velocidad a la que se vacía la animación tras soltar el botón sin completar el envío"
+        },
+        "allowLinks": {
+            main: "Permitir enlaces",
+            alt: "Permite escanear enlaces"
+        },
+        "allowMentions": {
+            main: "Permitir menciones",
+            alt: "Permite escanear menciones"
+        },
+        times: {
+            main: "x"
+        },
+        resetSingle: {
+            main: "¿Restablecer este ajuste al predeterminado?"
+        },
+        resetSection: {
+            main: "¿Restablecer esta sección al predeterminado?"
+        },
+        resetAll: {
+            main: "¿Restablecer ajustes a valores predeterminados?"
+        },
+        default: {
+            main: "NO SE HA ENCONTRADO TRADUCCIÓN"
         }
     },
 
@@ -489,15 +528,6 @@ export const labels = {
         milliseconds: {
             main: "ミリ秒"
         },
-        legacy: {
-            main: "レガシー (Legacy)",
-        },
-        "injection-without-emotes": {
-            main: "インジェクション方式 (絵文字なし)",
-        },
-        "injection-with-emotes": {
-            main: "インジェクション方式 (絵文字あり)",
-        },
         seventvInstallationWaitTime: {
             main: "7TV 検出待機時間",
             alt: "7TVの読み込みを待機する時間です。「7TVのインストールが検出されませんでした」と表示される場合は、この値を増やしてください。"
@@ -510,6 +540,51 @@ export const labels = {
         },
         "reset-icon": {
             main: "デフォルトに戻す"
+        },
+        "text-only": {
+            main: "テキストのみ"
+        },
+        "fetch-native": {
+            main: "標準エモートを取得"
+        },
+        "insert-before": {
+            main: "Insert Beforeから取得 (7TVのみ)"
+        },
+        "fetch-all": {
+            main: "すべてのエモートを取得"
+        },
+        "tokens-tooltip": {
+            main: "Tokens (Tooltip)から取得 (7TVのみ)"
+        },
+        "tokens-paint": {
+            main: "Tokens (Paint)から取得 (7TVのみ)"
+        },
+        "drainPlaybackRate": {
+            main: "ホールド解除時のドレイン速度",
+            alt: "最大まで溜めずにホールドを解除した際のアニメーション再生速度"
+        },
+        "allowLinks": {
+            main: "リンクを許可",
+            alt: "リンクのスキャンを許可します"
+        },
+        "allowMentions": {
+            main: "メンションを許可",
+            alt: "メンションのスキャンを許可します"
+        },
+        times: {
+            main: "x"
+        },
+        resetSingle: {
+            main: "この設定をデフォルトに戻しますか？"
+        },
+        resetSection: {
+            main: "このセクションをデフォルトに戻しますか？"
+        },
+        resetAll: {
+            main: "設定をデフォルトに戻しますか？"
+        },
+        default: {
+            main: "翻訳が見つかりませんでした"
         }
     },
 
@@ -639,15 +714,6 @@ export const labels = {
         milliseconds: {
             main: "Millisekunden"
         },
-        legacy: {
-            main: "Legacy (Veraltet)",
-        },
-        "injection-without-emotes": {
-            main: "Injektionsbasiert (Ohne Emotes)",
-        },
-        "injection-with-emotes": {
-            main: "Injektionsbasiert (Mit Emotes)",
-        },
         seventvInstallationWaitTime: {
             main: "7TV-Erkennungszeit",
             alt: "Wartezeit für das Laden von 7TV. Erhöhen Sie dies, wenn '7TV-Installation nicht erkannt' angezeigt wird."
@@ -660,6 +726,51 @@ export const labels = {
         },
         "reset-icon": {
             main: "Auf Standard zurücksetzen"
+        },
+        "text-only": {
+            main: "Nur Text"
+        },
+        "fetch-native": {
+            main: "Native Emotes abrufen"
+        },
+        "insert-before": {
+            main: "Von 'Insert Before' beziehen (Nur 7TV)"
+        },
+        "fetch-all": {
+            main: "Alle Emotes abrufen"
+        },
+        "tokens-tooltip": {
+            main: "Von 'Tokens (Tooltip)' beziehen (Nur 7TV)"
+        },
+        "tokens-paint": {
+            main: "Von 'Tokens (Paint)' beziehen (Nur 7TV)"
+        },
+        "drainPlaybackRate": {
+            main: "Animations-Entleerungsrate",
+            alt: "Wiedergabegeschwindigkeit der Entleerung nach dem Loslassen ohne Versand"
+        },
+        "allowLinks": {
+            main: "Links erlauben",
+            alt: "Erlaubt das Scannen von Links"
+        },
+        "allowMentions": {
+            main: "Erwähnungen erlauben",
+            alt: "Erlaubt das Scannen von Erwähnungen"
+        },
+        times: {
+            main: "x"
+        },
+        resetSingle: {
+            main: "Diese Einstellung auf Standard zurücksetzen?"
+        },
+        resetSection: {
+            main: "Diesen Abschnitt auf Standard zurücksetzen?"
+        },
+        resetAll: {
+            main: "Einstellungen auf Standard zurücksetzen?"
+        },
+        default: {
+            main: "KEINE ÜBERSETZUNG GEFUNDEN"
         }
     },
 
@@ -789,15 +900,6 @@ export const labels = {
         milliseconds: {
             main: "Millisecondes"
         },
-        legacy: {
-            main: "Hérité (Legacy)",
-        },
-        "injection-without-emotes": {
-            main: "Basé sur l'injection (sans emotes)",
-        },
-        "injection-with-emotes": {
-            main: "Basé sur l'injection (avec emotes)",
-        },
         seventvInstallationWaitTime: {
             main: "Délai détection 7TV",
             alt: "Temps d'attente pour 7TV. Augmentez ceci si vous voyez 'Installation de 7TV non détectée'."
@@ -810,6 +912,51 @@ export const labels = {
         },
         "reset-icon": {
             main: "Réinitialiser par défaut"
+        },
+        "text-only": {
+            main: "Texte uniquement"
+        },
+        "fetch-native": {
+            main: "Récupérer emotes natives"
+        },
+        "insert-before": {
+            main: "Récupérer depuis 'Insert Before' (7TV uniquement)"
+        },
+        "fetch-all": {
+            main: "Récupérer toutes les emotes"
+        },
+        "tokens-tooltip": {
+            main: "Récupérer depuis 'Tokens (Tooltip)' (7TV uniquement)"
+        },
+        "tokens-paint": {
+            main: "Récupérer depuis 'Tokens (Paint)' (7TV uniquement)"
+        },
+        "drainPlaybackRate": {
+            main: "Vitesse vidage animation",
+            alt: "Vitesse de l'animation de vidage après avoir relâché sans envoi"
+        },
+        "allowLinks": {
+            main: "Autoriser les liens",
+            alt: "Autorise le scan des liens"
+        },
+        "allowMentions": {
+            main: "Autoriser les mentions",
+            alt: "Autorise le scan des mentions"
+        },
+        times: {
+            main: "x"
+        },
+        resetSingle: {
+            main: "Réinitialiser ce paramètre par défaut ?"
+        },
+        resetSection: {
+            main: "Réinitialiser cette section par défaut ?"
+        },
+        resetAll: {
+            main: "Réinitialiser les paramètres par défaut ?"
+        },
+        default: {
+            main: "AUCUNE TRADUCTION TROUVÉE"
         }
     },
 
@@ -939,15 +1086,6 @@ export const labels = {
         milliseconds: {
             main: "밀리초"
         },
-        legacy: {
-            main: "레거시 (Legacy)",
-        },
-        "injection-without-emotes": {
-            main: "인젝션 방식 (이모티콘 제외)",
-        },
-        "injection-with-emotes": {
-            main: "인젝션 방식 (이모티콘 포함)",
-        },
         seventvInstallationWaitTime: {
             main: "7TV 감지 대기 시간",
             alt: "7TV 로딩을 기다리는 시간입니다. '7TV 설치가 감지되지 않음'이 표시되면 이 값을 늘리세요."
@@ -960,6 +1098,51 @@ export const labels = {
         },
         "reset-icon": {
             main: "기본값으로 초기화"
+        },
+        "text-only": {
+            main: "텍스트 전용"
+        },
+        "fetch-native": {
+            main: "기본 이모트 가져오기"
+        },
+        "insert-before": {
+            main: "'Insert Before'에서 가져오기 (7TV 전용)"
+        },
+        "fetch-all": {
+            main: "모든 이모트 가져오기"
+        },
+        "tokens-tooltip": {
+            main: "'Tokens (Tooltip)'에서 가져오기 (7TV 전용)"
+        },
+        "tokens-paint": {
+            main: "'Tokens (Paint)'에서 가져오기 (7TV 전용)"
+        },
+        "drainPlaybackRate": {
+            main: "애니메이션 소모 속도",
+            alt: "전송 전 버튼을 떼었을 때 애니메이션이 줄어드는 속도"
+        },
+        "allowLinks": {
+            main: "링크 허용",
+            alt: "링크 스캔을 허용합니다"
+        },
+        "allowMentions": {
+            main: "멘션 허용",
+            alt: "멘션 스캔을 허용합니다"
+        },
+        times: {
+            main: "x"
+        },
+        resetSingle: {
+            main: "이 설정을 기본값으로 초기화할까요?"
+        },
+        resetSection: {
+            main: "이 섹션을 기본값으로 초기화할까요?"
+        },
+        resetAll: {
+            main: "모든 설정을 기본값으로 초기화할까요?"
+        },
+        default: {
+            main: "번역을 찾을 수 없습니다"
         }
     },
 }

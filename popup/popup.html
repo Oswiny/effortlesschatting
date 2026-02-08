@@ -79,20 +79,20 @@
                         </div>
 
                         <div class="dropdown" data-dropdown id="scannerMethod">
-                            <input type="hidden" id="scannerMethodValue" value="legacy" />
+                            <input type="hidden" id="scannerMethodValue" value="text-only" />
 
                             <button type="button" class="dropdown-btn" aria-haspopup="listbox" aria-expanded="false">
-                                <span class="dropdown-label" data-label="legacy" data-label-type="main">Legacy</span>
+                                <span class="dropdown-label" data-value="text-only" data-label="text-only" data-label-type="main">Text Only</span>
                                 <span class="dropdown-caret" aria-hidden>▾</span>
                             </button>
 
                             <div class="dropdown-menu" role="listbox" tabindex="-1">
-                                <button type="button" class="dropdown-item" role="option" data-value="injection-without-emotes" aria-selected="true" data-label="injection-without-emotes" data-label-type="main">Text Only</button>
-                                <button type="button" class="dropdown-item" role="option" data-value="injection-fetch-native" aria-selected="false" data-label="injection-fetch-native" data-label-type="main">Fetch Native Emotes</button>
-                                <button type="button" class="dropdown-item" role="option" data-value="injection-with-emotes" aria-selected="false" data-label="injection-with-emotes" data-label-type="main">Grab From Insert Before (7TV Only)</button>
-                                <button type="button" class="dropdown-item" role="option" data-value="injection-and-fetch" aria-selected="false" data-label="injection-and-fetch" data-label-type="main">Fetch All Emotes</button>
-                                <button type="button" class="dropdown-item" role="option" data-value="injection-tokens-tooltip" aria-selected="false" data-label="injection-tokens-tooltip" data-label-type="main">Grab From Tokens (Tooltip) (7TV Only)</button>
-                                <button type="button" class="dropdown-item" role="option" data-value="injection-tokens-paint" aria-selected="false" data-label="injection-tokens-paint" data-label-type="main">Grab From Tokens (Paint) (7TV Only)</button>
+                                <button type="button" class="dropdown-item" role="option" data-value="text-only" aria-selected="true" data-label="text-only" data-label-type="main">Text Only</button>
+                                <button type="button" class="dropdown-item" role="option" data-value="fetch-native" aria-selected="false" data-label="fetch-native" data-label-type="main">Fetch Native Emotes</button>
+                                <button type="button" class="dropdown-item" role="option" data-value="insert-before" aria-selected="false" data-label="insert-before" data-label-type="main">Grab From Insert Before (7TV Only)</button>
+                                <button type="button" class="dropdown-item" role="option" data-value="fetch-all" aria-selected="false" data-label="fetch-all" data-label-type="main">Fetch All Emotes</button>
+                                <button type="button" class="dropdown-item" role="option" data-value="tokens-tooltip" aria-selected="false" data-label="tokens-tooltip" data-label-type="main">Grab From Tokens (Tooltip) (7TV Only)</button>
+                                <button type="button" class="dropdown-item" role="option" data-value="tokens-paint" aria-selected="false" data-label="tokens-paint" data-label-type="main">Grab From Tokens (Paint) (7TV Only)</button>
                             </div>
                         </div>
                     </div>
