@@ -31,11 +31,18 @@ const accessors = {
 
 async function fetchFromURL(provider, url) {
     const accessor = accessors[provider]
-    const res = await fetch(url)
-    if (!res.ok) throw new Error(`[${provider}] HTTP ${res.status} for ${url}`);;
-    const json = await res.json()
-    return accessor(json);
+    try {
+        const res = await fetch(url)
+        if (!res.ok) return [];
+        const json = await res.json()
+        return accessor(json);
+    }
+    catch (error) {
+        console.error(error.message)
+        return []
+    }
 }
+
 
 const providerToURL = {
     "7tv": (id = null) => {
@@ -55,14 +62,15 @@ const providerToURL = {
 async function fetchFromProvider(provider, id = null) {
     const url = providerToURL[provider](id)
     let emotes = await fetchFromURL(provider, url)
+    if (Object.keys(emotes).length === 0) return {}
     emotes = standardizeEmotes[provider](emotes)
     return emotes
 }
 
 const standardizeEmotes = {
     "7tv": (emotes) => {
-        let standardizedEmotes = {}; ""
-        emotes.forEach(emote => {
+        let standardizedEmotes = {};
+        emotes?.forEach(emote => {
             const name = emote.name;
             const srcset = Object.values(emote.data?.host?.files).filter(item => item.name.includes("avif")).map(item => `${emote?.data?.host?.url}/${item.name} ${item.name.split(".")[0]}`).join(", ")
             standardizedEmotes[name] = srcset;
@@ -71,7 +79,7 @@ const standardizeEmotes = {
     },
     "frankerfacez": (emotes) => {
         let standardizedEmotes = {};
-        emotes.forEach(emote => {
+        emotes?.forEach(emote => {
             const name = emote.name;
             const srcset = Object.entries(emote.urls)?.map(([key, url]) => `${url} ${key}x`).join(", ");
             standardizedEmotes[name] = srcset;
@@ -81,12 +89,21 @@ const standardizeEmotes = {
     "betterttv": (emotes) => {
         let standardizedEmotes = {}
         const sizes = ["1x", "2x", "3x"]
-        emotes.forEach(emote => {
+        emotes?.forEach(emote => {
             const name = emote.code;
             standardizedEmotes[name] = sizes.map(size => `https://cdn.betterttv.net/emote/${emote.id}/${size} ${size}`).join(", ")
         })
         return standardizedEmotes
     },
+    "native": (emotes) => {
+        let standardizedEmotes = {};
+        const sizes = ["1.0", "2.0", "3.0"]
+        Object.values(emotes).forEach(emote => {
+            const name = emote.token;
+            standardizedEmotes[name] = sizes.map(size => `https://static-cdn.jtvnw.net/emoticons/v2/${emote.id}/default/dark/${size} ${size === "3.0" ? "4" : Math.floor(Number(size))}x`).join(", ")
+        })
+        return standardizedEmotes
+    }
 }
 
 export async function getAllCustomEmotes() {
@@ -98,24 +115,26 @@ export async function getAllCustomEmotes() {
         fetchFromProvider(provider.ffz, id),
         fetchFromProvider(provider.bttv),
         fetchFromProvider(provider.bttv, id)
-    ])).filter(result => result.status === "fulfilled").map(item => item.value)
-    const emotes = Object.assign({}, ...results);
-    return emotes
+    ]));
+
+    return results.filter(result => result.status === "fulfilled").reduce((accumulator, result) => {
+        return Object.assign(accumulator, result.value);
+    }, {});
 }
 
 export function getAllNativeEmotes() {
     const startFiber = document.reactFiberSelector(".chat-room__content")
     const fiber = findPathToTarget(startFiber, "emoteSetsData").fiber;
-    const standardizedEmotes = {};
-    const nativeEmotes = fiber.stateNode.props.emoteSetsData.emoteMap
-    const sizes = ["1.0", "2.0", "3.0"]
-    Object.values(nativeEmotes).forEach(emote => {
-        const name = emote.token;
-        standardizedEmotes[name] = sizes.map(size => `https://static-cdn.jtvnw.net/emoticons/v2/${emote.id}/default/dark/${size} ${size === "3.0" ? "4" : Math.floor(Number(size))}x`).join(", ")
-    })
-    return standardizedEmotes;
+    const emotes = fiber.stateNode.props.emoteSetsData.emoteMap
+    return standardizeEmotes["native"](emotes);
 }
 
-export function getAllEmotes() {
-    return Object.assign({}, ...[getAllCustomEmotes(), getAllNativeEmotes()])
+export async function getAllEmotes() {
+    const results = await Promise.all([
+        getAllCustomEmotes(),
+        getAllNativeEmotes()
+    ]);
+    return results.reduce((accumulator, result) => {
+        return Object.assign(accumulator, result)
+    })
 }

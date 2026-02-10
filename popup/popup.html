@@ -330,6 +330,30 @@
                         </div>
                     </div>
 
+                    <div class="row">
+                        <div class="control">
+                            <div class="icon" aria-hidden>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                    <path fill="currentColor" d="M5.825 13L7.7 14.875q.275.3.288.713T7.7 16.3t-.7.3t-.7-.3l-3.6-3.6q-.15-.15-.213-.325T2.426 12t.063-.375t.212-.325l3.6-3.6q.3-.3.7-.3t.7.3t.3.713t-.3.712L5.825 11h12.35L16.3 9.125q-.275-.3-.287-.712T16.3 7.7t.7-.3t.7.3l3.6 3.6q.15.15.213.325t.062.375t-.062.375t-.213.325l-3.6 3.6q-.3.3-.7.3t-.7-.3t-.3-.712t.3-.713L18.175 13z" />
+                                </svg>
+                            </div>
+                            <div class="meta">
+                                <div class="meta-top">
+                                    <b data-label="maxScanLength" data-label-type="main">Maximum Scan Length</b>
+                                    <span class="reset-icon" title="Reset to default" data-target="maxScanLength" data-label="reset-icon" data-label-type="main">&times;</span>
+                                </div>
+                                <span class="muted" data-label="maxScanLength" data-label-type="alt">Maximum scan length for each scanned word</span>
+                            </div>
+                        </div>
+                        <div class="input-wrapper">
+                            <div class="range-wrap">
+                                <input id="maxScanLength" type="range" min="0" max="501" value="501" step="1" data-range-tag="max"/>
+                                <span class="muted range-value"></span>
+                                <span class="muted" data-label="characters" data-label-type="main">Characters</span>
+                            </div>
+                        </div>
+                    </div>
+
                     <section class="subsection" id="bannedWords">
                         <div class="control">
                             <div class="meta">
@@ -654,6 +678,41 @@
                                 <input id="drainPlaybackRate" type="range" min="1" max="50" value="4" step="1" />
                                 <span class="muted" class="muted range-value"></span>
                                 <span class="muted" data-label="times" data-label-type="main">x</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="control">
+                            <div class="icon" aria-hidden>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-dashed-icon lucide-square-dashed">
+                                    <path d="M5 3a2 2 0 0 0-2 2" />
+                                    <path d="M19 3a2 2 0 0 1 2 2" />
+                                    <path d="M21 19a2 2 0 0 1-2 2" />
+                                    <path d="M5 21a2 2 0 0 1-2-2" />
+                                    <path d="M9 3h1" />
+                                    <path d="M9 21h1" />
+                                    <path d="M14 3h1" />
+                                    <path d="M14 21h1" />
+                                    <path d="M3 9v1" />
+                                    <path d="M21 9v1" />
+                                    <path d="M3 14v1" />
+                                    <path d="M21 14v1" />
+                                </svg>
+                            </div>
+                            <div class="meta">
+                                <div class="meta-top">
+                                    <b data-label="maxDisplayLength" data-label-type="main">Max Display Length</b>
+                                    <span class="reset-icon" title="Reset to default" data-target="maxDisplayLength" data-label="reset-icon" data-label-type="main">&times;</span>
+                                </div>
+                                <span class="muted" data-label="maxDisplayLength" data-label-type="alt">Maximum display length for a message box</span>
+                            </div>
+                        </div>
+                        <div class="input-wrapper">
+                            <div class="range-wrap">
+                                <input id="maxDisplayLength" type="range" min="1" max="501" value="10" step="1"/>
+                                <span class="muted" class="muted range-value"></span>
+                                <span class="muted" data-label="characters" data-label-type="main">Characters</span>
                             </div>
                         </div>
                     </div>

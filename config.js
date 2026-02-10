@@ -9,7 +9,7 @@ export let defaultConfig = {
     bannedEmotes: new Set([]),
     bannedUsers: new Set([]),
     scrapeBots: false,
-    scrapeMods: false,
+    scrapeMods: true,
     scrapeVIPs: true,
     scrapeOnlySubs: false,
     scrapeSubsWithMinimumMonths: 12,
@@ -18,7 +18,7 @@ export let defaultConfig = {
     scrapeAlreadySentMessages: true,
     requiredHoldTime: 5000,
     messageClickAnimationTime: 150,
-    scannerMethod: "text-only",
+    scannerMethod: "fetch-all",
     language: "en",
     allowSelf: true,
     seventvInstallationWaitTime: 2000,
@@ -27,6 +27,8 @@ export let defaultConfig = {
     holdColor: "rgba(169, 112, 255, 0.4)",
     allowLinks: false,
     allowMentions: false,
+    maxScanLength: Infinity,
+    maxDisplayLength: 10,
 }
 
 export const labels = {
@@ -210,6 +212,17 @@ export const labels = {
         },
         resetAll: {
             main: "Reset settings to defaults?"
+        },
+        maxScanLength: {
+            main: "Maximum Scan Length",
+            alt: "Maximum scan length for each scanned word"
+        },
+        characters: {
+            main: "Characters",
+        },
+        maxDisplayLength: {
+            main: "Max Display Length",
+            alt: "Maximum display length for a message box"
         },
         default: {
             main: "NO TRANSLATION HAS BEEN FOUND"
@@ -397,6 +410,17 @@ export const labels = {
         resetAll: {
             main: "¿Restablecer ajustes a valores predeterminados?"
         },
+        maxScanLength: {
+            main: "Longitud Máxima de Escaneo",
+            alt: "Longitud máxima de escaneo para cada palabra escaneada"
+        },
+        characters: {
+            main: "Caracteres",
+        },
+        maxDisplayLength: {
+            main: "Longitud Máxima de Visualización",
+            alt: "Longitud máxima de visualización para una caja de mensajes"
+        },
         default: {
             main: "NO SE HA ENCONTRADO TRADUCCIÓN"
         }
@@ -582,6 +606,17 @@ export const labels = {
         },
         resetAll: {
             main: "設定をデフォルトに戻しますか？"
+        },
+        maxScanLength: {
+            main: "最大スキャン長",
+            alt: "スキャンされる各単語の最大スキャン長"
+        },
+        characters: {
+            main: "文字",
+        },
+        maxDisplayLength: {
+            main: "最大表示長",
+            alt: "メッセージボックスの最大表示長"
         },
         default: {
             main: "翻訳が見つかりませんでした"
@@ -769,6 +804,17 @@ export const labels = {
         resetAll: {
             main: "Einstellungen auf Standard zurücksetzen?"
         },
+        maxScanLength: {
+            main: "Maximale Scan-Länge",
+            alt: "Maximale Scan-Länge für jedes gescannte Wort"
+        },
+        characters: {
+            main: "Zeichen",
+        },
+        maxDisplayLength: {
+            main: "Maximale Anzeigelänge",
+            alt: "Maximale Anzeigelänge für eine Nachrichtenbox"
+        },
         default: {
             main: "KEINE ÜBERSETZUNG GEFUNDEN"
         }
@@ -955,6 +1001,17 @@ export const labels = {
         resetAll: {
             main: "Réinitialiser les paramètres par défaut ?"
         },
+        maxScanLength: {
+            main: "Longueur Maximale de Scan",
+            alt: "Longueur maximale de scan pour chaque mot scanné"
+        },
+        characters: {
+            main: "Caractères",
+        },
+        maxDisplayLength: {
+            main: "Longueur d'Affichage Max",
+            alt: "Longueur d'affichage maximale pour une boîte de message"
+        },
         default: {
             main: "AUCUNE TRADUCTION TROUVÉE"
         }
@@ -1140,6 +1197,17 @@ export const labels = {
         },
         resetAll: {
             main: "모든 설정을 기본값으로 초기화할까요?"
+        },
+        maxScanLength: {
+            main: "최대 스캔 길이",
+            alt: "스캔된 각 단어의 최대 스캔 길이"
+        },
+        characters: {
+            main: "글자",
+        },
+        maxDisplayLength: {
+            main: "최대 표시 길이",
+            alt: "메시지 박스의 최대 표시 길이"
         },
         default: {
             main: "번역을 찾을 수 없습니다"

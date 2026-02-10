@@ -59,8 +59,16 @@ import { defaultConfig, labels } from "../config.js";
             updateResetState(item.closest(".row").querySelector(".reset-icon"), defaultConfig[item.id], currentConfig[item.id])
         })
         ranges.forEach((item) => {
-            item.childNodes[1].value = String(currentConfig[item.childNodes[1].id])
-            item.childNodes[3].textContent = item.childNodes[1].value;
+            const input = item.childNodes[1]
+            const span = item.childNodes[3]
+            if (input.id.includes("max") && currentConfig[input.id] === Number(input.max)) { //TRANSLATION IS NEEDED
+                span.textContent = Infinity;
+                input.value = input.max
+            }
+            else {
+                input.value = currentConfig[input.id]
+                span.textContent = input.value;
+            }
             updateResetState(item.closest(".row").querySelector(".reset-icon"), defaultConfig[item.childNodes[1].id], currentConfig[item.childNodes[1].id])
 
         })
@@ -167,12 +175,22 @@ import { defaultConfig, labels } from "../config.js";
         const id = input.id;
         const span = item.childNodes[3];
         let currentConfig = await configAccess.currentConfig()
-        input.value = String(currentConfig[id]);
-        span.textContent = input.value;
-        updateResetState(document.querySelector(`.reset-icon[data-target="${input.id}"]`), defaultConfig[input.id], currentConfig[input.id])
-        input.addEventListener("input", () => {
-            configAccess.setConfig(input.id, input.value)
+        if (input.id.includes("max") && input.value === input.max) { //TRANSLATION IS NEEDED
+            span.textContent = Infinity
+        }
+        else {
             span.textContent = input.value;
+        }
+        updateResetState(document.querySelector(`.reset-icon[data-target="${input.id}"]`), defaultConfig[input.id], currentConfig[input.id])
+        input.addEventListener("input", async () => {
+            if (input.id.includes("max") && input.value === input.max) { //TRANSLATION IS NEEDED
+                await configAccess.setConfig(input.id, Infinity)
+                span.textContent = Infinity
+            }
+            else {
+                span.textContent = input.value;
+                await configAccess.setConfig(input.id, Number(input.value))
+            }
             updateResetState(document.querySelector(`.reset-icon[data-target="${input.id}"]`), defaultConfig[input.id], input.value)
         })
     })

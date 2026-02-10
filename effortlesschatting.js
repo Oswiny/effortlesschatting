@@ -377,8 +377,8 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
 
         displayOn(message) {
             let associatedChild = this.node.querySelector(`.contentImg`)
-            associatedChild.alt = message.text;
             associatedChild.srcset = message.srcset;
+            associatedChild.alt = (associatedChild.srcset !== "" || (message.text.length <= config.maxDisplayLength)) ? message.text : message.text.substring(0, config.maxDisplayLength);
             associatedChild.classList.remove("hidden")
             this.node.classList.remove("hidden")
             this.printWrapper = function () {
@@ -494,9 +494,11 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
         const linkRegex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
 
         let uniqueWordsInMessage = Array.from(new Set(messageData.message.body.trim().split(" ").filter(item => {
-            return (!config.bannedWords.has(item) && (config.allowLinks || !linkRegex.test(item)) && (config.allowMentions || !(item?.[0] === "@")))
+            return (item.length <= Number(config.maxScanLength) && !config.bannedWords.has(item) && (config.allowLinks || !linkRegex.test(item)) && (config.allowMentions || !(item?.[0] === "@")))
         })))
-        uniqueWordsInMessage.forEach(word => messages.add(new Message(word, "", emotes[word])));
+        uniqueWordsInMessage.forEach(word => {
+            messages.add(new Message(word, "", emotes[word]))
+        });
     }
 
     function scrapeOnSeventv(messageData) {
@@ -520,7 +522,7 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
         const linkRegex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
 
         let uniqueWordsInMessage = Array.from(new Set(messageData.body.trim().split(" ").filter(item => {
-            return (!config.bannedWords.has(item) && (config.allowLinks || !linkRegex.test(item)) && (config.allowMentions || !(item?.[0] === "@")))
+            return (item.length <= config.maxScanLength && !config.bannedWords.has(item) && (config.allowLinks || !linkRegex.test(item)) && (config.allowMentions || !(item?.[0] === "@")))
         })))
         let emotesInCurrentMessage = {}
         messageData.tokens.forEach(token => emotesInCurrentMessage[token.content.emote.data.name] = token.content.emote.data.host.srcset)
@@ -533,7 +535,7 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
     let fiber = null;
     let originalOnChatMessageEvent = null;
     let originalInsertBefore = Node.prototype.insertBefore
-    function scannerMethod() {
+    async function scannerMethod() {
         emotes = {}
 
         startFiber = document.reactFiberSelector(".chat-room__content")
@@ -547,7 +549,7 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
         }
         Node.prototype.insertBefore = originalInsertBefore;
 
-        if (config.scannerMethod === "injection-without-emotes") {
+        if (config.scannerMethod === "text-only") {
             fiber.stateNode.onChatMessageEvent = function (...args) {
                 if (args[0] && (config.allowSelf || (!config.allowSelf && !args[0].sentByCurrentUser))) {
                     scrapeOnEvent(args[0])
@@ -558,8 +560,8 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
                 return originalOnChatMessageEvent.apply(this, args)
             }
         }
-        if (config.scannerMethod === "injection-fetch-native") {
-            emotes = getAllNativeEmotes();
+        if (config.scannerMethod === "fetch-native") {
+            emotes = await getAllNativeEmotes();
             fiber.stateNode.onChatMessageEvent = function (...args) {
                 if (args[0] && (config.allowSelf || (!config.allowSelf && !args[0].sentByCurrentUser))) {
                     scrapeOnEvent(args[0])
@@ -570,7 +572,7 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
                 return originalOnChatMessageEvent.apply(this, args)
             }
         }
-        if (config.scannerMethod === "injection-with-emotes") {
+        if (config.scannerMethod === "insert-before") {
             let scanEmotesFlag = { flag: false, param: null };
             fiber.stateNode.onChatMessageEvent = function (...args) {
                 if (args[0] && (config.allowSelf || (!config.allowSelf && !args[0].sentByCurrentUser))) {
@@ -602,8 +604,8 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
                 return originalInsertBefore.apply(this, args);
             }
         }
-        if (config.scannerMethod === "injection-and-fetch") {
-            emotes = getAllEmotes();
+        if (config.scannerMethod === "fetch-all") {
+            emotes = await getAllEmotes();
             fiber.stateNode.onChatMessageEvent = function (...args) {
                 if (args[0] && (config.allowSelf || (!config.allowSelf && !args[0].sentByCurrentUser))) {
                     scrapeOnEvent(args[0])
@@ -614,7 +616,7 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
                 return originalOnChatMessageEvent.apply(this, args)
             }
         }
-        if (config.scannerMethod === "injection-tokens-tooltip") {
+        if (config.scannerMethod === "tokens-tooltip") {
             const seventvRoot = document.querySelector("#seventv-root")
             const patchOrig = seventvRoot.__vue_app__._context.directives.tooltip.mounted
             seventvRoot.__vue_app__._context.directives.tooltip.mounted = function (...args) {
@@ -627,7 +629,7 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
                 return patchOrig.apply(this, args)
             }
         }
-        if (config.scannerMethod === "injection-tokens-paint") {
+        if (config.scannerMethod === "tokens-paint") {
             const seventvRoot = document.querySelector("#seventv-root")
             const patchOrig = seventvRoot.__vue_app__._context.directives["cosmetic-paint"].mounted
             seventvRoot.__vue_app__._context.directives["cosmetic-paint"].mounted = function (...args) {
