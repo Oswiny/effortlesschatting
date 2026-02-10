@@ -378,7 +378,7 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
         displayOn(message) {
             let associatedChild = this.node.querySelector(`.contentImg`)
             associatedChild.srcset = message.srcset;
-            associatedChild.alt = (associatedChild.srcset !== "" || (message.text.length <= config.maxDisplayLength)) ? message.text : message.text.substring(0, config.maxDisplayLength);
+            associatedChild.alt = (associatedChild.srcset !== "" || (message.text.length <= config.maxDisplayLength)) ? message.text : message.text.substring(0, config.maxDisplayLength) + "…";
             associatedChild.classList.remove("hidden")
             this.node.classList.remove("hidden")
             this.printWrapper = function () {
