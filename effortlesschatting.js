@@ -16,6 +16,7 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
             config = event.data.payload.config;
             resolveConfigReady?.();
             updateLabels(config);
+            document.documentElement.style.setProperty("--hoverColor", config.hoverColor)
             updateScannerMethod(config.scannerMethod, oldConfig.scannerMethod)
         }
     });

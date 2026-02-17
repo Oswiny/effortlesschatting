@@ -9,7 +9,7 @@
     --font-size-base: var(--font-size-4);
     --color-background-body: var(--color-hinted-grey-1);
     --color-text-base: var(--color-hinted-grey-14);
-
+    --hoverColor: rgba(255, 255, 255, 0.15);
     --color-background-scrollbar: #fff6;
     --color-background-scrollbar-track: #0000;
 
@@ -96,7 +96,7 @@
 }
 
 .effortlesschatting-messagebox:hover {
-    background-color: var(--color-background-interactable-hover, rgba(255, 255, 255, 0.08));
+    background-color: var(--hoverColor);
 }
 
 .effortlesschatting-message-img {

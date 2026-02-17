@@ -33,7 +33,7 @@
     browser.runtime.onMessage.addListener(async (message) => {
         if (message.type === "CONFIG_SYNC") {
             const config = await currentConfig();
-            console.log("OnMessag listener in injector has detected a change: ", config)
+            console.log("OnMessage listener in injector has detected a change: ", config)
             window.postMessage(
                 { source: "effortless", type: "CONFIG_SYNC", payload: { config } },
                 "*"

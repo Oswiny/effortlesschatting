@@ -24,11 +24,19 @@ export let defaultConfig = {
     seventvInstallationWaitTime: 2000,
     drainPlaybackRate: 4,
     tapColor: "rgba(255, 255, 255, 0.15)",
+    tapColorCustom: null,
     holdColor: "rgba(169, 112, 255, 0.4)",
+    holdColorCustom: null,
+    hoverColor: "rgba(255, 255, 255, 0.15)",
+    hoverColorCustom: null,
     allowLinks: false,
     allowMentions: false,
     maxScanLength: Infinity,
     maxDisplayLength: 10,
+    accent: "#3dd9c8",
+    accentCustom: null,
+    accent2: "#4fb0ff",
+    accent2Custom: null,
 }
 
 export const labels = {
@@ -222,7 +230,27 @@ export const labels = {
         },
         maxDisplayLength: {
             main: "Max Display Length",
-            alt: "Maximum display length for a message box"
+            alt: "Maximum display length for a message box",
+        },
+        tapColor: {
+            main: "Tap Color",
+            alt: "Color used for the message box tap animation",
+        },
+        holdColor: {
+            main: "Hold Color",
+            alt: "Color used for the message box hold animation",
+        },
+        hoverColor: {
+            main: "Hover Color",
+            alt: "Color used for the message box hover animation",
+        },
+        accent: {
+            main: "Theme Main Accent",
+            alt: "Main accent color of the theme"
+        },
+        accent2: {
+            main: "Theme Alternative Accent",
+            alt: "Alternative accent color of the theme"
         },
         default: {
             main: "NO TRANSLATION HAS BEEN FOUND"
@@ -421,6 +449,26 @@ export const labels = {
             main: "Longitud Máxima de Visualización",
             alt: "Longitud máxima de visualización para una caja de mensajes"
         },
+        tapColor: {
+            main: "Color al Pulsar",
+            alt: "Color usado para la animación al pulsar una caja de mensaje",
+        },
+        holdColor: {
+            main: "Color al Mantener",
+            alt: "Color usado para la animación al mantener pulsada una caja de mensaje",
+        },
+        hoverColor: {
+            main: "Color al Pasar el Cursor",
+            alt: "Color usado para la animación al pasar el cursor sobre una caja de mensaje",
+        },
+        accent: {
+            main: "Acento Principal del Tema",
+            alt: "Color de acento principal del tema"
+        },
+        accent2: {
+            main: "Acento Alternativo del Tema",
+            alt: "Color de acento alternativo del tema"
+        },
         default: {
             main: "NO SE HA ENCONTRADO TRADUCCIÓN"
         }
@@ -617,6 +665,26 @@ export const labels = {
         maxDisplayLength: {
             main: "最大表示長",
             alt: "メッセージボックスの最大表示長"
+        },
+        tapColor: {
+            main: "タップ時の色",
+            alt: "メッセージボックスをタップした際のアニメーションに使用される色",
+        },
+        holdColor: {
+            main: "長押し時の色",
+            alt: "メッセージボックスを長押しした際のアニメーションに使用される色",
+        },
+        hoverColor: {
+            main: "ホバー時の色",
+            alt: "メッセージボックスにカーソルを合わせた際のアニメーションに使用される色",
+        },
+        accent: {
+            main: "テーマのメインアクセント",
+            alt: "テーマのメインアクセントカラー"
+        },
+        accent2: {
+            main: "テーマの代替アクセント",
+            alt: "テーマの代替アクセントカラー"
         },
         default: {
             main: "翻訳が見つかりませんでした"
@@ -815,6 +883,26 @@ export const labels = {
             main: "Maximale Anzeigelänge",
             alt: "Maximale Anzeigelänge für eine Nachrichtenbox"
         },
+        tapColor: {
+            main: "Tipp-Farbe",
+            alt: "Farbe für die Animation beim Antippen einer Nachrichtenbox",
+        },
+        holdColor: {
+            main: "Halte-Farbe",
+            alt: "Farbe für die Animation beim Gedrückthalten einer Nachrichtenbox",
+        },
+        hoverColor: {
+            main: "Hover-Farbe",
+            alt: "Farbe für die Animation beim Überfahren mit der Maus",
+        },
+        accent: {
+            main: "Hauptakzent des Themas",
+            alt: "Hauptakzentfarbe des Themas"
+        },
+        accent2: {
+            main: "Alternativer Akzent des Themas",
+            alt: "Alternative Akzentfarbe des Themas"
+        },
         default: {
             main: "KEINE ÜBERSETZUNG GEFUNDEN"
         }
@@ -1012,6 +1100,26 @@ export const labels = {
             main: "Longueur d'Affichage Max",
             alt: "Longueur d'affichage maximale pour une boîte de message"
         },
+        tapColor: {
+            main: "Couleur au Clic",
+            alt: "Couleur utilisée pour l'animation au clic sur une boîte de message",
+        },
+        holdColor: {
+            main: "Couleur au Maintien",
+            alt: "Couleur utilisée pour l'animation au maintien d'une boîte de message",
+        },
+        hoverColor: {
+            main: "Couleur au Survol",
+            alt: "Couleur utilisée pour l'animation au survol d'une boîte de message",
+        },
+        accent: {
+            main: "Accent Principal du Thème",
+            alt: "Couleur d'accent principale du thème"
+        },
+        accent2: {
+            main: "Accent Alternatif du Thème",
+            alt: "Couleur d'accent alternative du thème"
+        },
         default: {
             main: "AUCUNE TRADUCTION TROUVÉE"
         }
@@ -1208,6 +1316,26 @@ export const labels = {
         maxDisplayLength: {
             main: "최대 표시 길이",
             alt: "메시지 박스의 최대 표시 길이"
+        },
+        tapColor: {
+            main: "탭 색상",
+            alt: "메시지 박스를 탭할 때 애니메이션에 사용되는 색상",
+        },
+        holdColor: {
+            main: "길게 누르기 색상",
+            alt: "메시지 박스를 길게 누를 때 애니메이션에 사용되는 색상",
+        },
+        hoverColor: {
+            main: "호버 색상",
+            alt: "메시지 박스에 마우스를 올렸을 때 애니메이션에 사용되는 색상",
+        },
+        accent: {
+            main: "테마 메인 포인트",
+            alt: "테마의 주요 포인트 색상"
+        },
+        accent2: {
+            main: "테마 보조 포인트",
+            alt: "테마의 보조 포인트 색상"
         },
         default: {
             main: "번역을 찾을 수 없습니다"

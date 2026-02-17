@@ -45,6 +45,7 @@ export async function sendUpdateConfigMessage() {
     await browser.tabs.sendMessage(tab.id, { type: "CONFIG_SYNC" });
 }
 
-export function clearStorage() {
+export async function clearStorage() {
     storageController().local.clear()
+    await sendUpdateConfigMessage()
 }

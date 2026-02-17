@@ -347,7 +347,7 @@
                         </div>
                         <div class="input-wrapper">
                             <div class="range-wrap">
-                                <input id="maxScanLength" type="range" min="0" max="501" value="501" step="1" data-range-tag="max"/>
+                                <input id="maxScanLength" type="range" min="0" max="501" value="501" step="1" data-range-tag="max" />
                                 <span class="muted range-value"></span>
                                 <span class="muted" data-label="characters" data-label-type="main">Characters</span>
                             </div>
@@ -412,7 +412,7 @@
                 <section class="card section">
                     <div class="heading-row">
                         <h2 data-label="setInsert" data-label-type="main">Insert Settings</h2>
-                        <span class="reset-icon" title="Reset to default" data-target="setInsert">&times;</span>
+                        <span class="reset-icon" title="Reset to default" data-target="section">&times;</span>
                     </div>
                     <p class="desc" data-label="setInsert" data-label-type="alt">Adjust insertion behavior</p>
 
@@ -492,7 +492,7 @@
                 <section class="card section">
                     <div class="heading-row">
                         <h2 data-label="setMessageBox" data-label-type="main">Message Box Settings</h2>
-                        <span class="reset-icon" title="Reset to default" data-target="setMessageBox">&times;</span>
+                        <span class="reset-icon" title="Reset to default" data-target="section">&times;</span>
                     </div>
                     <p class="desc" data-label="setMessageBox" data-label-type="alt">Customize message box behavior</p>
 
@@ -593,7 +593,7 @@
                     <div class="row">
                         <div class="control">
                             <div class="icon" aria-hidden>
-                                <svg xmlns="http://www.w3.org/2000/svg" height="20px" width="20px" viewBox="0 -960 960 960" fill="currentColor">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" width="24px" viewBox="0 -960 960 960" fill="currentColor">
                                     <path
                                         d=" M216-144q-33 0-52.5-19.5T144-216v-528q0-33
                                 19.5-52.5T216-816h192v672H216Zm276.21 0q-15.21 0-25.71-10.29t-10.5-25.5q0-15.21
@@ -710,20 +710,198 @@
                         </div>
                         <div class="input-wrapper">
                             <div class="range-wrap">
-                                <input id="maxDisplayLength" type="range" min="1" max="501" value="10" step="1"/>
+                                <input id="maxDisplayLength" type="range" min="1" max="501" value="10" step="1" />
                                 <span class="muted" class="muted range-value"></span>
                                 <span class="muted" data-label="characters" data-label-type="main">Characters</span>
                             </div>
                         </div>
                     </div>
 
-                    <!--todo color picker here for accent, hold and tap-->
+                    <div class="row">
+                        <div class="control">
+                            <div class="icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                                    <path d="M6.92 6.956L5.45 5.473m9.309 1.483l1.47-1.483m-10.78 10.88l1.47-1.484m3.92-9.89V3m-5.88 7.913H3m13.875 5.923l3.814-1.506a.496.496 0 0 0 0-.921l-9.165-3.615a.492.492 0 0 0-.635.64l3.582 9.251c.162.42.75.42.912 0z" />
+                                </svg>
+                            </div>
+                            <div class="meta">
+                                <div class="meta-top">
+                                    <b data-label="tapColor" data-label-type="main" >Tap color</b>
+                                    <span class="reset-icon" title="Reset to default" data-target="tapColor">&times;</span>
+                                </div>
+                                <span class="muted" data-label="tapColor" data-label-type="alt">Color used for the message box tap animation</span>
+                            </div>
+                        </div>
+                        <div id="tapColor" class="color-picker" data-target="tapColor">
+                            <div class="accent-actions">
+                                <div class="preset-list">
+                                    <div class="preset-dot" style="background: rgba(255, 255, 255, 0.15)" data-color="rgba(255, 255, 255, 0.15)"></div>
+                                    <div class="preset-dot" style="background: rgba(200, 230, 255, 0.15)" data-color="rgba(200, 230, 255, 0.15)"></div>
+                                    <div class="preset-dot" style="background: rgba(220, 255, 235, 0.15)" data-color="rgba(220, 255, 235, 0.15)"></div>
+                                    <div class="preset-dot" style="background: rgba(255, 240, 220, 0.15)" data-color="rgba(255, 240, 220, 0.15)"></div>
+                                    <div class="preset-dot" style="background: rgba(255, 220, 230, 0.15)" data-color="rgba(255, 220, 230, 0.15)"></div>
+                                    <div class="preset-dot" style="background: rgba(255, 255, 255, 0.1)" data-color="rgba(255, 255, 255, 0.1)"></div>
+                                </div>
+                                <div class="toggle-picker">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M5 12h14" />
+                                        <path d="M12 5v14" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="picker-panel">
+                                <div class="picker-top">
+                                    <div class="preview-side"></div>
+                                    <div class="sat-map">
+                                        <canvas class="sat-canvas"></canvas>
+                                        <div class="sat-pointer"></div>
+                                    </div>
+                                </div>
+                                <div class="hue-bar">
+                                    <div class="hue-pointer"></div>
+                                </div>
+                                <div class="alpha-bar">
+                                    <div class="alpha-pointer"></div>
+                                </div>
+                                <div class="data-grid">
+                                    <div class="data-input-box">
+                                        <label>HEX</label>
+                                        <input type="text" data-type="hex" spellcheck="false" />
+                                    </div>
+                                    <div class="data-input-box">
+                                        <label>RGB</label>
+                                        <input type="text" data-type="rgb" spellcheck="false" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="control">
+                            <div class="icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="24" height="24" viewBox="0 0 24 24">
+                                    <path xmlns="http://www.w3.org/2000/svg" class="cls-1" d="M16.47,15.89l3.81-1.51c.25-.1.38-.39.28-.64-.05-.13-.15-.23-.28-.28l-9.16-3.61c-.25-.1-.54.03-.64.28-.04.12-.04.24,0,.36l3.58,9.25c.16.42.75.42.91,0l1.49-3.85ZM10.45,14.82c-2.74,0-5-2.26-5-5s2.26-5,5-5,5,2.26,5,5" />
+                                </svg>
+                            </div>
+                            <div class="meta">
+                                <div class="meta-top">
+                                    <b>Hold color</b>
+                                    <span class="reset-icon" title="Reset to default" data-target="holdColor">&times;</span>
+                                </div>
+                                <span class="muted">Color used for the message box hold animation</span>
+                            </div>
+                        </div>
+                        <div id="holdColor" class="color-picker" data-target="holdColor">
+                            <div class="accent-actions">
+                                <div class="preset-list">
+                                    <div class="preset-dot" style="background: rgba(169, 112, 255, 0.4)" data-color="rgba(169, 112, 255, 0.4)"></div>
+                                    <div class="preset-dot" style="background: rgba(0, 140, 255, 0.4)" data-color="rgba(0, 140, 255, 0.4)"></div>
+                                    <div class="preset-dot" style="background: rgba(0, 255, 128, 0.4)" data-color="rgba(0, 255, 128, 0.4)"></div>
+                                    <div class="preset-dot" style="background: rgba(255, 140, 0, 0.4)" data-color="rgba(255, 140, 0, 0.4)"></div>
+                                    <div class="preset-dot" style="background: rgba(255, 60, 120, 0.4)" data-color="rgba(255, 60, 120, 0.4)"></div>
+                                    <div class="preset-dot" style="background: rgba(255, 255, 255, 0.4)" data-color="rgba(255, 255, 255, 0.4)"></div>
+                                </div>
+                                <div class="toggle-picker">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M5 12h14" />
+                                        <path d="M12 5v14" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="picker-panel">
+                                <div class="picker-top">
+                                    <div class="preview-side"></div>
+                                    <div class="sat-map">
+                                        <canvas class="sat-canvas"></canvas>
+                                        <div class="sat-pointer"></div>
+                                    </div>
+                                </div>
+                                <div class="hue-bar">
+                                    <div class="hue-pointer"></div>
+                                </div>
+                                <div class="alpha-bar">
+                                    <div class="alpha-pointer"></div>
+                                </div>
+                                <div class="data-grid">
+                                    <div class="data-input-box">
+                                        <label>HEX</label>
+                                        <input type="text" data-type="hex" spellcheck="false" />
+                                    </div>
+                                    <div class="data-input-box">
+                                        <label>RGB</label>
+                                        <input type="text" data-type="rgb" spellcheck="false" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="control">
+                            <div class="icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="24" height="24" viewBox="0 0 24 24">
+                                    <path xmlns="http://www.w3.org/2000/svg" class="cls-1" d="M16.47,15.89l3.81-1.51c.25-.1.38-.39.28-.64-.05-.13-.15-.23-.28-.28l-9.16-3.61c-.25-.1-.54.03-.64.28-.04.12-.04.24,0,.36l3.58,9.25c.16.42.75.42.91,0l1.49-3.85Z" />
+                                </svg>
+                            </div>
+                            <div class="meta">
+                                <div class="meta-top">
+                                    <b>Hover Color</b>
+                                    <span class="reset-icon" title="Reset to default" data-target="hoverColor">&times;</span>
+                                </div>
+                                <span class="muted">Color used for the message box hover animation</span>
+                            </div>
+                        </div>
+                        <div id="hoverColor" class="color-picker" data-target="hoverColor">
+                            <div class="accent-actions">
+                                <div class="preset-list">
+                                    <div class="preset-dot" style="background: rgba(255, 255, 255, 0.15)" data-color="rgba(255, 255, 255, 0.15)"></div>
+                                    <div class="preset-dot" style="background: rgba(200, 230, 255, 0.15)" data-color="rgba(200, 230, 255, 0.15)"></div>
+                                    <div class="preset-dot" style="background: rgba(220, 255, 235, 0.15)" data-color="rgba(220, 255, 235, 0.15)"></div>
+                                    <div class="preset-dot" style="background: rgba(255, 240, 220, 0.15)" data-color="rgba(255, 240, 220, 0.15)"></div>
+                                    <div class="preset-dot" style="background: rgba(255, 220, 230, 0.15)" data-color="rgba(255, 220, 230, 0.15)"></div>
+                                    <div class="preset-dot" style="background: rgba(255, 255, 255, 0.1)" data-color="rgba(255, 255, 255, 0.1)"></div>
+                                </div>
+                                <div class="toggle-picker">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M5 12h14" />
+                                        <path d="M12 5v14" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="picker-panel">
+                                <div class="picker-top">
+                                    <div class="preview-side"></div>
+                                    <div class="sat-map">
+                                        <canvas class="sat-canvas"></canvas>
+                                        <div class="sat-pointer"></div>
+                                    </div>
+                                </div>
+                                <div class="hue-bar">
+                                    <div class="hue-pointer"></div>
+                                </div>
+                                <div class="alpha-bar">
+                                    <div class="alpha-pointer"></div>
+                                </div>
+                                <div class="data-grid">
+                                    <div class="data-input-box">
+                                        <label>HEX</label>
+                                        <input type="text" data-type="hex" spellcheck="false" />
+                                    </div>
+                                    <div class="data-input-box">
+                                        <label>RGB</label>
+                                        <input type="text" data-type="rgb" spellcheck="false" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </section>
 
                 <section class="card section">
                     <div class="heading-row">
                         <h2 data-label="other" data-label-type="main">Other</h2>
-                        <span class="reset-icon" title="Reset to default" data-target="other">&times;</span>
+                        <span class="reset-icon" title="Reset to default" data-target="section">&times;</span>
                     </div>
                     <p class="desc" data-label="other" data-label-type="alt">Other settings</p>
 
@@ -793,6 +971,121 @@
                                 <button type="button" class="dropdown-item" role="option" data-value="de" aria-selected="false">Deutsch</button>
                                 <button type="button" class="dropdown-item" role="option" data-value="fr" aria-selected="false">Français</button>
                                 <button type="button" class="dropdown-item" role="option" data-value="ko" aria-selected="false">한국어</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="control">
+                            <div class="icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                    <path fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3c0 0 7 6 7 12c0 2 -1 6 -7 6M12 3c0 0 -7 6 -7 12c0 2 1 6 7 6"></path>
+                                </svg>
+                            </div>
+                            <div class="meta">
+                                <div class="meta-top">
+                                    <b>Theme Main Accent</b>
+                                    <span class="reset-icon" title="Reset to default" data-target="accent">&times;</span>
+                                </div>
+                                <span class="muted">Main accent color of the theme</span>
+                            </div>
+                        </div>
+                        <div id="accent" class="color-picker" data-target="accent">
+                            <div class="accent-actions">
+                                <div class="preset-list">
+                                    <div class="preset-dot" style="background: #3dd9c8" data-color="#3dd9c8"></div>
+                                    <div class="preset-dot" style="background: #d93dce" data-color="#d93dce"></div>
+                                    <div class="preset-dot" style="background: #3dd96f" data-color="#3dd96f"></div>
+                                    <div class="preset-dot" style="background: #ff8e4f" data-color="#ff8e4f"></div>
+                                    <div class="preset-dot" style="background: #4f5eff" data-color="#4f5eff"></div>
+                                    <div class="preset-dot" style="background: #3dffb5" data-color="#3dffb5"></div>
+                                </div>
+                                <div class="toggle-picker">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M5 12h14" />
+                                        <path d="M12 5v14" />
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <div class="picker-panel">
+                                <div class="picker-top">
+                                    <div class="preview-side"></div>
+                                    <div class="sat-map">
+                                        <canvas class="sat-canvas"></canvas>
+                                        <div class="sat-pointer"></div>
+                                    </div>
+                                </div>
+                                <div class="hue-bar">
+                                    <div class="hue-pointer"></div>
+                                </div>
+                                <div class="data-grid">
+                                    <div class="data-input-box">
+                                        <label>HEX</label>
+                                        <input type="text" data-type="hex" spellcheck="false" />
+                                    </div>
+                                    <div class="data-input-box">
+                                        <label>RGB</label>
+                                        <input type="text" data-type="rgb" spellcheck="false" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="control">
+                            <div class="icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+                                    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3c0 0 7 6 7 12c0 2 -1 6 -7 6M12 3c0 0 -7 6 -7 12c0 2 1 6 7 6"></path>
+                                </svg>
+                            </div>
+                            <div class="meta">
+                                <div class="meta-top">
+                                    <b>Theme Alternative Accent</b>
+                                    <span class="reset-icon" title="Reset to default" data-target="accent2">&times;</span>
+                                </div>
+                                <span class="muted">Alternative accent color of the theme</span>
+                            </div>
+                        </div>
+                        <div id="accent2" class="color-picker" data-target="accent2">
+                            <div class="accent-actions">
+                                <div class="preset-list">
+                                    <div class="preset-dot" style="background: #4fb0ff" data-color="#4fb0ff"></div>
+                                    <div class="preset-dot" style="background: #9c4fff" data-color="#9c4fff"></div>
+                                    <div class="preset-dot" style="background: #d9c83d" data-color="#d9c83d"></div>
+                                    <div class="preset-dot" style="background: #ff4f68" data-color="#ff4f68"></div>
+                                    <div class="preset-dot" style="background: #2d89ef" data-color="#2d89ef"></div>
+                                    <div class="preset-dot" style="background: #ff4f78" data-color="#ff4f78"></div>
+                                </div>
+                                <div class="toggle-picker">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M5 12h14" />
+                                        <path d="M12 5v14" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="picker-panel">
+                                <div class="picker-top">
+                                    <div class="preview-side"></div>
+                                    <div class="sat-map">
+                                        <canvas class="sat-canvas"></canvas>
+                                        <div class="sat-pointer"></div>
+                                    </div>
+                                </div>
+                                <div class="hue-bar">
+                                    <div class="hue-pointer"></div>
+                                </div>
+                                <div class="data-grid">
+                                    <div class="data-input-box">
+                                        <label>HEX</label>
+                                        <input type="text" data-type="hex" spellcheck="false" />
+                                    </div>
+                                    <div class="data-input-box">
+                                        <label>RGB</label>
+                                        <input type="text" data-type="rgb" spellcheck="false" />
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
