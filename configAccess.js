@@ -25,6 +25,12 @@ export async function setConfig(key, value) {
     await sendUpdateConfigMessage()
 }
 
+export async function setBulkConfig(object) {
+    await new Promise((resolve) => {
+        storageController().local.set(object, resolve)
+    })
+    await sendUpdateConfigMessage();
+}
 export async function resetConfig(key) {
     await new Promise((resolve) => {
         storageController().local.set({ [key]: defaultConfig[key] }, resolve)

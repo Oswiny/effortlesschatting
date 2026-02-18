@@ -1136,3 +1136,7 @@ input:focus {
     font-family: 'SF Mono', 'Fira Code', monospace;
     font-size: 13px;
 }
+
+.hidden {
+    display: none !important;
+}

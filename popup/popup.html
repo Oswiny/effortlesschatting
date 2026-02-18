@@ -44,6 +44,9 @@
                         7tv
                     </div>
                     -->
+                    <button class="btn ghost" id="importButton" data-label="import" , data-label-type="main">Import</button>
+                    <input class="hidden" type="file" id="fileSelector"/>
+                    <button class="btn ghost" id="exportButton" data-label="export" , data-label-type="main">Export</button>
                     <button class="btn ghost" id="resetButton" data-label="resetButton" , data-label-type="main">Reset All</button>
                     <button class="btn primary" id="closeButton">&times;</button>
                 </div>
@@ -726,7 +729,7 @@
                             </div>
                             <div class="meta">
                                 <div class="meta-top">
-                                    <b data-label="tapColor" data-label-type="main" >Tap color</b>
+                                    <b data-label="tapColor" data-label-type="main">Tap color</b>
                                     <span class="reset-icon" title="Reset to default" data-target="tapColor">&times;</span>
                                 </div>
                                 <span class="muted" data-label="tapColor" data-label-type="alt">Color used for the message box tap animation</span>

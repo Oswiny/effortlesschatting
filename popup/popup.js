@@ -12,7 +12,18 @@ extend([mixPlugin]);
         labelElements.forEach((element) => {
             if (element.hasAttribute("placeholder")) (element.placeholder = labels[language][element.getAttribute("data-label")][element.getAttribute("data-label-type")]);
             else if (element.getAttribute("data-label") === "reset-icon") (element.setAttribute("title", labels[language]["reset-icon"]["main"]))
-            else element.textContent = labels[language][element.getAttribute("data-label")][element.getAttribute("data-label-type")]
+            else {
+                const dataLabel = element.getAttribute("data-label")
+                const dataLabelType = element.getAttribute("data-label-type")
+                if (!dataLabel || !dataLabelType) {
+                    return;
+                }
+                const translatedLabel = labels?.[language]?.[dataLabel]?.[dataLabelType];
+                if (translatedLabel === undefined) {
+                    console.log("Missing translation for: ", dataLabel)
+                }
+                element.textContent = labels?.[language]?.[dataLabel]?.[dataLabelType]
+            }
         })
     }
     updateLabels(currentConfig["language"])
@@ -328,16 +339,12 @@ extend([mixPlugin]);
         let currentDarknessColord = null
         document.documentElement.style.setProperty("--" + colorPicker.dataset.target, selectedColor)
 
-        function getIsDark()
-        {
-            if(!currentDarkness || !currentDarknessColord || !currentDarknessColord.isEqual(colordObject))
-            {
-                if(hasAlpha && colordObject.alpha() < 1)
-                {
+        function getIsDark() {
+            if (!currentDarkness || !currentDarknessColord || !currentDarknessColord.isEqual(colordObject)) {
+                if (hasAlpha && colordObject.alpha() < 1) {
                     currentDarkness = backgroundColord.mix(colordObject.alpha(1), colordObject.alpha()).isDark()
                 }
-                else
-                {
+                else {
                     currentDarkness = colordObject.isDark();
                 }
             }
@@ -346,7 +353,7 @@ extend([mixPlugin]);
         }
 
         toggleButton.style.backgroundColor = starterColordCustom.isValid() ? starterColordCustom.toRgbString() : null;
-        toggleButton.style.color = starterColordCustom.isValid() ? (getIsDark() ? "#efeff1" : "#10100e"): "#efeff1";
+        toggleButton.style.color = starterColordCustom.isValid() ? (getIsDark() ? "#efeff1" : "#10100e") : "#efeff1";
         if (colorPicker.id === "accent") {
             document.documentElement.style.setProperty("--text-visible", getIsDark() ? "#efeff1" : "#10100e")
         }
@@ -731,6 +738,76 @@ extend([mixPlugin]);
         await updateVisualStates();
         updateLabels(defaultConfig["language"])
     });
+
+    document.getElementById("exportButton").addEventListener("click", async () => {
+        const currentConfig = await configAccess.currentConfig();
+        const jsonizedCurrentConfig = JSON.stringify(currentConfig, (key, value) => {
+            if (value instanceof Set) {
+                return Array.from(value).filter(item => !defaultConfig[key].has(item));
+            }
+            else if (value === Infinity) {
+                return "Infinity";
+            }
+            return value;
+        }, 4);
+        const blob = new Blob([jsonizedCurrentConfig], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+
+        chrome.downloads.download({
+            url: url,
+            filename: "ec_settings.json",
+            saveAs: true,
+        })
+    })
+
+    const fileSelector = document.getElementById("fileSelector");
+    document.getElementById("importButton").addEventListener("click", async () => {
+        fileSelector.click()
+        fileSelector.value = "";
+    })
+
+    fileSelector.onclick = () => {
+        console.log("test");
+    }
+
+    fileSelector.addEventListener("change", (e) => {
+        const file = e.target.files[0]
+
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.addEventListener("load", async (event) => {
+            const rawContent = event.target.result;
+            const parsedContent = JSON.parse(rawContent, (key, value) => {
+                if (value instanceof Array) {
+                    return new Set(value);
+                }
+                else if (typeof value === "number" || value === "Infinity") {
+                    const input = document.querySelector(`input#${key}`)
+                    if (value > input.max || value === "Infinity") {
+                        if (key.includes("max")) {
+                            return Infinity
+                        }
+                        return input.max
+                    }
+                    else if (value < input.min) {
+                        return input.min
+                    }
+                    else {
+                        return Math.round(value / input.step) * input.step
+                    }
+                }
+                return value;
+            });
+
+            await configAccess.setBulkConfig(parsedContent);
+            await updateVisualStates();
+            if (parsedContent["language"]) {
+                updateLabels(parsedContent["language"]);
+            }
+        })
+        reader.readAsText(file);
+    })
 
     //temporary
     function autoSizeSVGs() {

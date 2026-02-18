@@ -39,6 +39,8 @@ export let defaultConfig = {
     accent2Custom: null,
 }
 
+//maybe combine with default config and make it reflect to html later
+
 export const labels = {
     en: {
         scannerMethod: {
@@ -251,6 +253,12 @@ export const labels = {
         accent2: {
             main: "Theme Alternative Accent",
             alt: "Alternative accent color of the theme"
+        },
+        import: {
+            main: "Import"
+        },
+        export: {
+            main: "Export"
         },
         default: {
             main: "NO TRANSLATION HAS BEEN FOUND"
@@ -469,6 +477,12 @@ export const labels = {
             main: "Acento Alternativo del Tema",
             alt: "Color de acento alternativo del tema"
         },
+        import: {
+            main: "Importar"
+        },
+        export: {
+            main: "Exportar"
+        },
         default: {
             main: "NO SE HA ENCONTRADO TRADUCCIÓN"
         }
@@ -685,6 +699,12 @@ export const labels = {
         accent2: {
             main: "テーマの代替アクセント",
             alt: "テーマの代替アクセントカラー"
+        },
+        import: {
+            main: "インポート"
+        },
+        export: {
+            main: "エクスポート"
         },
         default: {
             main: "翻訳が見つかりませんでした"
@@ -903,6 +923,12 @@ export const labels = {
             main: "Alternativer Akzent des Themas",
             alt: "Alternative Akzentfarbe des Themas"
         },
+        import: {
+            main: "Importieren"
+        },
+        export: {
+            main: "Exportieren"
+        },
         default: {
             main: "KEINE ÜBERSETZUNG GEFUNDEN"
         }
@@ -1120,6 +1146,12 @@ export const labels = {
             main: "Accent Alternatif du Thème",
             alt: "Couleur d'accent alternative du thème"
         },
+        import: {
+            main: "Importer"
+        },
+        export: {
+            main: "Exporter"
+        },
         default: {
             main: "AUCUNE TRADUCTION TROUVÉE"
         }
@@ -1336,6 +1368,12 @@ export const labels = {
         accent2: {
             main: "테마 보조 포인트",
             alt: "테마의 보조 포인트 색상"
+        },
+        import: {
+            main: "가져오기"
+        },
+        export: {
+            main: "내보내기"
         },
         default: {
             main: "번역을 찾을 수 없습니다"
