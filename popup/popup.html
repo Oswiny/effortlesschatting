@@ -36,7 +36,15 @@
                 <div class="header-actions">
                     <div id="twitch" class="status-pill">
                         <span class="status-dot red"></span>
-                        Twitch
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" x="0px" y="0px" viewBox="0 0 2400 2800" style="enable-background: new 0 0 2400 2800" xml:space="preserve">
+                            <g>
+                                <g id="Layer_1-2">
+                                    <path fill="#f0f0ff" d="M500,0L0,500v1800h600v500l500-500h400l900-900V0H500z M2200,1300l-400,400h-400l-350,350v-350H600V200h1600    V1300z" />
+                                    <rect x="1700" y="550" fill="#f0f0ff" width="200" height="600" />
+                                    <rect x="1150" y="550" fill="#f0f0ff" width="200" height="600" />
+                                </g>
+                            </g>
+                        </svg>
                     </div>
                     <!--
                     <div id="seventv" class="status-pill">
@@ -44,11 +52,23 @@
                         7tv
                     </div>
                     -->
-                    <button class="btn ghost" id="importButton" data-label="import" , data-label-type="main">Import</button>
-                    <input class="hidden" type="file" id="fileSelector"/>
-                    <button class="btn ghost" id="exportButton" data-label="export" , data-label-type="main">Export</button>
+                    <button class="btn ghost" id="importButton" data-label="import" data-label-type="main" title="Import">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16">
+                            <path fill="currentColor" fill-rule="evenodd" d="M11.78 7.159a.75.75 0 0 0-1.06 0l-1.97 1.97V1.75a.75.75 0 0 0-1.5 0v7.379l-1.97-1.97a.75.75 0 0 0-1.06 1.06l3.25 3.25L8 12l.53-.53l3.25-3.25a.75.75 0 0 0 0-1.061M2.5 9.75a.75.75 0 1 0-1.5 0V13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V9.75a.75.75 0 0 0-1.5 0V13a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <input class="hidden" type="file" id="fileSelector" />
+                    <button class="btn ghost" id="exportButton" data-label="export" data-label-type="main" title="Export">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16">
+                            <path fill="currentColor" fill-rule="evenodd" d="M11.78 5.841a.75.75 0 0 1-1.06 0l-1.97-1.97v7.379a.75.75 0 0 1-1.5 0V3.871l-1.97 1.97a.75.75 0 0 1-1.06-1.06l3.25-3.25L8 1l.53.53l3.25 3.25a.75.75 0 0 1 0 1.061M2.5 9.75a.75.75 0 0 0-1.5 0V13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V9.75a.75.75 0 0 0-1.5 0V13a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
                     <button class="btn ghost" id="resetButton" data-label="resetButton" , data-label-type="main">Reset All</button>
-                    <button class="btn primary" id="closeButton">&times;</button>
+                    <button class="btn primary" id="closeButton" style="padding: 16px">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24">
+                            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" d="m8.464 15.535l7.072-7.07m-7.072 0l7.072 7.07" />
+                        </svg>
+                    </button>
                 </div>
             </header>
 
@@ -410,6 +430,84 @@
 
                         <ul class="banned-list"></ul>
                     </section>
+                </section>
+
+                <section class="card section">
+                    <div class="heading-row">
+                        <h2 data-label="setClickToWrite" data-label-type="main">Click To Write</h2>
+                        <span class="reset-icon" title="Reset to default" data-target="section">&times;</span>
+                    </div>
+                    <p class="desc" data-label="setClickToWrite" data-label-type="alt">Adjust click to writes behavior</p>
+
+                    <div class="row">
+                        <div class="control">
+                            <div class="icon" aria-hidden>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M4 10v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1 -1v-3" />
+                                </svg>
+                            </div>
+                            <div class="meta">
+                                <div class="meta-top">
+                                    <b data-label="allowClickToWrite" data-label-type="main">Allow Click To Write</b>
+                                    <span class="reset-icon" title="Reset to default" data-target="allowClickToWrite" data-label="reset-icon" data-label-type="main">&times;</span>
+                                </div>
+                                <span class="muted" data-label="allowClickToWrite" data-label-type="alt">Allows click to write</span>
+                            </div>
+                        </div>
+                        <div>
+                            <div tabindex="0" class="toggle" id="allowClickToWrite" role="switch" aria-checked="false">
+                                <div class="knob"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="control">
+                            <div class="icon" aria-hidden>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M4 10v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1 -1v-3" />
+                                </svg>
+                            </div>
+                            <div class="meta">
+                                <div class="meta-top">
+                                    <b data-label="allowUserNameClickToWrite" data-label-type="main">Allow User Name Clicks</b>
+                                    <span class="reset-icon" title="Reset to default" data-target="allowUserNameClickToWrite" data-label="reset-icon" data-label-type="main">&times;</span>
+                                </div>
+                                <span class="muted" data-label="allowUserNameClickToWrite" data-label-type="alt">Allows User Name to be click written</span>
+                            </div>
+                        </div>
+                        <div>
+                            <div tabindex="0" class="toggle" id="allowUserNameClickToWrite" role="switch" aria-checked="false">
+                                <div class="knob"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="control">
+                            <div class="icon" aria-hidden>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M4 10v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1 -1v-3" />
+                                </svg>
+                            </div>
+                            <div class="meta">
+                                <div class="meta-top">
+                                    <b data-label="autoUserNameTag" data-label-type="main">Automatically Put @ Before User names</b>
+                                    <span class="reset-icon" title="Reset to default" data-target="autoUserNameTag" data-label="reset-icon" data-label-type="main">&times;</span>
+                                </div>
+                                <span class="muted" data-label="autoUserNameTag" data-label-type="alt">Automatically puts @ before usernames (when click written) allowing easier pings</span>
+                            </div>
+                        </div>
+                        <div>
+                            <div tabindex="0" class="toggle" id="autoUserNameTag" role="switch" aria-checked="false">
+                                <div class="knob"></div>
+                            </div>
+                        </div>
+                    </div>
+
                 </section>
 
                 <section class="card section">

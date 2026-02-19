@@ -5,7 +5,7 @@ export let defaultConfig = {
     allowText: true,
     deleteAfterMs: 10000,
     contentNodeAmount: 5,
-    bannedWords: new Set(["\n", "", "͏", "​", "‌", "‍", "﻿", "͏", "⁠", "⁣", "⁢", "⁤", "", "", "", "", "", "", "", "", "", "", ""]),
+    bannedWords: new Set(["\n", "", "͏", "​", "‌", "‍", "﻿", "͏", "⁠", "⁣", "⁢", "⁤", "", "", "", "", "", "", "", "", "", "", "", " "]),
     bannedEmotes: new Set([]),
     bannedUsers: new Set([]),
     scrapeBots: false,
@@ -37,6 +37,9 @@ export let defaultConfig = {
     accentCustom: null,
     accent2: "#4fb0ff",
     accent2Custom: null,
+    allowClickToWrite: true,
+    allowUserNameClickToWrite: true,
+    autoUserNameTag: true,
 }
 
 //maybe combine with default config and make it reflect to html later

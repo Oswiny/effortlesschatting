@@ -1,5 +1,5 @@
 "use strict";
-import { labels } from "./config.js";
+import { defaultConfig, labels } from "./config.js";
 
 import { getAllCustomEmotes, getAllNativeEmotes, getAllEmotes } from "./emoteRequestHandler.js";
 import { findPathToTarget } from "./internalTraversalHandler.js";
@@ -462,6 +462,7 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
             domManager.injectFlushButton();
             domManager.injectContentNodes();
             //domManager.scrapeAlreadySent();
+            writeMessagesByClick()
             isInjected = true;
             updateScannerMethod();
             observer.observe(document, { childList: true, subtree: true })
@@ -472,6 +473,96 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
     checkInjection();
 
 
+    function writeMessagesByClick() {
+        const chatMessagesContainer = document.querySelector(".chat-list--default");
+        const getWordIndexes = function (text, offset) {
+            if (defaultConfig.bannedWords.has(text[offset])) return null;
+
+            let start = offset
+            let end = offset
+
+            while (start > 0 && !defaultConfig.bannedWords.has(text[start - 1])) {
+                start--;
+            }
+
+            while (end < text.length && !defaultConfig.bannedWords.has(text[end])) {
+                end++;
+            }
+
+            if (start === end) return null;
+            return { start, end };
+        }
+
+
+        const onClick = function (event) {
+            if(!config.allowClickToWrite) return;
+            const target = event.target
+
+            let isBadge = false;
+            let isUserName = false;
+
+            for (const attribute of target.attributes) {
+                const value = attribute.value
+                if (isUserName && isBadge) break;
+                if (!isBadge && value.includes("badge")) isBadge = true
+                if (!isUserName && value.includes("name")) isUserName = true
+            }
+
+            if (isBadge) return;
+
+            let clickedWord = null
+            if (event.target.nodeName === "IMG") {
+                clickedWord = event.target.alt
+            }
+            else {
+                let textNode = null;
+                let offset = null;
+                const caretPosition = document.caretPositionFromPoint(event.clientX, event.clientY);
+                textNode = caretPosition.offsetNode;
+                offset = caretPosition.offset
+
+                if (textNode && textNode.nodeType === 3) {
+                    const textContent = textNode.textContent;
+                    const wordIndexes = getWordIndexes(textContent, offset)
+
+                    if (wordIndexes) {
+                        const tempClickedWord = textContent.substring(wordIndexes.start, wordIndexes.end).trim();
+                        if (tempClickedWord.length > 0) clickedWord = tempClickedWord
+                    }
+                }
+            }
+
+            if (!clickedWord) return;
+
+            if (!isUserName) {
+                const wrapper = target.parentElement.closest("[class]")
+                if (wrapper) {
+                    for (const attribute of wrapper.attributes) {
+                        if (attribute.value.includes("name")) {
+                            isUserName = true;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (isUserName) {
+                console.log("clicked on user name ", clickedWord)
+            }
+            else {
+                console.log("clicked on a text ", clickedWord)
+            }
+        }
+
+        chatMessagesContainer.addEventListener("click", onClick)
+
+
+
+
+
+
+        findPathToTarget(startFiber, "setPaused") //wip
+    }
 
     let emotes = {}
     function scrapeOnEvent(messageData) {

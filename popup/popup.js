@@ -11,7 +11,7 @@ extend([mixPlugin]);
         const labelElements = document.querySelectorAll("[data-label]")
         labelElements.forEach((element) => {
             if (element.hasAttribute("placeholder")) (element.placeholder = labels[language][element.getAttribute("data-label")][element.getAttribute("data-label-type")]);
-            else if (element.getAttribute("data-label") === "reset-icon") (element.setAttribute("title", labels[language]["reset-icon"]["main"]))
+            else if (element.getAttribute("title") !== null) (element.setAttribute("title", labels[language][element.getAttribute("data-label")]["main"]))
             else {
                 const dataLabel = element.getAttribute("data-label")
                 const dataLabelType = element.getAttribute("data-label-type")
@@ -21,6 +21,7 @@ extend([mixPlugin]);
                 const translatedLabel = labels?.[language]?.[dataLabel]?.[dataLabelType];
                 if (translatedLabel === undefined) {
                     console.log("Missing translation for: ", dataLabel)
+                    return
                 }
                 element.textContent = labels?.[language]?.[dataLabel]?.[dataLabelType]
             }
