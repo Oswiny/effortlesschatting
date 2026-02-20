@@ -600,6 +600,29 @@ extend([mixPlugin]);
         });
     })
 
+    const hotkeys = document.querySelectorAll(".hotkey-btn");
+    const notAllowedKeys = new Set(["Backspace", "Escape", "Enter", "Tab", " ", "ArrowUp", "ArrowLeft", "ArrowRight", "ArrowDown"])
+    hotkeys.forEach(hotkey => {
+        hotkey.addEventListener("click", () => {
+            hotkey.classList.add("recording");
+            const pressedKeys = new Set();
+            const handleHotkeyRecording = function (event) {
+                const standardizedKey = event.key.toLowerCase()
+                if (notAllowedKeys.has(event.key))
+                    pressedKeys.add(standardizedKey)
+                if (pressedKeys.length >= hotkey.dataset.maxKeys) {
+                    document.removeEventListener(handleHotkeyRecording);
+                    hotkey.classList.remove("recording");
+                }
+                
+
+            }
+            document.addEventListener("keydown", handleHotkeyRecording)
+        })
+
+
+    })
+
     document.querySelectorAll('.reset-icon').forEach(async (reset) => {
         if (reset.dataset.target === "section") {
             reset.addEventListener("click", async () => {

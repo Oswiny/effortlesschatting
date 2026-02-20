@@ -495,9 +495,12 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
 
 
         const onClick = function (event) {
-            if(!config.allowClickToWrite) return;
+            if (!config.allowClickToWrite) return;
+            if (config.onlyClickWriteOnPause && !(document.querySelector(".chat-paused-footer") || document.querySelector(".seventv-message-buffer-notice"))) return;
+            // i first tried to find pause functions although it was easy for normal twitch, i was not able to find it for 7tv
+            // if i find a way to for seventv to i will switch to that
+            
             const target = event.target
-
             let isBadge = false;
             let isUserName = false;
 
@@ -547,7 +550,9 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
             }
 
             if (isUserName) {
-                console.log("clicked on user name ", clickedWord)
+                if(!config.allowUserNameClickToWrite) return;
+                if(config.autoUserNameTag && !clickedWord.startsWith("@")) 
+                    clickedWord = "@" + clickedWord
             }
             else {
                 console.log("clicked on a text ", clickedWord)
@@ -557,11 +562,6 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
         chatMessagesContainer.addEventListener("click", onClick)
 
 
-
-
-
-
-        findPathToTarget(startFiber, "setPaused") //wip
     }
 
     let emotes = {}

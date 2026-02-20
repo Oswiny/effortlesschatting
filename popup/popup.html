@@ -508,6 +508,65 @@
                         </div>
                     </div>
 
+                    <div class="row">
+                        <div class="control">
+                            <div class="icon" aria-hidden>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <path d="M4 10v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1 -1v-3" />
+                                </svg>
+                            </div>
+                            <div class="meta">
+                                <div class="meta-top">
+                                    <b data-label="onlyClickWriteOnPause" data-label-type="main">Only Write On Pause</b>
+                                    <span class="reset-icon" title="Reset to default" data-target="onlyClickWriteOnPause" data-label="reset-icon" data-label-type="main">&times;</span>
+                                </div>
+                                <span class="muted" data-label="onlyClickWriteOnPause" data-label-type="alt">Writes only if the chat is in paused state</span>
+                            </div>
+                        </div>
+                        <div>
+                            <div tabindex="0" class="toggle" id="onlyClickWriteOnPause" role="switch" aria-checked="false">
+                                <div class="knob"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="control">
+                            <div class="icon" aria-hidden>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect width="20" height="16" x="2" y="4" rx="2" ry="2" />
+                                    <path d="M6 8h.001" />
+                                    <path d="M10 8h.001" />
+                                    <path d="M14 8h.001" />
+                                    <path d="M18 8h.001" />
+                                    <path d="M8 12h.001" />
+                                    <path d="M12 12h.001" />
+                                    <path d="M16 12h.001" />
+                                    <path d="M7 16h10" />
+                                </svg>
+                            </div>
+                            <div class="meta">
+                                <div class="meta-top">
+                                    <b data-label="keyCombo" data-label-type="main">Activation Shortcut</b>
+                                    <span class="reset-icon" title="Reset to default" data-target="keyCombo" data-label="reset-icon" data-label-type="main">&times;</span>
+                                </div>
+                                <span class="muted" data-label="keyCombo" data-label-type="alt">Click to record a new key combination</span>
+                            </div>
+                        </div>
+                        <div>
+                            <!-- To show the "recording" state visually, simply add the class "recording" to the element below using JS later -->
+                            <div tabindex="0" class="hotkey-btn recording" id="keyComboInput" role="button" aria-label="Key Combination" data-max-keys="4">
+                                <kbd>0</kbd>
+                                <span class="separator">+</span>
+                                <kbd>1</kbd>
+                                <span class="separator">+</span>
+                                <kbd>2</kbd>
+                                <span class="separator">+</span>
+                                <kbd>3</kbd>
+                            </div>
+                        </div>
+                    </div>
                 </section>
 
                 <section class="card section">
