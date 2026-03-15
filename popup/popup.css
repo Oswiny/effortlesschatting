@@ -1165,9 +1165,9 @@ input:focus {
 .hotkey-btn:focus,
 .hotkey-btn.recording {
     outline: none;
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px var(--accent-glow);
-    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--danger);
+    box-shadow: 0 0 0 3px var(--danger-glow);
+    background: color-mix(in srgb, var(--danger), transparent 92%);
 }
 
 .hotkey-btn kbd {

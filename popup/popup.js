@@ -604,20 +604,33 @@ extend([mixPlugin]);
     const notAllowedKeys = new Set(["Backspace", "Escape", "Enter", "Tab", " ", "ArrowUp", "ArrowLeft", "ArrowRight", "ArrowDown"])
     hotkeys.forEach(hotkey => {
         hotkey.addEventListener("click", () => {
-            hotkey.classList.add("recording");
-            const pressedKeys = new Set();
-            const handleHotkeyRecording = function (event) {
-                const standardizedKey = event.key.toLowerCase()
-                if (notAllowedKeys.has(event.key))
-                    pressedKeys.add(standardizedKey)
-                if (pressedKeys.length >= hotkey.dataset.maxKeys) {
-                    document.removeEventListener(handleHotkeyRecording);
-                    hotkey.classList.remove("recording");
-                }
-                
+            if (!hotkey.classList.contains("recording")) {
+                hotkey.classList.add("recording");
+                const pressedKeys = new Set();
 
+                const handleHotkeyRecording = function (event) {
+                    const standardizedKey = event.key.toLowerCase()
+                    if (notAllowedKeys.has(event.key))
+                        pressedKeys.add(standardizedKey)
+                    if (pressedKeys.length >= hotkey.dataset.maxKeys) {
+                        document.removeEventListener("click", handleHotkeyRecording);
+                        document.removeEventListener("keydown", handleHotkeyRecording)
+                        hotkey.classList.remove("recording");
+                    }
+                }
+
+                const saveCurrentHotkey = function (event) {
+                    if (hotkey.classList.contains("recording")) {
+                        console.log(pressedKeys)
+                        hotkey.classList.remove("recording")
+                        document.removeEventListener("click", handleHotkeyRecording);
+                        document.removeEventListener("keydown", handleHotkeyRecording)
+                    }
+                }
+
+                document.addEventListener("keydown", handleHotkeyRecording)
+                document.addEventListener("click", saveCurrentHotkey)
             }
-            document.addEventListener("keydown", handleHotkeyRecording)
         })
 
 
