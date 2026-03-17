@@ -1162,7 +1162,6 @@ input:focus {
     border-color: rgba(255, 255, 255, 0.15);
 }
 
-.hotkey-btn:focus,
 .hotkey-btn.recording {
     outline: none;
     border-color: var(--danger);

@@ -41,6 +41,7 @@ export let defaultConfig = {
     allowUserNameClickToWrite: true,
     autoUserNameTag: true,
     onlyClickWriteOnPause: true,
+    clickToWriteHotkey: new Set([]),
 }
 
 //maybe combine with default config and make it reflect to html later

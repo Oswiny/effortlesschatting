@@ -602,38 +602,52 @@ extend([mixPlugin]);
 
     const hotkeys = document.querySelectorAll(".hotkey-btn");
     const notAllowedKeys = new Set(["Backspace", "Escape", "Enter", "Tab", " ", "ArrowUp", "ArrowLeft", "ArrowRight", "ArrowDown"])
+
+    const displayHotkey = function (hotkey, pressedKeys) {
+        const kbdElements = Object.entries(hotkey.children).filter(item => item[1].nodeName === "KBD");
+        Object.values(hotkey.children).forEach(item => item.classList.add("hidden"))
+        Array.from(pressedKeys).forEach((pressedKey, index) => {
+            kbdElements[index][1].textContent = pressedKey;
+            kbdElements[index][1].classList.remove("hidden")
+            hotkey.children[kbdElements[index][0] - 1]?.classList.remove("hidden")
+        })
+    }
+
+    const saveHotkey = function (hotkey, pressedKeys, handler) {
+        hotkey.classList.remove("recording");
+        configAccess.setConfig(hotkey.id, pressedKeys);
+        document.removeEventListener("keydown", handler);
+    }
+
     hotkeys.forEach(hotkey => {
+        displayHotkey(hotkey, currentConfig[hotkey.id])
+        const pressedKeys = new Set();
+
+        const handleHotkeyRecording = function (event) {
+            const standardizedKey = event.key.toLowerCase()
+
+            if (!notAllowedKeys.has(event.key)) {
+                pressedKeys.add(standardizedKey)
+                displayHotkey(hotkey, pressedKeys)
+                if (pressedKeys.size >= hotkey.dataset.maxKeys) {
+                    saveHotkey(hotkey, pressedKeys, handleHotkeyRecording);
+                    return;
+                }
+            }
+        }
+
         hotkey.addEventListener("click", () => {
             if (!hotkey.classList.contains("recording")) {
                 hotkey.classList.add("recording");
-                const pressedKeys = new Set();
-
-                const handleHotkeyRecording = function (event) {
-                    const standardizedKey = event.key.toLowerCase()
-                    if (notAllowedKeys.has(event.key))
-                        pressedKeys.add(standardizedKey)
-                    if (pressedKeys.length >= hotkey.dataset.maxKeys) {
-                        document.removeEventListener("click", handleHotkeyRecording);
-                        document.removeEventListener("keydown", handleHotkeyRecording)
-                        hotkey.classList.remove("recording");
-                    }
-                }
-
-                const saveCurrentHotkey = function (event) {
-                    if (hotkey.classList.contains("recording")) {
-                        console.log(pressedKeys)
-                        hotkey.classList.remove("recording")
-                        document.removeEventListener("click", handleHotkeyRecording);
-                        document.removeEventListener("keydown", handleHotkeyRecording)
-                    }
-                }
-
+                pressedKeys.clear()
                 document.addEventListener("keydown", handleHotkeyRecording)
-                document.addEventListener("click", saveCurrentHotkey)
+                return
+            }
+            else {
+                saveHotkey(hotkey, pressedKeys, handleHotkeyRecording);
+                return;
             }
         })
-
-
     })
 
     document.querySelectorAll('.reset-icon').forEach(async (reset) => {
