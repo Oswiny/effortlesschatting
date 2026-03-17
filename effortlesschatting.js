@@ -498,9 +498,11 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
             if (!config.allowClickToWrite) return;
             if (config.onlyClickWriteOnPause && !(document.querySelector(".chat-paused-footer") || document.querySelector(".seventv-message-buffer-notice"))) return;
             // i first tried to find pause functions although it was easy for normal twitch, i was not able to find it for 7tv
-            // if i find a way to for seventv to i will switch to that
-            
-            const target = event.target
+            // if i find a way to for seventv too i will switch to that
+
+            if (config.onlyClickToWriteOnHotkey && Array.from(config.clickToWriteHotkey).every(key => pressedKeys.has(key))) {
+
+            }
             let isBadge = false;
             let isUserName = false;
 
@@ -550,14 +552,31 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
             }
 
             if (isUserName) {
-                if(!config.allowUserNameClickToWrite) return;
-                if(config.autoUserNameTag && !clickedWord.startsWith("@")) 
+                if (!config.allowUserNameClickToWrite) return;
+                if (config.autoUserNameTag && !clickedWord.startsWith("@"))
                     clickedWord = "@" + clickedWord
             }
             else {
                 console.log("clicked on a text ", clickedWord)
             }
         }
+
+        const pressedKeys = new Set([]);
+
+        //wip - left here
+        function onKeyDown(event) {
+            if (event.repeat) return;
+            pressedKeys.add(event.key.toLowerCase())
+        }
+
+        function onKeyUp(event) {
+            pressedKeys.delete(event.key.toLowerCase())
+        }
+
+        document.addEventListener("keydown", onKeyDown);
+        document.addEventListener("keyup", onKeyUp);
+
+
 
         chatMessagesContainer.addEventListener("click", onClick)
 
