@@ -475,6 +475,21 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
 
     function writeMessagesByClick() {
         const chatMessagesContainer = document.querySelector(".chat-list--default");
+
+        const pressedKeys = new Set([]);
+
+        function onKeyDown(event) {
+            if (event.repeat) return;
+            pressedKeys.add(event.key.toLowerCase())
+        }
+
+        function onKeyUp(event) {
+            pressedKeys.delete(event.key.toLowerCase())
+        }
+
+        document.addEventListener("keydown", onKeyDown);
+        document.addEventListener("keyup", onKeyUp);
+
         const getWordIndexes = function (text, offset) {
             if (defaultConfig.bannedWords.has(text[offset])) return null;
 
@@ -500,9 +515,14 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
             // i first tried to find pause functions although it was easy for normal twitch, i was not able to find it for 7tv
             // if i find a way to for seventv too i will switch to that
 
-            if (config.onlyClickToWriteOnHotkey && Array.from(config.clickToWriteHotkey).every(key => pressedKeys.has(key))) {
-
+            if (config.onlyClickToWriteOnHotkey) {
+                for (const key of config.clickToWriteHotkey) {
+                    if (!pressedKeys.has(key)) return;
+                }
             }
+
+            const target = event.target
+
             let isBadge = false;
             let isUserName = false;
 
@@ -553,28 +573,17 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
 
             if (isUserName) {
                 if (!config.allowUserNameClickToWrite) return;
-                if (config.autoUserNameTag && !clickedWord.startsWith("@"))
+                if (config.autoUserNameTag && !clickedWord.startsWith("@")) {
                     clickedWord = "@" + clickedWord
+                }
+                (new Message(clickedWord)).printToChat();
             }
             else {
-                console.log("clicked on a text ", clickedWord)
+                (new Message(clickedWord)).printToChat();
             }
         }
 
-        const pressedKeys = new Set([]);
 
-        //wip - left here
-        function onKeyDown(event) {
-            if (event.repeat) return;
-            pressedKeys.add(event.key.toLowerCase())
-        }
-
-        function onKeyUp(event) {
-            pressedKeys.delete(event.key.toLowerCase())
-        }
-
-        document.addEventListener("keydown", onKeyDown);
-        document.addEventListener("keyup", onKeyUp);
 
 
 
