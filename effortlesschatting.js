@@ -211,8 +211,6 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
                     duration: 120,
                     easing: "ease-out"
                 });
-
-                console.log("Normal click");
             });
 
 
@@ -383,8 +381,16 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
             associatedChild.classList.remove("hidden")
             this.node.classList.remove("hidden")
             this.printWrapper = function () {
-                message.printToChat();
+                if (isCombination(config.enableInstantSend, config.combinationInstantSend, pressedKeys)) {
+                    sendMessage(message.text)
+                    return;
+                }
+                else {
+                    message.printToChat();
+                    return;
+                }
             }
+
             this.node.addEventListener("click", this.printWrapper)
         }
 
@@ -424,6 +430,7 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
     let textbox = null;
     let textBoxControllers = null;
     let sendMessage = null;
+    let pressedKeys = null;
 
     //if for some reason chat box gets removed we inject it
     function checkInjection() {
@@ -462,6 +469,7 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
             domManager.injectFlushButton();
             domManager.injectContentNodes();
             //domManager.scrapeAlreadySent();
+            pressedKeys = new Set([]);
             writeMessagesByClick()
             isInjected = true;
             updateScannerMethod();
@@ -472,11 +480,18 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
     }
     checkInjection();
 
+    function isCombination(enableSetting, combinationSetting, pressedKeys) {
+        if (enableSetting) {
+            for (const combinationKey of combinationSetting) {
+                if (!pressedKeys.has(combinationKey)) return false
+            }
+            return true
+        }
+    }
 
     function writeMessagesByClick() {
         const chatMessagesContainer = document.querySelector(".chat-list--default");
 
-        const pressedKeys = new Set([]);
 
         function onKeyDown(event) {
             if (event.repeat) return;
@@ -515,11 +530,7 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
             // i first tried to find pause functions although it was easy for normal twitch, i was not able to find it for 7tv
             // if i find a way to for seventv too i will switch to that
 
-            if (config.onlyClickToWriteOnHotkey) {
-                for (const key of config.clickToWriteHotkey) {
-                    if (!pressedKeys.has(key)) return;
-                }
-            }
+            if (!isCombination(config.onlyClickToWriteOnHotkey, config.clickToWriteHotkey, pressedKeys)) return;
 
             const target = event.target
 
@@ -576,11 +587,14 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
                 if (config.autoUserNameTag && !clickedWord.startsWith("@")) {
                     clickedWord = "@" + clickedWord
                 }
-                (new Message(clickedWord)).printToChat();
             }
-            else {
-                (new Message(clickedWord)).printToChat();
+
+            if (isCombination(config.enableInstantSend, config.combinationInstantSend, pressedKeys)) {
+                sendMessage(clickedWord);
+                return;
             }
+            (new Message(clickedWord)).printToChat();
+            return;
         }
 
 

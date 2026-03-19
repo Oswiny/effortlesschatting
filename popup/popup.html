@@ -535,8 +535,7 @@
                 <div class="row">
                     <div class="control">
                         <div class="icon" aria-hidden>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
-                                viewBox="0 0 24 24">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
                                 <path fill="currentColor"
                                     d="M4 21q-.425 0-.712-.288T3 20v-2.425q0-.4.15-.763t.425-.637L16.2 3.575q.3-.275.663-.425t.762-.15t.775.15t.65.45L20.425 5q.3.275.437.65T21 6.4q0 .4-.138.763t-.437.662l-12.6 12.6q-.275.275-.638.425t-.762.15zM17.6 7.8L19 6.4L17.6 5l-1.4 1.4z" />
                             </svg>
@@ -784,35 +783,7 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="control">
-                        <div class="icon" aria-hidden>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <path
-                                    d="M3.714 3.048a.498.498 0 0 0-.683.627l2.843 7.627a2 2 0 0 1 0 1.396l-2.842 7.627a.498.498 0 0 0 .682.627l18-8.5a.5.5 0 0 0 0-.904z" />
-                                <path d="M6 12h16" />
-                            </svg>
-                        </div>
-                        <div class="meta">
-                            <div class="meta-top">
-                                <b data-label="requiredHoldTime" data-label-type="main">Long-Press to Send</b>
-                                <span class="reset-icon" title="Reset to default" data-target="requiredHoldTime"
-                                    data-label="reset-icon" data-label-type="main">&times;</span>
-                            </div>
-                            <span class="muted" data-label="requiredHoldTime" data-label-type="alt">Duration to hold the
-                                message box to auto-send</span>
-                        </div>
-                    </div>
-                    <div class="input-wrapper">
-                        <div class="range-wrap">
-                            <input id="requiredHoldTime" type="range" min="1000" max="10000" value="5000" step="250" />
-                            <span class="muted range-value"></span>
-                            <span class="muted" data-label="milliseconds" data-label-type="main">Milliseconds</span>
-                        </div>
-                    </div>
-                </div>
+
             </section>
 
             <section class="card section">
@@ -1001,6 +972,109 @@
                                 step="5" />
                             <span class="muted" class="muted range-value"></span>
                             <span class="muted" data-label="milliseconds" data-label-type="main">Milliseconds</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="control">
+                        <div class="icon" aria-hidden>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path
+                                    d="M3.714 3.048a.498.498 0 0 0-.683.627l2.843 7.627a2 2 0 0 1 0 1.396l-2.842 7.627a.498.498 0 0 0 .682.627l18-8.5a.5.5 0 0 0 0-.904z" />
+                                <path d="M6 12h16" />
+                            </svg>
+                        </div>
+                        <div class="meta">
+                            <div class="meta-top">
+                                <b data-label="requiredHoldTime" data-label-type="main">Long-Press to Send</b>
+                                <span class="reset-icon" title="Reset to default" data-target="requiredHoldTime"
+                                    data-label="reset-icon" data-label-type="main">&times;</span>
+                            </div>
+                            <span class="muted" data-label="requiredHoldTime" data-label-type="alt">Duration to hold the
+                                message box to auto-send</span>
+                        </div>
+                    </div>
+                    <div class="input-wrapper">
+                        <div class="range-wrap">
+                            <input id="requiredHoldTime" type="range" min="1000" max="10000" value="5000" step="250" />
+                            <span class="muted range-value"></span>
+                            <span class="muted" data-label="milliseconds" data-label-type="main">Milliseconds</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="control">
+                        <div class="icon" aria-hidden>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path
+                                    d="M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49" />
+                                <path d="M14.084 14.158a3 3 0 0 1-4.242-4.242" />
+                                <path
+                                    d="M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143" />
+                                <path d="m2 2 20 20" />
+                            </svg>
+                        </div>
+                        <div class="meta">
+                            <div class="meta-top">
+                                <b data-label="enableInstantSend" data-label-type="main">Enable Instant Send Key
+                                    Combination</b>
+                                <span class="reset-icon" title="Reset to default" data-target="enableInstantSend"
+                                    data-label="reset-icon" data-label-type="main">&times;</span>
+                            </div>
+                            <span class="muted" data-label="enableInstantSend" data-label-type="alt">Enable combination
+                                usage to instantly send clicked message</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div tabindex="0" class="toggle" id="enableInstantSend" role="switch" aria-checked="false">
+                            <div class="knob"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="control">
+                        <div class="icon" aria-hidden>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M10 8h.01" />
+                                <path d="M12 12h.01" />
+                                <path d="M14 8h.01" />
+                                <path d="M16 12h.01" />
+                                <path d="M18 8h.01" />
+                                <path d="M6 8h.01" />
+                                <path d="M7 16h10" />
+                                <path d="M8 12h.01" />
+                                <rect width="20" height="16" x="2" y="4" rx="2" />
+                            </svg>
+                        </div>
+                        <div class="meta">
+                            <div class="meta-top">
+                                <b data-label="keyCombo" data-label-type="main">Activation Shortcut For Instant Send</b>
+                                <span class="reset-icon" title="Reset to default" data-target="keyCombo"
+                                    data-label="reset-icon" data-label-type="main">&times;</span>
+                            </div>
+                            <span class="muted" data-label="keyCombo" data-label-type="alt">Click to record a new key
+                                combination</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div tabindex="0" class="hotkey-btn" id="combinationInstantSend" role="button"
+                            aria-label="Key Combination" data-max-keys="4">
+                            <kbd>0</kbd>
+                            <span class="separator">+</span>
+                            <kbd>1</kbd>
+                            <span class="separator">+</span>
+                            <kbd>2</kbd>
+                            <span class="separator">+</span>
+                            <kbd>3</kbd>
                         </div>
                     </div>
                 </div>

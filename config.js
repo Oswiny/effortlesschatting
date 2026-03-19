@@ -43,6 +43,8 @@ export let defaultConfig = {
     onlyClickWriteOnPause: true,
     onlyClickToWriteOnHotkey: true, 
     clickToWriteHotkey: new Set(["control"]),
+    enableInstantSend: true,
+    combinationInstantSend: new Set(["shift"]),
 }
 
 //maybe combine with default config and make it reflect to html later
