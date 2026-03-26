@@ -228,21 +228,30 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
             }
         }
 
-        injectFlushButton() {
+        injectBottom() {
             let parent = document.querySelector(".chat-input__buttons-container");
-            let flushDiv = document.createElement("div");
-            flushDiv.classList.add("effortlesschatting-flush-button-outer")
-            flushDiv.innerHTML = `
-                <div class="effortlesschatting-flush-button-inner">
+            let div = document.createElement("div");
+            div.classList.add("effortlesschatting-bottom-container")
+
+            div.innerHTML = `
+                <div class="effortlesschatting-bottom-button-container" id="ec-clear-boxes">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="m16 22-1-4"></path>
-                        <path
-                            d="M19 13.99a1 1 0 0 0 1-1V12a2 2 0 0 0-2-2h-3a1 1 0 0 1-1-1V4a2 2 0 0 0-4 0v5a1 1 0 0 1-1 1H6a2 2 0 0 0-2 2v.99a1 1 0 0 0 1 1">
+                        <path d="M19 13.99a1 1 0 0 0 1-1V12a2 2 0 0 0-2-2h-3a1 1 0 0 1-1-1V4a2 2 0 0 0-4 0v5a1 1 0 0 1-1 1H6a2 2 0 0 0-2 2v.99a1 1 0 0 0 1 1">
                         </path>
                         <path d="M5 14h14l1.973 6.767A1 1 0 0 1 20 22H4a1 1 0 0 1-.973-1.233z"></path>
                         <path d="m8 22 1-4"></path>
                     </svg>
-                    <div class="effortlesschatting-flush-tooltip">Flush</div>
+                    <div class="effortlesschatting-flush-tooltip">Clear Message Boxes</div>
+                </div>
+
+                <div class="effortlesschatting-bottom-button-container" id="ec-clear-input">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/>
+                        <path d="M3 6h18"/>
+                        <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                    </svg>
+                    <div class="effortlesschatting-flush-tooltip">Clear Input Box</div>
                 </div>
             `
             function flushMessagesStorage() {
@@ -255,15 +264,22 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
                 emotes = {}
                 ContentNode.updateNodes();
             }
-            flushDiv.querySelector(".effortlesschatting-flush-button-inner").addEventListener("click", flushMessagesStorage)
+
+            function clearInput() {
+                textBoxControllers.select(textBoxControllers.range(textBoxControllers.point([0, 0], { edge: "start"}), textBoxControllers.point([0, 0], { edge: "end"})))
+                textBoxControllers.delete()
+            }
+
+            div.querySelector("#ec-clear-boxes").addEventListener("click", flushMessagesStorage)
+            div.querySelector("#ec-clear-input").addEventListener("click", clearInput)
             console.log("-----------")
             console.log(parent)
             console.log(parent.lastChild)
             console.log(parent.lastChild.firstChild)
             console.log("-----------")
             parent.lastChild.removeChild(parent.lastChild.firstChild)
-            parent.insertBefore(flushDiv, parent.childNodes[parent.childNodes.length - 1]);
-            return flushDiv
+            parent.insertBefore(div, parent.childNodes[parent.childNodes.length - 1]);
+            return div
         }
 
         isMouseOver() {
@@ -440,7 +456,7 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
             if (!isChannel) return;
 
             const root = document.querySelector(".effortlesschatting-root");
-            const flush = document.querySelector(".effortlesschatting-flush-button-outer");
+            const flush = document.querySelector(".effortlesschatting-bottom-container");
             const contentNodes = document.querySelectorAll(".contentNode");
 
             if (domManager && root && flush && contentNodes.length !== 0) {
@@ -466,7 +482,7 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
             textBoxControllers = domManager.getEditor();
             sendMessage = domManager.getSendMessage();
             domManager.injectRoot();
-            domManager.injectFlushButton();
+            domManager.injectBottom();
             domManager.injectContentNodes();
             //domManager.scrapeAlreadySent();
             pressedKeys = new Set([]);

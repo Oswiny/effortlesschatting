@@ -109,7 +109,7 @@
     max-height: 4rem;
 }
 
-.effortlesschatting-flush-button-outer {
+.effortlesschatting-bottom-container {
     margin-left: auto;
     display: flex !important;
     align-items: center !important;
@@ -118,7 +118,7 @@
     height: 100%;
 }
 
-.effortlesschatting-flush-button-inner {
+.effortlesschatting-bottom-button-container {
     position: relative;
     display: flex;
     justify-content: center;
@@ -132,7 +132,7 @@
     color: var(--color-fill-button-icon, #efeff1);
 }
 
-.effortlesschatting-flush-button-inner:hover {
+.effortlesschatting-bottom-button-container:hover {
     background-color: var(--color-background-button-text-hover, rgba(255, 255, 255, 0.15));
     color: var(--color-fill-button-icon-hover, #fff);
 }
@@ -183,7 +183,7 @@
     z-index: -1;
 }
 
-.effortlesschatting-flush-button-inner:hover .effortlesschatting-flush-tooltip {
+.effortlesschatting-bottom-button-container:hover .effortlesschatting-flush-tooltip {
     opacity: 1;
 }
 
