@@ -1,6 +1,6 @@
-export let defaultConfig = {
+export const defaultConfig = Object.freeze({
     useStartAsDefaultOffset: false,
-    get defaultOffsetPosition() { return defaultConfig.useStartAsDefaultOffset ? "start" : "end" },
+    //get defaultOffsetPosition() { return defaultConfig.useStartAsDefaultOffset ? "start" : "end" },
     autoSpace: true,
     allowText: true,
     deleteAfterMs: 10000,
@@ -41,10 +41,14 @@ export let defaultConfig = {
     allowUserNameClickToWrite: true,
     autoUserNameTag: true,
     onlyClickWriteOnPause: true,
-    onlyClickToWriteOnHotkey: true, 
+    onlyClickToWriteOnHotkey: true,
     clickToWriteHotkey: new Set(["control"]),
     enableInstantSend: true,
     combinationInstantSend: new Set(["shift"]),
+})
+
+export function getDefaultConfig(){
+    return structuredClone(defaultConfig);
 }
 
 //maybe combine with default config and make it reflect to html later

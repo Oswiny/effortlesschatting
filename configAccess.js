@@ -1,5 +1,5 @@
 //used by files who already have access to browser or chrome APIs
-import { defaultConfig } from "./config.js";
+import { defaultConfig, getDefaultConfig } from "./config.js";
 
 export function storageController() {
     if (typeof browser !== "undefined" && browser.storage) {
@@ -15,7 +15,7 @@ export async function currentConfig() {
     const userConfig = await new Promise((resolve) => {
         storageController().local.get(null, resolve)
     })
-    return { ...defaultConfig, ...userConfig }
+    return { ...getDefaultConfig(), ...userConfig }
 }
 
 export async function setConfig(key, value) {

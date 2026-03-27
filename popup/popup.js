@@ -271,7 +271,7 @@ extend([mixPlugin]);
     async function renderBanned(list, id) {
         let currentConfig = await configAccess.currentConfig()
         list.innerHTML = "";
-        if (currentConfig[id].length - defaultConfig[id].length === 0) {
+        if (currentConfig[id].size=== defaultConfig[id].size) {
             const empty = document.createElement("li");
             empty.className = "muted";
             empty.textContent = "No items added yet."
