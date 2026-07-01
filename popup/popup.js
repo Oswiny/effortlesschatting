@@ -206,10 +206,35 @@ extend([mixPlugin]);
             configAccess.setConfig(id, isOn)
             const reset = document.querySelector(`.reset-icon[data-target="${id}"]`);
             updateResetState(reset, defaultConfig[id], isOn)
+            conditionUpdate(item.id);
         });
+
         item.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); t.click(); } })
     });
 
+
+    const conditionUpdate = (callerID) => {
+        // move this out later
+        const conditionsTable = Array.from(document.querySelectorAll("[data-condition]")).map(
+            el => ({
+                "element": el,
+                "condition": el.dataset.condition.split("&&").map(condition => condition.trim())
+            })
+        )
+        // -------------------
+        const filteredConditionsTable = conditionsTable.filter(conditions => conditions.condition.includes(callerID))
+        if (filteredConditionsTable.length > 0) {
+            filteredConditionsTable.forEach(conditions => {
+                if (conditions.condition.every(requirement => document.querySelector(`#${requirement}`).classList.contains("on"))) {
+                    conditions.element.classList.toggle("disabled", false)
+                }
+                else {
+                    conditions.element.classList.toggle("disabled", true)
+                }
+            }
+            )
+        }
+    }
 
     const ranges = [...document.querySelectorAll(".range-wrap")]
     ranges.forEach(async (item) => {
@@ -271,7 +296,7 @@ extend([mixPlugin]);
     async function renderBanned(list, id) {
         let currentConfig = await configAccess.currentConfig()
         list.innerHTML = "";
-        if (currentConfig[id].size=== defaultConfig[id].size) {
+        if (currentConfig[id].size === defaultConfig[id].size) {
             const empty = document.createElement("li");
             empty.className = "muted";
             empty.textContent = "No items added yet."
@@ -674,6 +699,7 @@ extend([mixPlugin]);
                         const on = defaultSetting;
                         el.classList.toggle('on', on);
                         el.setAttribute('aria-checked', on);
+                        conditionUpdate(el.id);
                     }
                     else if (el.type === "range") {
                         el.value = String(defaultSetting);
@@ -735,6 +761,7 @@ extend([mixPlugin]);
                     const on = defaultSetting;
                     el.classList.toggle('on', on);
                     el.setAttribute('aria-checked', on);
+                    conditionUpdate(el.id);
                 }
                 else if (el.type === "range") {
                     el.value = String(defaultSetting);
@@ -787,6 +814,7 @@ extend([mixPlugin]);
         if (!confirm(labels[currentConfig["language"]]["resetAll"]["main"])) return;
         await configAccess.clearStorage();
         await updateVisualStates();
+        document.querySelectorAll(".toggle").forEach(item => conditionUpdate(item.id))
         updateLabels(defaultConfig["language"])
     });
 

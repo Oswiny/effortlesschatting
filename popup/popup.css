@@ -1208,3 +1208,20 @@ input:focus {
 .hotkey-btn.recording {
     animation: pulseRecord 1.5s infinite;
 }
+
+.disabled {
+    opacity: 0.35 !important;
+    filter: grayscale(100%) !important;
+    pointer-events: none !important;
+    user-select: none !important;
+    transition: opacity 0.3s ease, filter 0.3s ease, transform 0.3s ease !important;
+}
+
+.disabled * {
+    animation-play-state: paused !important;
+}
+
+.disabled .icon,
+.disabled .meta b {
+    transform: none !important;
+}

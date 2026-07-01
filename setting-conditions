@@ -1,0 +1,8 @@
+setting, what needs to be true
+
+allow username clicks -> allow click to write
+auto @ -> allow click to write + allow username clicks
+only write on pause -> allow click to write
+activation shortcut -> allow click to write
+
+activation shortcut for instant send -> enable instant send key combination
