@@ -110,11 +110,11 @@
 }
 
 .effortlesschatting-bottom-container {
-    margin-left: auto;
     display: flex !important;
     align-items: center !important;
     align-content: center !important;
     flex-direction: row !important;
+    gap: 5px;
     height: 100%;
 }
 
@@ -123,8 +123,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 3rem;
-    height: 3rem;
+    width: 2rem;
+    height: 2rem;
     cursor: pointer;
     border-radius: var(--border-radius-medium, 0.4rem);
     transition: background-color 0.2s ease, color 0.2s ease;

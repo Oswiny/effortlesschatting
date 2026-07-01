@@ -277,7 +277,7 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
             console.log(parent.lastChild)
             console.log(parent.lastChild.firstChild)
             console.log("-----------")
-            parent.lastChild.removeChild(parent.lastChild.firstChild)
+            //parent.lastChild.removeChild(parent.lastChild.firstChild)
             parent.insertBefore(div, parent.childNodes[parent.childNodes.length - 1]);
             return div
         }
