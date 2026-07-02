@@ -16,7 +16,8 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
             config = event.data.payload.config;
             resolveConfigReady?.();
             updateLabels(config);
-            document.documentElement.style.setProperty("--hoverColor", config.hoverColor)
+            domManager ? domManager.injectContentNodes() : null;
+            document.documentElement.style.setProperty("--hoverColor", config.hoverColor);
             updateScannerMethod(config.scannerMethod, oldConfig.scannerMethod)
         }
     });
@@ -221,7 +222,11 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
 
         injectContentNodes() {
             let outerElement = document.querySelector(".effortlesschatting-messagebox-area");
-            for (let i = 0; i < config.contentNodeAmount; i++) {
+            outerElement.replaceChildren();
+            this.contentNodes = [];
+            document.documentElement.style.setProperty("--message-box-row", config.messageBoxRow)
+            document.documentElement.style.setProperty("--message-box-column", config.messageBoxColumn)
+            for (let i = 0; i < config.messageBoxRow * config.messageBoxColumn; i++) {
                 let contentNode = this.#createContentNode()
                 outerElement.appendChild(contentNode.node)
                 this.contentNodes.push(contentNode)
@@ -414,9 +419,9 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
             if (!domManager || domManager.contentNodes.length == 0) {
                 return
             }
-            let topElements = messages.getTop(config.contentNodeAmount);
+            let topElements = messages.getTop(config.messageBoxRow * config.messageBoxColumn);
             let isAnyMessageFound = false;
-            for (let i = 0; i < config.contentNodeAmount; i++) {
+            for (let i = 0; i < config.messageBoxRow * config.messageBoxColumn; i++) {
                 domManager.contentNodes[i].stopDisplayOn()
                 if (topElements[i] && topElements[i].text) {
                     domManager.contentNodes[i].displayOn(topElements[i])

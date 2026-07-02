@@ -17,6 +17,8 @@
     --color-text-tooltip: #0e0e10;
     --border-radius-medium: 0.4rem;
     --border-radius-small: 0.2rem;
+    --message-box-row: 2;
+    --message-box-column: 5;
 }
 
 #effortlesschatting,
@@ -31,10 +33,13 @@
 }
 
 .effortlesschatting-messagebox-area {
-    display: flex;
-    justify-content: space-evenly;
+    min-height: calc(var(--message-box-row) * 5rem);
+    display: grid;
+    grid-template-columns: repeat(var(--message-box-column), 1fr);
+    grid-template-rows: repeat(var(--message-box-row), 1fr);
+    gap: 0.5rem;
+    justify-content: stretch;
     align-items: stretch;
-    column-gap: 0.5rem;
     width: 100%;
     box-sizing: border-box;
     border: 1px solid var(--color-border-input, rgba(255, 255, 255, 0.1));
@@ -79,15 +84,14 @@
 }
 
 .effortlesschatting-messagebox {
-    display: grid;
-    grid-template-columns: repeat(3, auto);
-    min-height: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
     padding: 0.5rem;
     cursor: pointer;
     overflow: hidden;
     z-index: 1;
-    text-overflow: ellipsis;
-    white-space: nowrap;
     user-select: none;
     border-radius: 0.25rem;
     transition: background-color 0.1s ease, box-shadow 0.1s ease;
@@ -100,13 +104,10 @@
 }
 
 .effortlesschatting-message-img {
-    grid-column: 1;
-    grid-row: 1;
-    margin: auto;
-    font-weight: 900;
+    max-height: 4rem;
+    max-width: 100%;
     object-fit: contain;
     pointer-events: none;
-    max-height: 4rem;
 }
 
 .effortlesschatting-bottom-container {

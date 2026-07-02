@@ -242,12 +242,14 @@ extend([mixPlugin]);
         const id = input.id;
         const span = item.childNodes[3];
         let currentConfig = await configAccess.currentConfig()
+        input.value = currentConfig[id];
         if (input.id.includes("max") && input.value === input.max) { //TRANSLATION IS NEEDED
             span.textContent = Infinity
         }
         else {
             span.textContent = input.value;
         }
+        
         updateResetState(document.querySelector(`.reset-icon[data-target="${input.id}"]`), defaultConfig[input.id], currentConfig[input.id])
         input.addEventListener("input", async () => {
             if (input.id.includes("max") && input.value === input.max) { //TRANSLATION IS NEEDED
