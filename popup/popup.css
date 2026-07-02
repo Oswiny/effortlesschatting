@@ -200,10 +200,25 @@ p.lead {
     padding: 14px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
+    padding: 18px;
     margin-top: 10px;
     position: relative;
     transition: transform 0.2s ease;
+    width: 100%;
+    animation: fadeUpIn 1.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeUpIn {
+    0% {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .subsection::before {
@@ -1138,7 +1153,7 @@ input:focus {
 }
 
 .hidden {
-    display: none !important;
+    display: none;
 }
 
 .hotkey-btn {
@@ -1277,4 +1292,10 @@ input:focus {
     transform: scale(1.15);
     z-index: 10;
     box-shadow: 0 4px 12px var(--accent-glow);
+}
+
+.grid-square.selected {
+    border-color: var(--accent);
+    box-shadow: 0 4px 12px var(--accent-glow);
+    background: rgba(255, 255, 255, 0.1)
 }

@@ -862,7 +862,8 @@
                                 <span class="reset-icon" title="Reset to default" data-target="visualizer"
                                     data-label="reset-icon" data-label-type="main">&times;</span>
                             </div>
-                            <span class="muted" data-label="visualizer" data-label-type="alt">Click to customize message boxes further</span>
+                            <span class="muted" data-label="visualizer" data-label-type="alt">Click to customize message
+                                boxes further</span>
                         </div>
                     </div>
 
@@ -870,7 +871,66 @@
                         <div class="visualizer" id="visualizer">
                         </div>
                     </div>
+
+                    <section class="subsection hidden" id="box-customizer">
+                        <div class="row">
+                            <div class="control">
+                                <div class="meta">
+                                    <div class="meta-top">
+                                        <b data-label="isDynamic" data-label-type="main">Record a shortcut for the
+                                            box</b>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div tabindex="0" class="hotkey-btn" id="combinationInstantSend" role="button"
+                                    aria-label="Key Combination" data-max-keys="4">
+                                    <kbd>0</kbd>
+                                    <span class="separator">+</span>
+                                    <kbd>1</kbd>
+                                    <span class="separator">+</span>
+                                    <kbd>2</kbd>
+                                    <span class="separator">+</span>
+                                    <kbd>3</kbd>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="control">
+                                <div class="meta">
+                                    <div class="meta-top">
+                                        <b data-label="isDynamic" data-label-type="main">Make it a static box</b>
+                                    </div>
+                                </div>
+                            </div>
+                            <div tabindex="0" class="toggle" id="isDynamic" role="switch" aria-checked="false">
+                                <div class="knob"></div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="control">
+                                <div class="meta">
+                                    <div class="meta-top">
+                                        <b data-label="isDynamic" data-label-type="main">Static value</b>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="add-row">
+                                <input class="bannedInput" type="text" data-label="enterItem" data-label-type="main"
+                                    placeholder="Enter item..." />
+                                <button class="btn primary addBannedButton" data-label="addButton"
+                                    data-label-type="main">Save</button>
+                            </div>
+                        </div>
+
+
+
+                    </section>
                 </div>
+
 
                 <div class="row">
                     <div class="control">

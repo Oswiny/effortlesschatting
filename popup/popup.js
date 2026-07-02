@@ -681,7 +681,7 @@ extend([mixPlugin]);
         const rowInput = document.querySelector("#messageBoxRow")
         const colInput = document.querySelector("#messageBoxColumn")
         const gridContainer = document.querySelector("#visualizer");
-
+        const boxCustomizer = document.querySelector("#box-customizer");
         function renderGrid() {
             let rows = Number(rowInput.value);
             let cols = Number(colInput.value);
@@ -694,7 +694,25 @@ extend([mixPlugin]);
             for (let i = 0; i < totalSquares; i++) {
                 const square = document.createElement('div');
                 square.className = "grid-square";
+                square.dataset.index = i;
+                square.addEventListener("click", () => {
+                    const squares = document.querySelectorAll(".grid-square")
+                    const isOn = square.classList.contains("selected");
+                    if(isOn)
+                    {
+                        square.classList.toggle("selected", false)
+                        boxCustomizer.classList.toggle("hidden", true)
+                        return
+                    }
+
+                    squares.forEach(square => {
+                        square.classList.toggle("selected", false)
+                    })
+                    square.classList.toggle("selected")
+                    boxCustomizer.classList.toggle("hidden", false)
+                })
                 gridContainer.appendChild(square);
+                
             }
         }
 
