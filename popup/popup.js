@@ -237,11 +237,12 @@ extend([mixPlugin]);
     }
 
     const ranges = [...document.querySelectorAll(".range-wrap")]
+    currentConfig = await configAccess.currentConfig()
+
     ranges.forEach(async (item) => {
         const input = item.childNodes[1];
         const id = input.id;
         const span = item.childNodes[3];
-        let currentConfig = await configAccess.currentConfig()
         input.value = currentConfig[id];
         if (input.id.includes("max") && input.value === input.max) { //TRANSLATION IS NEEDED
             span.textContent = Infinity
@@ -249,7 +250,6 @@ extend([mixPlugin]);
         else {
             span.textContent = input.value;
         }
-        
         updateResetState(document.querySelector(`.reset-icon[data-target="${input.id}"]`), defaultConfig[input.id], currentConfig[input.id])
         input.addEventListener("input", async () => {
             if (input.id.includes("max") && input.value === input.max) { //TRANSLATION IS NEEDED
@@ -677,6 +677,35 @@ extend([mixPlugin]);
         })
     })
 
+    const visualizer = async () => {
+        const rowInput = document.querySelector("#messageBoxRow")
+        const colInput = document.querySelector("#messageBoxColumn")
+        const gridContainer = document.querySelector("#visualizer");
+
+        function renderGrid() {
+            let rows = Number(rowInput.value);
+            let cols = Number(colInput.value);
+
+            gridContainer.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
+            gridContainer.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+            gridContainer.replaceChildren();
+
+            const totalSquares = rows * cols;
+            for (let i = 0; i < totalSquares; i++) {
+                const square = document.createElement('div');
+                square.className = "grid-square";
+                gridContainer.appendChild(square);
+            }
+        }
+
+        rowInput.addEventListener("input", renderGrid);
+        colInput.addEventListener("input", renderGrid);
+
+        renderGrid();
+    };
+    visualizer()
+
+
     document.querySelectorAll('.reset-icon').forEach(async (reset) => {
         if (reset.dataset.target === "section") {
             reset.addEventListener("click", async () => {
@@ -706,6 +735,7 @@ extend([mixPlugin]);
                     else if (el.type === "range") {
                         el.value = String(defaultSetting);
                         el.parentElement.querySelector("span").textContent = el.value;
+                        if (el.id.includes("Row") || el.id.includes("Column")) visualizer()
                     }
                     else if (el.classList.contains("subsection")) {
                         await renderBanned(el.querySelector(".banned-list"), id)
@@ -743,6 +773,8 @@ extend([mixPlugin]);
                         document.documentElement.style.setProperty("--" + colorPicker.dataset.target, defaultConfig[colorPicker.dataset.target]);
                     }
                 })
+                updateResetState(reset, defaultConfig[reset.dataset.target], currentConfig[reset.dataset.target])
+                await updateVisualStates();
             })
         }
         else {
@@ -768,6 +800,7 @@ extend([mixPlugin]);
                 else if (el.type === "range") {
                     el.value = String(defaultSetting);
                     el.parentElement.querySelector("span").textContent = el.value;
+                    if (el.id.includes("Row") || el.id.includes("Column")) visualizer()
                 }
                 else if (el.classList.contains("subsection")) {
                     await renderBanned(el.querySelector(".banned-list"), id)
@@ -817,6 +850,7 @@ extend([mixPlugin]);
         await configAccess.clearStorage();
         await updateVisualStates();
         document.querySelectorAll(".toggle").forEach(item => conditionUpdate(item.id))
+        visualizer()
         updateLabels(defaultConfig["language"])
     });
 
