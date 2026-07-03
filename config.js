@@ -47,9 +47,10 @@ export const defaultConfig = Object.freeze({
     clickToWriteHotkey: new Set(["control"]),
     enableInstantSend: true,
     combinationInstantSend: new Set(["shift"]),
+    boxCustomSettings: { 0: { hotkey: new Set(["A", "B"]), isStatic: true, staticValue: "test"} },
 })
 
-export function getDefaultConfig(){
+export function getDefaultConfig() {
     return structuredClone(defaultConfig);
 }
 

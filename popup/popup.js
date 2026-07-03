@@ -200,13 +200,15 @@ extend([mixPlugin]);
             updateResetState(document.querySelector(`.reset-icon[data-target="${id}"]`), defaultConfig[id], currentConfig[id])
         }
         item.addEventListener('click', () => {
+            console.log(item.id)
             const isOn = item.classList.toggle('on');
             item.setAttribute('aria-checked', isOn);
             const id = item.id;
-            configAccess.setConfig(id, isOn)
+            item.dataset?.index !== null ? configAccess.setConfig("boxCustomSettings", isOn, `${item.dataset.index}.${id}`) : configAccess.setConfig(id, isOn)
             const reset = document.querySelector(`.reset-icon[data-target="${id}"]`);
-            updateResetState(reset, defaultConfig[id], isOn)
             conditionUpdate(item.id);
+            if(!reset) return
+            updateResetState(reset, defaultConfig[id], isOn)
         });
 
         item.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); t.click(); } })
@@ -264,7 +266,7 @@ extend([mixPlugin]);
         })
     })
 
-    let arrayBasedSettings = [...document.querySelectorAll(".subsection")]
+    let arrayBasedSettings = [...document.querySelectorAll("[data-setting-type='array']")]
     arrayBasedSettings.forEach(async (item) => {
         const id = item.id
         const input = item.querySelector(".bannedInput");
@@ -630,7 +632,8 @@ extend([mixPlugin]);
     const hotkeys = document.querySelectorAll(".hotkey-btn");
     const notAllowedKeys = new Set(["Backspace", "Escape", "Enter", "Tab", " ", "ArrowUp", "ArrowLeft", "ArrowRight", "ArrowDown"])
 
-    const displayHotkey = function (hotkey, pressedKeys) {
+    const displayHotkey = function (hotkey, pressedKeys = new Set([])) {
+        if (!hotkey) return
         const kbdElements = Object.entries(hotkey.children).filter(item => item[1].nodeName === "KBD");
         Object.values(hotkey.children).forEach(item => item.classList.add("hidden"))
         Array.from(pressedKeys).forEach((pressedKey, index) => {
@@ -642,7 +645,7 @@ extend([mixPlugin]);
 
     const saveHotkey = function (hotkey, pressedKeys, handler) {
         hotkey.classList.remove("recording");
-        configAccess.setConfig(hotkey.id, pressedKeys);
+        hotkey.id === "boxHotkey" ? configAccess.setConfig("boxCustomSettings", pressedKeys, `${hotkey.dataset.index}.hotkey`) : configAccess.setConfig(hotkey.id, pressedKeys);
         document.removeEventListener("keydown", handler);
     }
 
@@ -695,11 +698,10 @@ extend([mixPlugin]);
                 const square = document.createElement('div');
                 square.className = "grid-square";
                 square.dataset.index = i;
-                square.addEventListener("click", () => {
+                square.addEventListener("click", async () => {
                     const squares = document.querySelectorAll(".grid-square")
                     const isOn = square.classList.contains("selected");
-                    if(isOn)
-                    {
+                    if (isOn) {
                         square.classList.toggle("selected", false)
                         boxCustomizer.classList.toggle("hidden", true)
                         return
@@ -710,9 +712,24 @@ extend([mixPlugin]);
                     })
                     square.classList.toggle("selected")
                     boxCustomizer.classList.toggle("hidden", false)
+                    boxCustomizer.dataset.index = square.dataset.index
+                    boxCustomizer.querySelectorAll("[data-index]").forEach(element => element.dataset.index = square.dataset.index)
+                    
+                    const currentConfig = await configAccess.currentConfig()
+                    const currentBoxSettings = currentConfig.boxCustomSettings[square.dataset.index]
+                    const hotkey = boxCustomizer.querySelector("#boxHotkey");
+                    const isStatic = boxCustomizer.querySelector("#isStatic");
+                    const isLastSent = boxCustomizer.querySelector("#useLastSent");
+                    const staticValue = boxCustomizer.querySelector("#staticValue");
+                    
+                    displayHotkey(hotkey, currentBoxSettings?.hotkey)
+                    isStatic.classList.toggle("on", currentBoxSettings?.isStatic ?? false)
+                    useLastSent.classList.toggle("on", currentBoxSettings?.useLastSent ?? false)
+                    staticValue.value = currentBoxSettings?.staticValue ?? ""
+
                 })
                 gridContainer.appendChild(square);
-                
+
             }
         }
 

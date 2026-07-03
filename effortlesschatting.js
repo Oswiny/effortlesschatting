@@ -380,6 +380,7 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
         constructor(node) {
             this.node = node;
             this.printWrapper = null;
+            this.isCustomized = null;
         }
 
         stopDisplayOn() {

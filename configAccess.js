@@ -18,11 +18,39 @@ export async function currentConfig() {
     return { ...getDefaultConfig(), ...userConfig }
 }
 
-export async function setConfig(key, value) {
+export async function setConfig(rootKey, value, access = null) {
+    const currentRoot = await new Promise((resolve) => {
+        storageController().local.get([rootKey], (result) => {
+            resolve(result[rootKey] || {});
+        });
+    });
+
+    if (!access) {
+        await new Promise((resolve) => {
+            storageController().local.set({ [rootKey]: value }, resolve);
+        });
+        await sendUpdateConfigMessage();
+        return;
+    }
+
+    const pathSegments = access.split(".");
+    const finalKey = pathSegments.pop();
+
+    let parentTarget = currentRoot;
+    for (const segment of pathSegments) {
+        if (typeof parentTarget[segment] !== 'object' || parentTarget[segment] === null) {
+            parentTarget[segment] = {};
+        }
+        parentTarget = parentTarget[segment];
+    }
+
+    parentTarget[finalKey] = value;
+
     await new Promise((resolve) => {
-        storageController().local.set({ [key]: value }, resolve)
-    })
-    await sendUpdateConfigMessage()
+        storageController().local.set({ [rootKey]: currentRoot }, resolve);
+    });
+    console.log(await currentConfig())
+    await sendUpdateConfigMessage();
 }
 
 export async function setBulkConfig(object) {
