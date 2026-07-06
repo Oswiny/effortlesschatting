@@ -207,7 +207,7 @@ extend([mixPlugin]);
             item.dataset?.index !== null ? configAccess.setConfig("boxCustomSettings", isOn, `${item.dataset.index}.${id}`) : configAccess.setConfig(id, isOn)
             const reset = document.querySelector(`.reset-icon[data-target="${id}"]`);
             conditionUpdate(item.id);
-            if(!reset) return
+            if (!reset) return
             updateResetState(reset, defaultConfig[id], isOn)
         });
 
@@ -295,6 +295,11 @@ extend([mixPlugin]);
         });
 
         await renderBanned(list, id);
+    })
+
+    const staticValue = document.querySelector("#staticValue")
+    staticValue.addEventListener("change", (e) => {
+        configAccess.setConfig("boxCustomSettings", e.target.value, `${e.target.dataset.index}.staticValue`);
     })
 
     async function renderBanned(list, id) {
@@ -714,14 +719,14 @@ extend([mixPlugin]);
                     boxCustomizer.classList.toggle("hidden", false)
                     boxCustomizer.dataset.index = square.dataset.index
                     boxCustomizer.querySelectorAll("[data-index]").forEach(element => element.dataset.index = square.dataset.index)
-                    
+
                     const currentConfig = await configAccess.currentConfig()
                     const currentBoxSettings = currentConfig.boxCustomSettings[square.dataset.index]
                     const hotkey = boxCustomizer.querySelector("#boxHotkey");
                     const isStatic = boxCustomizer.querySelector("#isStatic");
                     const isLastSent = boxCustomizer.querySelector("#useLastSent");
                     const staticValue = boxCustomizer.querySelector("#staticValue");
-                    
+
                     displayHotkey(hotkey, currentBoxSettings?.hotkey)
                     isStatic.classList.toggle("on", currentBoxSettings?.isStatic ?? false)
                     useLastSent.classList.toggle("on", currentBoxSettings?.useLastSent ?? false)

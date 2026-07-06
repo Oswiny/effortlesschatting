@@ -18,11 +18,18 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
             updateLabels(config);
             domManager ? domManager.injectContentNodes() : null;
             document.documentElement.style.setProperty("--hoverColor", config.hoverColor);
+
             updateScannerMethod(config.scannerMethod, oldConfig.scannerMethod)
         }
     });
 
     await configReady;
+
+    function assignBoxHotkeys() {
+        config.boxCustomSettings.forEach(setting => {
+
+        })
+    }
 
     function updateScannerMethod(newScannerMethod, oldScannerMethod = null) {
         if (!isInjected || (oldScannerMethod !== null && oldScannerMethod === newScannerMethod)) {
@@ -271,7 +278,7 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
             }
 
             function clearInput() {
-                textBoxControllers.select(textBoxControllers.range(textBoxControllers.point([0, 0], { edge: "start"}), textBoxControllers.point([0, 0], { edge: "end"})))
+                textBoxControllers.select(textBoxControllers.range(textBoxControllers.point([0, 0], { edge: "start" }), textBoxControllers.point([0, 0], { edge: "end" })))
                 textBoxControllers.delete()
             }
 
@@ -379,11 +386,16 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
     class ContentNode {
         constructor(node) {
             this.node = node;
+            this.message = null
             this.printWrapper = null;
             this.isCustomized = null;
+            this.isStatic = null;
+            this.useLastSent = null;
+            this.hotkey = null;
         }
 
         stopDisplayOn() {
+            this.message = null
             for (let child of this.node.children) {
                 child.classList.add("hidden");
                 child.srcset = null;
@@ -397,6 +409,7 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
         }
 
         displayOn(message) {
+            this.message = message
             let associatedChild = this.node.querySelector(`.contentImg`)
             associatedChild.srcset = message.srcset;
             associatedChild.alt = (associatedChild.srcset !== "" || (message.text.length <= config.maxDisplayLength)) ? message.text : message.text.substring(0, config.maxDisplayLength) + "…";
@@ -511,21 +524,52 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
         }
     }
 
+    function onKeyDown(event) {
+        if (event.repeat) return;
+        pressedKeys.add(event.key.toLowerCase())
+        hotkeyCheck()
+    }
+
+    function onKeyUp(event) {
+        pressedKeys.delete(event.key.toLowerCase())
+    }
+
+    document.addEventListener("keydown", onKeyDown);
+    document.addEventListener("keyup", onKeyUp);
+
+    function hotkeyCheck() {
+        let boxCustomSettings = Object.entries(config.boxCustomSettings)
+        let triggeredHotkeys = boxCustomSettings.filter(item => item[1].hotkey && isCombination(true, item[1].hotkey, pressedKeys))
+        triggeredHotkeys.forEach(item => {
+            domManager.contentNodes[item[0]].message.printToChat()
+        })
+    }
+
+    function staticCheck() {
+        const statics = []
+        domManager.contentNodes.forEach((item, index) => {
+            item.isStatic = config.boxCustomSettings[index].isStatic;
+            //left here
+            //left here
+            //left here
+            //left here
+            //left here
+            //left here
+            //left here
+            //left here
+            if (item.isStatic)
+            {
+                
+            }
+            else return
+        })
+        statics
+
+    }
+
+
     function writeMessagesByClick() {
         const chatMessagesContainer = document.querySelector(".chat-list--default");
-
-
-        function onKeyDown(event) {
-            if (event.repeat) return;
-            pressedKeys.add(event.key.toLowerCase())
-        }
-
-        function onKeyUp(event) {
-            pressedKeys.delete(event.key.toLowerCase())
-        }
-
-        document.addEventListener("keydown", onKeyDown);
-        document.addEventListener("keyup", onKeyUp);
 
         const getWordIndexes = function (text, offset) {
             if (defaultConfig.bannedWords.has(text[offset])) return null;
