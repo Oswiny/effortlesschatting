@@ -16,10 +16,9 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
             config = event.data.payload.config;
             resolveConfigReady?.();
             updateLabels(config);
-            domManager ? domManager.injectContentNodes() : null;
             document.documentElement.style.setProperty("--hoverColor", config.hoverColor);
-
             updateScannerMethod(config.scannerMethod, oldConfig.scannerMethod)
+            isInjected ? ContentNode.updateNodes() : null
         }
     });
 
@@ -435,10 +434,19 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
             }
             let topElements = messages.getTop(config.messageBoxRow * config.messageBoxColumn);
             let isAnyMessageFound = false;
+            let encounteredStatics = 0;
             for (let i = 0; i < config.messageBoxRow * config.messageBoxColumn; i++) {
                 domManager.contentNodes[i].stopDisplayOn()
-                if (topElements[i] && topElements[i].text) {
-                    domManager.contentNodes[i].displayOn(topElements[i])
+                if (config.boxCustomSettings?.[i]?.isStatic) {
+                    encounteredStatics++;
+                    domManager.contentNodes[i].isStatic = config.boxCustomSettings[i].isStatic
+                    const message = config.boxCustomSettings[i].staticValue
+                    if (!message?.trim()) continue
+                    domManager.contentNodes[i].displayOn(new Message(config.boxCustomSettings[i].staticValue))
+                    isAnyMessageFound = true;
+                }
+                else if (topElements[i - encounteredStatics] && topElements[i - encounteredStatics].text) {
+                    domManager.contentNodes[i].displayOn(topElements[i - encounteredStatics])
                     isAnyMessageFound = true;
                 }
             }
@@ -508,6 +516,7 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
             writeMessagesByClick()
             isInjected = true;
             updateScannerMethod();
+            ContentNode.updateNodes()
             observer.observe(document, { childList: true, subtree: true })
         })
 
@@ -526,8 +535,25 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
 
     function onKeyDown(event) {
         if (event.repeat) return;
+
         pressedKeys.add(event.key.toLowerCase())
-        hotkeyCheck()
+
+        for (const [boxId, settings] of Object.entries(config.boxCustomSettings)) {
+            if (!settings.hotkey) continue;
+
+            const instantSendHotkey = new Set([...settings.hotkey, ...config.combinationInstantSend]);
+
+            if (isCombination(true, instantSendHotkey, pressedKeys)) {
+                event.preventDefault();
+                sendMessage(domManager.contentNodes[boxId].message.text);
+                continue;
+            }
+
+            if (isCombination(true, settings.hotkey, pressedKeys)) {
+                event.preventDefault();
+                domManager.contentNodes[boxId].message.printToChat();
+            }
+        }
     }
 
     function onKeyUp(event) {
@@ -537,29 +563,21 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
     document.addEventListener("keydown", onKeyDown);
     document.addEventListener("keyup", onKeyUp);
 
-    function hotkeyCheck() {
-        let boxCustomSettings = Object.entries(config.boxCustomSettings)
-        let triggeredHotkeys = boxCustomSettings.filter(item => item[1].hotkey && isCombination(true, item[1].hotkey, pressedKeys))
-        triggeredHotkeys.forEach(item => {
-            domManager.contentNodes[item[0]].message.printToChat()
-        })
-    }
-
     function staticCheck() {
         const statics = []
         domManager.contentNodes.forEach((item, index) => {
+            item.isCustomized = config.boxCustomSettings?.[index]
+            if (!item.isCustomized) return
             item.isStatic = config.boxCustomSettings[index].isStatic;
-            //left here
-            //left here
-            //left here
-            //left here
-            //left here
-            //left here
-            //left here
-            //left here
-            if (item.isStatic)
-            {
-                
+            if (item.isStatic) {
+                if (item.useLastSent) {
+                    //figure out how to get last sent message.
+                    item.displayOn()
+                } else if (config.boxCustomSettings[index].staticValue) {
+                    item.displayOn(new Message(config.boxCustomSettings[index].staticValue))
+                    document.querySelector(".effortlesschatting-no-message").classList.add("hidden");
+                    document.querySelector(".effortlesschatting-messagebox-area").classList.remove("hidden");
+                }
             }
             else return
         })

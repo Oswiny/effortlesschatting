@@ -192,6 +192,11 @@
     display: none !important;
 }
 
+.effortlesschatting-messagebox-area > .hidden {
+    display: flex !important;
+    visibility: hidden;
+}
+
 .seventv-chat-input-container .chat-input {
     display: flex;
     flex-direction: column;
