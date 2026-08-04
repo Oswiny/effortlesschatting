@@ -215,19 +215,23 @@ extend([mixPlugin]);
     });
 
 
+    const conditionsTable = Array.from(document.querySelectorAll("[data-condition]")).map(
+        el => ({
+            "element": el,
+            "condition": el.dataset.condition.split("&&").map(condition => condition.trim())
+        })
+    )
     const conditionUpdate = (callerID) => {
-        // move this out later
-        const conditionsTable = Array.from(document.querySelectorAll("[data-condition]")).map(
-            el => ({
-                "element": el,
-                "condition": el.dataset.condition.split("&&").map(condition => condition.trim())
-            })
-        )
-        // -------------------
-        const filteredConditionsTable = conditionsTable.filter(conditions => conditions.condition.includes(callerID))
+        const filteredConditionsTable = conditionsTable.filter(conditions =>
+            conditions.condition.some(item => item === callerID || item.substring(1, item.length) === callerID))
         if (filteredConditionsTable.length > 0) {
             filteredConditionsTable.forEach(conditions => {
-                if (conditions.condition.every(requirement => document.querySelector(`#${requirement}`).classList.contains("on"))) {
+                if (conditions.condition.every(requirement => {
+                    if (requirement[0] === "!") {
+                        return !document.querySelector(`#${requirement.substring(1, requirement.length)}`).classList.contains("on")
+                    }
+                    return document.querySelector(`#${requirement}`).classList.contains("on")
+                })) {
                     conditions.element.classList.toggle("disabled", false)
                 }
                 else {
@@ -330,6 +334,17 @@ extend([mixPlugin]);
         currentConfig = await configAccess.currentConfig()
         updateResetState(document.querySelector(`.reset-icon[data-target="${id}"]`), defaultConfig[id], currentConfig[id])
     }
+
+    const hotkeyClearButtons = document.querySelectorAll("[data-clear]")
+    hotkeyClearButtons.forEach(item => {
+        item.addEventListener("click", () => {
+            const hotkeyDisplayElement = document.querySelector(`#${item.dataset.clear}`)
+            configAccess.setConfig(item.dataset.clear, new Set([]), !hotkeyDisplayElement.dataset.index ? `${hotkeyDisplayElement.dataset.index}.hotkey` : null)
+            hotkeyDisplayElement.childNodes.forEach(item => item?.classList?.add("hidden")) 
+        })
+    })
+
+
 
     const pngSquares = {
         light: {

@@ -103,6 +103,7 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
         constructor() {
             this.root = null
             this.contentNodes = []
+            this.originalOnSendMessage = null
         }
 
         hasText() {
@@ -440,9 +441,9 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
                 if (config.boxCustomSettings?.[i]?.isStatic) {
                     encounteredStatics++;
                     domManager.contentNodes[i].isStatic = config.boxCustomSettings[i].isStatic
-                    const message = config.boxCustomSettings[i].staticValue
+                    const message = config.boxCustomSettings[i].useLastSent ? lastSentMessage : config.boxCustomSettings[i].staticValue;
                     if (!message?.trim()) continue
-                    domManager.contentNodes[i].displayOn(new Message(config.boxCustomSettings[i].staticValue))
+                    domManager.contentNodes[i].displayOn(new Message(message))
                     isAnyMessageFound = true;
                 }
                 else if (topElements[i - encounteredStatics] && topElements[i - encounteredStatics].text) {
@@ -474,6 +475,7 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
     let textBoxControllers = null;
     let sendMessage = null;
     let pressedKeys = null;
+    let lastSentMessage = null;
 
     //if for some reason chat box gets removed we inject it
     function checkInjection() {
@@ -562,29 +564,6 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
 
     document.addEventListener("keydown", onKeyDown);
     document.addEventListener("keyup", onKeyUp);
-
-    function staticCheck() {
-        const statics = []
-        domManager.contentNodes.forEach((item, index) => {
-            item.isCustomized = config.boxCustomSettings?.[index]
-            if (!item.isCustomized) return
-            item.isStatic = config.boxCustomSettings[index].isStatic;
-            if (item.isStatic) {
-                if (item.useLastSent) {
-                    //figure out how to get last sent message.
-                    item.displayOn()
-                } else if (config.boxCustomSettings[index].staticValue) {
-                    item.displayOn(new Message(config.boxCustomSettings[index].staticValue))
-                    document.querySelector(".effortlesschatting-no-message").classList.add("hidden");
-                    document.querySelector(".effortlesschatting-messagebox-area").classList.remove("hidden");
-                }
-            }
-            else return
-        })
-        statics
-
-    }
-
 
     function writeMessagesByClick() {
         const chatMessagesContainer = document.querySelector(".chat-list--default");
@@ -753,11 +732,28 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
     let fiber = null;
     let originalOnChatMessageEvent = null;
     let originalInsertBefore = Node.prototype.insertBefore
+    let originalParseOutgoingMessage = null;
     async function scannerMethod() {
         emotes = {}
 
         startFiber = document.reactFiberSelector(".chat-room__content")
         fiber = findPathToTarget(startFiber, functionName).fiber
+
+        let fiber2 = findPathToTarget(startFiber, "parseOutgoingMessage").fiber;
+
+        if (originalParseOutgoingMessage == null) {
+            originalParseOutgoingMessage = fiber2.stateNode.parseOutgoingMessage;
+        } else {
+            fiber2.stateNode.parseOutgoingMessage = originalParseOutgoingMessage;
+        }
+
+        fiber2.stateNode.parseOutgoingMessage = function (...args) {
+            lastSentMessage = args[0];
+            if (!domManager.isMouseOver()) {
+                ContentNode.updateNodes()
+            }
+            return originalParseOutgoingMessage.apply(this, args);
+        };
 
         if (originalOnChatMessageEvent !== null) {
             fiber.stateNode.onChatMessageEvent = originalOnChatMessageEvent

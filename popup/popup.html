@@ -705,7 +705,10 @@
                                 combination</span>
                         </div>
                     </div>
-                    <div>
+                    <div
+                        style="display: flex; flex-direction: row; align-items: center; justify-items: center; gap: 4px;">
+                        <button class="btn-remove" data-clear="clickToWriteHotkey" data-label="clear"
+                            data-label-type="main">Clear</button>
                         <div tabindex="0" class="hotkey-btn" id="clickToWriteHotkey" role="button"
                             aria-label="Key Combination" data-max-keys="4">
                             <kbd>0</kbd>
@@ -883,7 +886,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div>
+                            <div
+                                style="display: flex; flex-direction: row; align-items: center; justify-items: center; gap: 4px;">
+                                <button class="btn-remove" data-clear="boxHotkey" data-index="-1" data-label="clear"
+                                    data-label-type="main">Clear</button>
                                 <div tabindex="0" class="hotkey-btn" id="boxHotkey" role="button"
                                     aria-label="Key Combination" data-max-keys="3" data-index="-1">
                                     <kbd>0</kbd>
@@ -903,25 +909,28 @@
                                     </div>
                                 </div>
                             </div>
-                            <div tabindex="0" class="toggle" id="isStatic" role="switch" aria-checked="false" data-index="-1">
+                            <div tabindex="0" class="toggle" id="isStatic" role="switch" aria-checked="false"
+                                data-index="-1">
                                 <div class="knob"></div>
                             </div>
                         </div>
 
-                        <div class="row">
+                        <div class="row" data-condition="isStatic">
                             <div class="control">
                                 <div class="meta">
                                     <div class="meta-top">
-                                        <b data-label="useLastSent" data-label-type="main">Use last sent message as value</b>
+                                        <b data-label="useLastSent" data-label-type="main">Use last sent message as
+                                            value</b>
                                     </div>
                                 </div>
                             </div>
-                            <div tabindex="0" class="toggle" id="useLastSent" role="switch" aria-checked="false" data-index="-1">
+                            <div tabindex="0" class="toggle" id="useLastSent" role="switch" aria-checked="false"
+                                data-index="-1">
                                 <div class="knob"></div>
                             </div>
                         </div>
 
-                        <div class="row">
+                        <div class="row" data-condition="isStatic && !useLastSent">
                             <div class="control">
                                 <div class="meta">
                                     <div class="meta-top">
@@ -931,7 +940,7 @@
                             </div>
                             <div class="add-row">
                                 <input class="bannedInput" type="text" data-label="enterItem" data-label-type="main"
-                                    placeholder="Enter item..." id="staticValue" data-index="-1"/>
+                                    placeholder="Enter item..." id="staticValue" data-index="-1" />
                                 <button class="btn primary addBannedButton" data-label="addButton"
                                     data-label-type="main">Save</button>
                             </div>
@@ -1188,7 +1197,10 @@
                                 combination</span>
                         </div>
                     </div>
-                    <div>
+                    <div
+                        style="display: flex; flex-direction: row; align-items: center; justify-items: center; gap: 4px;">
+                        <button class="btn-remove" data-clear="combinationInstantSend" data-label="clear"
+                            data-label-type="main">Clear</button>
                         <div tabindex="0" class="hotkey-btn" id="combinationInstantSend" role="button"
                             aria-label="Key Combination" data-max-keys="4">
                             <kbd>0</kbd>
