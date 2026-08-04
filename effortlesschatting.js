@@ -543,12 +543,14 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
         for (const [boxId, settings] of Object.entries(config.boxCustomSettings)) {
             if (!settings.hotkey) continue;
 
-            const instantSendHotkey = new Set([...settings.hotkey, ...config.combinationInstantSend]);
+            if (!config.combinationInstantSend) {
+                const instantSendHotkey = new Set([...settings.hotkey, ...config.combinationInstantSend]);
 
-            if (isCombination(true, instantSendHotkey, pressedKeys)) {
-                event.preventDefault();
-                sendMessage(domManager.contentNodes[boxId].message.text);
-                continue;
+                if (isCombination(true, instantSendHotkey, pressedKeys)) {
+                    event.preventDefault();
+                    sendMessage(domManager.contentNodes[boxId].message.text);
+                    continue;
+                }
             }
 
             if (isCombination(true, settings.hotkey, pressedKeys)) {
@@ -726,6 +728,32 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
         uniqueWordsInMessage.forEach(word => messages.add(new Message(word, "", emotesInCurrentMessage[word])));
     }
 
+    function scrapeHistory(messageData) {
+        if (messageData.badges && ((!config.scrapeMods && messageData.badges.moderator) || (!config.scrapeVIPs && messageData.vip) || (!config.scrapeBots && messageData.badges.chatbot))) //make sure vip and chatbot are the way they are
+        {
+            return;
+        }
+
+        if (config.scrapeOnlySubs) {
+            if (!messageData.badges.Subscriber || (messageData.badges.Subscriber && (Number(messageData.badges.Subscriber) < config.scrapeSubsWithMinimumMonths))) {
+                return
+            }
+        }
+
+        if (config.bannedUsers.has(messageData.user.userDisplayName) || config.bannedUsers.has(messageData.user.userLogin)) {
+            return
+        }
+
+        const linkRegex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
+
+        let uniqueWordsInMessage = Array.from(new Set(messageData.messageBody.trim().split(" ").filter(item => {
+            return (item.length <= config.maxScanLength && !config.bannedWords.has(item) && (config.allowLinks || !linkRegex.test(item)) && (config.allowMentions || !(item?.[0] === "@")))
+        })))
+        let emotesInCurrentMessage = {}
+        uniqueWordsInMessage.forEach(word => messages.add(new Message(word, "", emotes?.[word])));
+    }
+
+
     let startElement = null;
     let startFiber = null;
     const functionName = "onChatMessageEvent";
@@ -754,6 +782,14 @@ import { findPathToTarget } from "./internalTraversalHandler.js";
             }
             return originalParseOutgoingMessage.apply(this, args);
         };
+
+        if (config.scrapeHistory) {
+            let fiber3 = findPathToTarget(startFiber, "getMessages").fiber
+            fiber3.stateNode.getMessages().forEach(item => {
+                scrapeHistory(item)
+            })
+
+        }
 
         if (originalOnChatMessageEvent !== null) {
             fiber.stateNode.onChatMessageEvent = originalOnChatMessageEvent
